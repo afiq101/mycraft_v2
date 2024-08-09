@@ -69,8 +69,8 @@ export default [
         meta: {},
       },
       {
-        title: "Report Generation",
-        path: "/report-generation",
+        title: "Report Management",
+        path: "/report-management",
         icon: "ic:outline-dashboard",
         child: [],
         meta: {},
