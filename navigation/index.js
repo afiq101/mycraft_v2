@@ -33,6 +33,56 @@ export default [
         "path": "/memberships",
         "icon": "",
         "child": []
+      },
+      {
+        "title": "Global Setting Management",
+        "path": "/global-setting-management",
+        "icon": "",
+        "child": [
+          {
+            "title": "Coin Management",
+            "path": "/global-setting-management/coin-management",
+            "icon": "",
+            "child": []
+          }
+        ]
+      },
+      {
+        "title": "System Monitoring",
+        "path": "/system-monitoring",
+        "icon": "",
+        "child": [
+          {
+            "title": "Server Performance Metrics",
+            "path": "/system-monitoring/server-performance-metrics",
+            "icon": "",
+            "child": []
+          },
+          {
+            "title": "Application Performance Metrics",
+            "path": "/system-monitoring/application-performance-metrics",
+            "icon": "",
+            "child": []
+          },
+          {
+            "title": "Database Performance Metrics",
+            "path": "/system-monitoring/database-performance-metrics",
+            "icon": "",
+            "child": []
+          }
+        ]
+      },
+      {
+        "title": "Integration API Keys Setting",
+        "path": "/integration-api-keys-setting",
+        "icon": "",
+        "child": []
+      },
+      {
+        "title": "Payment Gateway API Keys",
+        "path": "/integration-api-keys-setting/payment-gateway-api-keys",
+        "icon": "",
+        "child": []
       }
     ],
     "meta": {}

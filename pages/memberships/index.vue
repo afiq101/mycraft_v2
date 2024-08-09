@@ -13,9 +13,30 @@ const fetchAdmins = async () => {
   // Simulating an API call with setTimeout
   setTimeout(() => {
     admins.value = [
-      { id: 1, name: 'John Doe', status: 'Active', lastSeen: '2023-04-01 09:30:00' },
-      { id: 2, name: 'Jane Smith', status: 'Active', lastSeen: '2023-04-02 14:45:00' },
-      { id: 3, name: 'Bob Johnson', status: 'Inactive', lastSeen: '2023-03-30 11:20:00' },
+    { 
+    id: 1, 
+    name: 'John Doe', 
+    email: 'john.doe@example.com', 
+    contactNumber: '+1 234 567 8901', 
+    status: 'Active', 
+    lastSeen: '2023-04-01 09:30:00' 
+  },
+  { 
+    id: 2, 
+    name: 'Jane Smith', 
+    email: 'jane.smith@example.com', 
+    contactNumber: '+1 234 567 8902', 
+    status: 'Active', 
+    lastSeen: '2023-04-02 14:45:00' 
+  },
+  { 
+    id: 3, 
+    name: 'Bob Johnson', 
+    email: 'bob.johnson@example.com', 
+    contactNumber: '+1 234 567 8903', 
+    status: 'Inactive', 
+    lastSeen: '2023-03-30 11:20:00' 
+  },
     ];
     isLoading.value = false;
   }, 1000); // Simulate a 1-second delay
@@ -39,16 +60,16 @@ const getRoleVariant = (role) => {
 
 <template>
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8">LIST OF ADMINS</h1>
+    <h1 class="text-3xl font-bold mb-8">LIST OF MEMBERS</h1>
 
     <rs-card>
       <template #header>
         <div class="flex justify-between items-center">
-          <h2 class="text-xl font-semibold">Administrator Listings</h2>
-          <nuxt-link to="/administrators/create-admin">
+          <h2 class="text-xl font-semibold">Membership Listings</h2>
+          <nuxt-link to="/memberships/create-member">
           <rs-button variant="primary">
             <Icon name="heroicons:plus" class="w-5 h-5 mr-2" />
-            New Admin
+            New Member
           </rs-button></nuxt-link>
         </div>
       </template>
@@ -59,11 +80,12 @@ const getRoleVariant = (role) => {
         <rs-table 
           v-else
           :data="admins" 
-          :field="['Name', 'Type', 'Status', 'Role', 'Last Seen', 'Action']" 
+          :field="['Name', 'Email', 'Contact Number', 'Status', 'Last Seen', 'Action']" 
           advanced
         >
           <template #Name="{ value }">{{ value.name }}</template>
-          <template #Type="{ value }">{{ value.type }}</template>
+          <template #Email="{ value }">{{ value.email }}</template>
+          <template #ContactNumber="{ value }">{{ value.contactNumber }}</template>
           <template #Status="{ value }">
             <rs-badge :variant="getStatusVariant(value.status)">{{ value.status }}</rs-badge>
           </template>
