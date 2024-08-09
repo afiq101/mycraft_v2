@@ -21,6 +21,11 @@ const path = reactive([
     icon: "ph:list-bullets-duotone",
   },
   {
+    name: "My Bookings",
+    path: "/bookings",
+    icon: "ph:calendar-duotone",
+  },
+  {
     name: "My Coins",
     path: "/coins",
     icon: "ph:coin-duotone",
@@ -44,11 +49,6 @@ const path = reactive([
     name: "Craft Video",
     path: "/craft-video",
     icon: "ph:video-camera-duotone",
-  },
-  {
-    name: "My Bookings",
-    path: "/bookings",
-    icon: "ph:calendar-duotone",
   },
   {
     name: "Help Centre",

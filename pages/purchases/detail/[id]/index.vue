@@ -22,22 +22,24 @@ const fetchOrderDetails = async (id) => {
   return {
     id: id,
     date: "2023-06-15T14:30:00Z",
-    total: 329.99,
+    total: 6294,
     status: "Delivered",
     items: [
       {
         id: 1,
-        name: "Wireless Headphones",
+        name: "Iphone 13 Pro Max",
         quantity: 1,
-        price: 199.99,
-        image: "https://example.com/headphones.jpg",
+        price: 5094,
+        image:
+          "https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-13-pro-max-silver-select?wid=940&hei=1112&fmt=png-alpha&.v=1645552346280",
       },
       {
         id: 2,
-        name: "Phone Case",
+        name: "3060 Ti",
         quantity: 2,
-        price: 65.0,
-        image: "https://example.com/phonecase.jpg",
+        price: 1200,
+        image:
+          "https://my-test-11.slatic.net/p/4f150e4d33381f40868350828304622f.png",
       },
     ],
     shippingAddress: {

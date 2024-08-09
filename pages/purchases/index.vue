@@ -190,7 +190,11 @@ const formatDate = (dateString) => {
                   </li>
                 </ul>
                 <div class="mt-4 flex justify-end">
-                  <rs-button variant="primary">View Order Details</rs-button>
+                  <rs-button
+                    @click="navigateTo(`/purchases/detail/${order.id}`)"
+                    variant="primary"
+                    >View Order Details</rs-button
+                  >
                 </div>
               </div>
             </div>
