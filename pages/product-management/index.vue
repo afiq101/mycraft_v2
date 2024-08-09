@@ -163,7 +163,7 @@
         </template>
         <template v-slot:Action="data">
           <div class="flex gap-5">
-            <nuxt-link :to="``">
+            <nuxt-link :to="`/product-management/audittrails/:id`">
               <rs-button variant="secondary"> Audit Trails </rs-button> 
             </nuxt-link>
           </div>
