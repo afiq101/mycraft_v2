@@ -26,9 +26,25 @@ export default [
       },
       {
         title: "Product Management",
-        path: "/product-management",
+        // path: "/product-management",
         icon: "ic:outline-dashboard",
-        child: [],
+        child: [
+          {
+            "title": "Product",
+            "icon": "",
+            "path": "/product-management",
+          },
+          {
+            "title": "Category",
+            "icon": "",
+            "path": "/product-management/category",
+          },
+          {
+            "title": "Product Care",
+            "icon": "",
+            "path": "/product-management/product-care",
+          },
+        ],
         meta: {},
       },
       {
