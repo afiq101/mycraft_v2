@@ -2,83 +2,83 @@
 import { ref, computed } from 'vue';
 
 definePageMeta({
-  title: "Kemaskini Profil",
+  title: "Update Profile",
   layout: "default",
 });
 
-const pengguna = ref({
-  gambarProfil: "/path/to/default-avatar.png",
-  namaPenuh: "Ahmad bin Abdullah",
-  emel: "ahmad@contoh.com",
-  noTelefon: "+60 12 345 6789",
+const user = ref({
+  profilePicture: "/path/to/default-avatar.png",
+  fullName: "John Doe",
+  email: "john@example.com",
+  phoneNumber: "+1 234 567 8900",
 });
 
-const kataLaluan = ref({
-  semasa: '',
-  baru: '',
-  ulangBaru: '',
+const password = ref({
+  current: '',
+  new: '',
+  confirmNew: '',
 });
 
-const ukurKekuatanKataLaluan = (password) => {
-  let skor = 0;
-  if (!password) return skor;
+const measurePasswordStrength = (password) => {
+  let score = 0;
+  if (!password) return score;
 
-  // Panjang kata laluan
-  if (password.length >= 8) skor += 10;
-  if (password.length >= 12) skor += 10;
-  if (password.length >= 16) skor += 10;
+  // Password length
+  if (password.length >= 8) score += 10;
+  if (password.length >= 12) score += 10;
+  if (password.length >= 16) score += 10;
 
-  // Kehadiran huruf besar dan kecil
-  if (password.match(/[a-z]/) && password.match(/[A-Z]/)) skor += 20;
+  // Presence of uppercase and lowercase letters
+  if (password.match(/[a-z]/) && password.match(/[A-Z]/)) score += 20;
 
-  // Kehadiran nombor
-  if (password.match(/\d/)) skor += 20;
+  // Presence of numbers
+  if (password.match(/\d/)) score += 20;
 
-  // Kehadiran simbol khas
-  if (password.match(/[^a-zA-Z\d]/)) skor += 20;
+  // Presence of special characters
+  if (password.match(/[^a-zA-Z\d]/)) score += 20;
 
-  // Variasi karakter
+  // Character variety
   const uniqueChars = new Set(password).size;
-  skor += Math.min(uniqueChars * 2, 10);
+  score += Math.min(uniqueChars * 2, 10);
 
-  return Math.min(skor, 100);
+  return Math.min(score, 100);
 };
 
-const kekuatanKataLaluan = computed(() => {
-  return ukurKekuatanKataLaluan(kataLaluan.value.baru);
+const passwordStrength = computed(() => {
+  return measurePasswordStrength(password.value.new);
 });
 
-const kekuatanKataLaluanLabel = computed(() => {
-  const skor = kekuatanKataLaluan.value;
-  if (skor >= 80) return 'Sangat Kuat';
-  if (skor >= 60) return 'Kuat';
-  if (skor >= 40) return 'Sederhana';
-  if (skor >= 20) return 'Lemah';
-  return 'Sangat Lemah';
+const passwordStrengthLabel = computed(() => {
+  const score = passwordStrength.value;
+  if (score >= 80) return 'Very Strong';
+  if (score >= 60) return 'Strong';
+  if (score >= 40) return 'Moderate';
+  if (score >= 20) return 'Weak';
+  return 'Very Weak';
 });
 
-const kekuatanKataLaluanColor = computed(() => {
-  const skor = kekuatanKataLaluan.value;
-  if (skor >= 80) return 'success';
-  if (skor >= 60) return 'info';
-  if (skor >= 40) return 'warning';
+const passwordStrengthColor = computed(() => {
+  const score = passwordStrength.value;
+  if (score >= 80) return 'success';
+  if (score >= 60) return 'info';
+  if (score >= 40) return 'warning';
   return 'danger';
 });
 
-const kemaskiniProfil = () => {
-  console.log('Profil dikemaskini', pengguna.value);
+const updateProfile = () => {
+  console.log('Profile updated', user.value);
 };
 
-const tukarKataLaluan = () => {
-  console.log('Kata laluan ditukar', kataLaluan.value);
+const changePassword = () => {
+  console.log('Password changed', password.value);
 };
 
-const muatNaikAvatar = (event) => {
+const uploadAvatar = (event) => {
   const file = event.target.files[0];
   if (file) {
     const reader = new FileReader();
     reader.onload = (e) => {
-      pengguna.value.gambarProfil = e.target.result;
+      user.value.profilePicture = e.target.result;
     };
     reader.readAsDataURL(file);
   }
@@ -87,20 +87,20 @@ const muatNaikAvatar = (event) => {
 
 <template>
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8">Kemaskini Profil</h1>
+    <h1 class="text-3xl font-bold mb-8">Update Profile</h1>
 
     <rs-card class="mb-8">
       <template #header>
-        <h2 class="text-xl font-semibold">Tukar Avatar Profil</h2>
+        <h2 class="text-xl font-semibold">Change Profile Picture</h2>
       </template>
       <template #body>
         <div class="flex items-center space-x-6">
           <div class="shrink-0">
-            <img class="h-16 w-16 object-cover rounded-full" :src="pengguna.gambarProfil" alt="Avatar Semasa" />
+            <img class="h-16 w-16 object-cover rounded-full" :src="user.profilePicture" alt="Current Avatar" />
           </div>
           <label class="block flex-grow">
-            <span class="sr-only">Pilih fail gambar</span>
-            <input type="file" @change="muatNaikAvatar" class="block w-full text-sm text-slate-500
+            <span class="sr-only">Choose image file</span>
+            <input type="file" @change="uploadAvatar" class="block w-full text-sm text-slate-500
               file:mr-4 file:py-2 file:px-4
               file:rounded-full file:border-0
               file:text-sm file:font-semibold
@@ -110,135 +110,135 @@ const muatNaikAvatar = (event) => {
           </label>
         </div>
         <div class="flex justify-end mt-6">
-          <rs-button @click="muatNaikAvatar">Muat Naik Avatar</rs-button>
+          <rs-button @click="uploadAvatar">Upload Avatar</rs-button>
         </div>
       </template>
     </rs-card>
 
     <rs-card class="mb-8">
       <template #header>
-        <h2 class="text-xl font-semibold">Maklumat Profil</h2>
+        <h2 class="text-xl font-semibold">Profile Information</h2>
       </template>
       <template #body>
-        <FormKit type="form" @submit="kemaskiniProfil">
+        <FormKit type="form" @submit="updateProfile">
           <div class="space-y-6">
             <FormKit
               type="text"
-              name="namaPenuh"
-              label="Nama Penuh"
-              v-model="pengguna.namaPenuh"
+              name="fullName"
+              label="Full Name"
+              v-model="user.fullName"
               validation="required"
             >
               <template #label>
                 <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
-                  Nama Penuh <span class="text-danger">*</span>
+                  Full Name <span class="text-danger">*</span>
                 </label>
               </template>
             </FormKit>
 
             <FormKit
               type="tel"
-              name="noTelefon"
-              label="Nombor Telefon"
-              v-model="pengguna.noTelefon"
+              name="phoneNumber"
+              label="Phone Number"
+              v-model="user.phoneNumber"
               validation="required"
             >
               <template #label>
                 <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
-                  Nombor Telefon <span class="text-danger">*</span>
+                  Phone Number <span class="text-danger">*</span>
                 </label>
               </template>
             </FormKit>
 
             <FormKit
               type="email"
-              name="emel"
-              label="Emel"
-              v-model="pengguna.emel"
+              name="email"
+              label="Email"
+              v-model="user.email"
               validation="required|email"
             >
               <template #label>
                 <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
-                  Emel <span class="text-danger">*</span>
+                  Email <span class="text-danger">*</span>
                 </label>
               </template>
             </FormKit>
           </div>
           <div class="flex justify-end mt-6">
-            <rs-button type="submit">Kemaskini Profil</rs-button>
+            <rs-button type="submit">Update Profile</rs-button>
           </div>
         </FormKit>
       </template>
     </rs-card>
 
     <rs-card class="mb-8">
-    <template #header>
-      <h2 class="text-xl font-semibold">Tukar Kata Laluan</h2>
-    </template>
-    <template #body>
-      <FormKit type="form" @submit="tukarKataLaluan">
-        <div class="space-y-6">
-          <FormKit
-            type="password"
-            name="kataLaluanSemasa"
-            label="Kata Laluan Semasa"
-            v-model="kataLaluan.semasa"
-            validation="required"
-          >
-            <template #label>
-              <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
-                Kata Laluan Semasa <span class="text-danger">*</span>
-              </label>
-            </template>
-          </FormKit>
+      <template #header>
+        <h2 class="text-xl font-semibold">Change Password</h2>
+      </template>
+      <template #body>
+        <FormKit type="form" @submit="changePassword">
+          <div class="space-y-6">
+            <FormKit
+              type="password"
+              name="currentPassword"
+              label="Current Password"
+              v-model="password.current"
+              validation="required"
+            >
+              <template #label>
+                <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
+                  Current Password <span class="text-danger">*</span>
+                </label>
+              </template>
+            </FormKit>
 
-          <FormKit
-            type="password"
-            name="kataLaluanBaru"
-            label="Kata Laluan Baru"
-            v-model="kataLaluan.baru"
-            validation="required|length:8"
-          >
-            <template #label>
-              <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
-                Kata Laluan Baru <span class="text-danger">*</span>
-              </label>
-            </template>
-          </FormKit>
+            <FormKit
+              type="password"
+              name="newPassword"
+              label="New Password"
+              v-model="password.new"
+              validation="required|length:8"
+            >
+              <template #label>
+                <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
+                  New Password <span class="text-danger">*</span>
+                </label>
+              </template>
+            </FormKit>
 
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Kekuatan Kata Laluan</label>
-            <rs-progress-bar 
-              :value="kekuatanKataLaluan" 
-              :max="100" 
-              class="mt-2" 
-              :variant="kekuatanKataLaluanColor"
-            />
-            <p class="mt-1 text-sm" :class="`text-${kekuatanKataLaluanColor}`">
-              {{ kekuatanKataLaluanLabel }}
-            </p>
+            <div>
+              <label class="block text-sm font-medium text-gray-700">Password Strength</label>
+              <rs-progress-bar 
+                :value="passwordStrength" 
+                :max="100" 
+                class="mt-2" 
+                :variant="passwordStrengthColor"
+              />
+              <p class="mt-1 text-sm" :class="`text-${passwordStrengthColor}`">
+                {{ passwordStrengthLabel }}
+              </p>
+            </div>
+
+            <FormKit
+              type="password"
+              name="confirmNewPassword"
+              label="Confirm New Password"
+              v-model="password.confirmNew"
+              validation="required|confirm"
+              validation-label="New Password"
+            >
+              <template #label>
+                <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
+                  Confirm New Password <span class="text-danger">*</span>
+                </label>
+              </template>
+            </FormKit>
           </div>
-
-          <FormKit
-            type="password"
-            name="ulangKataLaluanBaru"
-            label="Ulang Kata Laluan Baru"
-            v-model="kataLaluan.ulangBaru"
-            validation="required|confirm"
-            validation-label="Kata Laluan Baru"
-          >
-            <template #label>
-              <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
-                Ulang Kata Laluan Baru <span class="text-danger">*</span>
-              </label>
-            </template>
-          </FormKit>
-        </div>
-        <div class="flex justify-end mt-6">
-          <rs-button type="submit">Tukar Kata Laluan</rs-button>
-        </div>
-      </FormKit>
-    </template>
-  </rs-card>
+          <div class="flex justify-end mt-6">
+            <rs-button type="submit">Change Password</rs-button>
+          </div>
+        </FormKit>
+      </template>
+    </rs-card>
   </div>
 </template>
