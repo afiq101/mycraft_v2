@@ -21,6 +21,18 @@ export default [
         "path": "/pengurusan-profil",
         "icon": "",
         "child": []
+      },
+      {
+        "title": "Administrators",
+        "path": "/administrators",
+        "icon": "",
+        "child": []
+      },
+      {
+        "title": "Memberships",
+        "path": "/memberships",
+        "icon": "",
+        "child": []
       }
     ],
     "meta": {}
