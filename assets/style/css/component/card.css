@@ -1,6 +1,5 @@
 /* RS Card Component */
 .card {
-  @apply mb-6;
   background-color: rgb(var(--bg-2));
   border-radius: var(--rounded-box);
   box-shadow: var(--box-shadow);
