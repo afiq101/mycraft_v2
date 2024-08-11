@@ -1,6 +1,6 @@
 <script setup>
 definePageMeta({
-  title: "My Products",
+  title: "Products",
 });
 
 

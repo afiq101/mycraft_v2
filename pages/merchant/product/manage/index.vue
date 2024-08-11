@@ -1,155 +1,152 @@
 <script setup>
 definePageMeta({
-  title: "My Products",
+  title: "Manage Products",
+  layout: "default",
 });
 
-const data = [
-                   {
-                      "id":"#8b5404",
-                      "firstName":"Andrej",
-                      "lastName":"Foucar",
-                      "email":"afoucar0@cocolog-nifty.com",
-                      "gender":"Male",
-                      "status":"Banned"
-                   },
-                   {
-                      "id":"#144bba",
-                      "firstName":"Glenna",
-                      "lastName":"Hardcastle",
-                      "email":"ghardcastle1@ovh.net",
-                      "gender":"Genderfluid",
-                      "status":"Inactive"
-                   },
-                   {
-                      "id":"#d0d0b6",
-                      "firstName":"Ramona",
-                      "lastName":"Fewkes",
-                      "email":"rfewkes2@home.pl",
-                      "gender":"Female",
-                      "status":"Active"
-                   },
-                   {
-                      "id":"#2b1261",
-                      "firstName":"Matias",
-                      "lastName":"Dobbings",
-                      "email":"mdobbings3@flavors.me",
-                      "gender":"Bigender",
-                      "status":"Inactive"
-                   },
-                   {
-                      "id":"#b5bb69",
-                      "firstName":"Kial",
-                      "lastName":"Ashtonhurst",
-                      "email":"kashtonhurst4@uiuc.edu",
-                      "gender":"Bigender",
-                      "status":"Active"
-                   },
-                   {
-                      "id":"#a6b5af",
-                      "firstName":"Hamish",
-                      "lastName":"La Grange",
-                      "email":"hlagrange5@pagesperso-orange.fr",
-                      "gender":"Male",
-                      "status":"Active"
-                   },
-                   {
-                      "id":"#495759",
-                      "firstName":"Myrwyn",
-                      "lastName":"McShane",
-                      "email":"mmcshane6@thetimes.co.uk",
-                      "gender":"Male",
-                      "status":"Inactive"
-                   },
-                   {
-                      "id":"#26b5da",
-                      "firstName":"Jami",
-                      "lastName":"Lighten",
-                      "email":"jlighten7@github.io",
-                      "gender":"Female",
-                      "status":"Banned"
-                   },
-                   {
-                      "id":"#8f70b8",
-                      "firstName":"Red",
-                      "lastName":"Kinnear",
-                      "email":"rkinnear8@gizmodo.com",
-                      "gender":"Polygender",
-                      "status":"Active"
-                   },
-                   {
-                      "id":"#53d378",
-                      "firstName":"Royal",
-                      "lastName":"Cleeton",
-                      "email":"rcleeton9@nifty.com",
-                      "gender":"Male",
-                      "status":"Inactive"
-                   },
-                   {
-                      "id":"#a7b924",
-                      "firstName":"Orly",
-                      "lastName":"Ratledge",
-                      "email":"oratledgea@elegantthemes.com",
-                      "gender":"Female",
-                      "status":"Active"
-                   },
-                   {
-                      "id":"#bbfd6b",
-                      "firstName":"Maddy",
-                      "lastName":"Ronnay",
-                      "email":"mronnayb@unicef.org",
-                      "gender":"Male",
-                      "status":"Banned"
-                   },
-                   {
-                      "id":"#21dcb2",
-                      "firstName":"Cob",
-                      "lastName":"Wrightam",
-                      "email":"cwrightamc@wix.com",
-                      "gender":"Male",
-                      "status":"Active"
-                   },
-                   {
-                      "id":"#bb8656",
-                      "firstName":"Ynez",
-                      "lastName":"Braham",
-                      "email":"ybrahamd@nbcnews.com",
-                      "gender":"Female",
-                      "status":"Banned"
-                   }
-                ]
+const products = ref([
+  { name: 'Smartphone X', category: 'Electronics', price: '$799', stock: 50, status: 'Active', abTesting: 'A' },
+  { name: 'Laptop Pro', category: 'Electronics', price: '$1299', stock: 30, status: 'Active', abTesting: 'B' },
+  { name: 'Winter Jacket', category: 'Clothing', price: '$99', stock: 150, status: 'Inactive', abTesting: 'A' },
+  { name: 'Garden Chair', category: 'Home & Garden', price: '$49', stock: 75, status: 'Active', abTesting: 'None' },
+  { name: 'Children\'s Toy Set', category: 'Toys', price: '$29', stock: 200, status: 'Violation', abTesting: 'B' },
+  { name: 'Science Fiction Book', category: 'Books', price: '$19', stock: 100, status: 'Deleted', abTesting: 'None' },
+]);
+
+const activeTab = ref('All');
+const searchQuery = ref('');
+const selectedCategory = ref('');
+const sortBy = ref('');
+const abTesting = ref('');
+
+const categories = ['Electronics', 'Clothing', 'Home & Garden', 'Toys', 'Books'];
+const sortOptions = ['Name A-Z', 'Name Z-A', 'Price Low to High', 'Price High to Low'];
+const abTestingOptions = ['A', 'B', 'None'];
+
+
+
+const filteredProducts = computed(() => {
+  return products.value.filter(product => 
+    (activeTab.value === 'All' || product.status === activeTab.value) &&
+    product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) &&
+    (selectedCategory.value === '' || product.category === selectedCategory.value) &&
+    (abTesting.value === '' || product.abTesting === abTesting.value)
+  );
+});
+
+// Function to add a new product (dummy function for now)
+const addNewProduct = () => {
+  console.log('Adding new product');
+};
 </script>
 
 <template>
-  <div>
-    <LayoutsBreadcrumb />
-    <rs-card class="p-4">
+  <div class="container mx-auto p-4">
+    <rs-card>
+      <template #header>
+        <div class="flex justify-between items-center mb-4">
+          <h1 class="text-2xl font-bold">Manage Products</h1>
+          <rs-button @click="addNewProduct" variant="primary">
+            + New Product
+          </rs-button>
+        </div>
+      </template>
+      <template #body>
+        <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4" role="alert">
+          <p>Welcome to Product Management Page. <a href="#" class="underline">Learn More</a></p>
+          <p>Try the New Size Chart Tool to enrich your fashion products information. <a href="#" class="underline">Learn how to use</a></p>
+          <p>Your products are not yet visible to buyers. Please add address to make them visible.</p>
+        </div>
+
+        <rs-tab>
+          <rs-tab-item title="All" :active="activeTab === 'All'" @click="activeTab = 'All'">
+          </rs-tab-item>
+          <rs-tab-item title="Active" :active="activeTab === 'Active'" @click="activeTab = 'Active'">
+          </rs-tab-item>
+          <rs-tab-item title="Inactive" :active="activeTab === 'Inactive'" @click="activeTab = 'Inactive'">
+          </rs-tab-item>
+          <rs-tab-item title="Violation" :active="activeTab === 'Violation'" @click="activeTab = 'Violation'">
+          </rs-tab-item>
+          <rs-tab-item title="Deleted" :active="activeTab === 'Deleted'" @click="activeTab = 'Deleted'">
+          </rs-tab-item>
+        </rs-tab>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 my-4">
+          <FormKit
+            type="text"
+            v-model="searchQuery"
+            placeholder="Search Product Name"
+            :classes="{
+              outer: 'mb-0',
+              input: 'w-full'
+            }"
+          />
+          <FormKit
+            type="select"
+            v-model="selectedCategory"
+            :options="['Please Select', ...categories]"
+            placeholder="Select Category"
+            :classes="{
+              outer: 'mb-0',
+              input: 'w-full'
+            }"
+          />
+          <FormKit
+            type="select"
+            v-model="sortBy"
+            :options="['Please Select', ...sortOptions]"
+            placeholder="Sort By"
+            :classes="{
+              outer: 'mb-0',
+              input: 'w-full'
+            }"
+          />
+          <FormKit
+            type="select"
+            v-model="abTesting"
+            :options="['Please Select', ...abTestingOptions]"
+            placeholder="A/B Testing"
+            :classes="{
+              outer: 'mb-0',
+              input: 'w-full'
+            }"
+          />
+        </div>
+
         <rs-table
-                  :data="data"
-                  :options="{
-                    variant: 'default',
-                    striped: true,
-                    borderless: true,
-                  }"
-                  :options-advanced="{
-                    sortable: true,
-                    responsive: true,
-                    filterable: false,
-                  }"
-                  advanced
-                >
-                  <template v-slot:status="data">
-                    <rs-badge
-                      :variant="
-                        data.text === 'Active'
-                          ? 'success'
-                          : data.text == 'Inactive'
-                          ? 'warning'
-                          : 'danger'
-                      ">
-                      {{ data.text }}
-                    </rs-badge>
-                  </template>
-                </rs-table>
+          v-if="filteredProducts.length > 0"
+          :data="filteredProducts"
+          :field="['Name', 'Category', 'Price', 'Stock', 'Status', 'Action']"
+          advanced
+          :options-advanced="{
+            sortable: true,
+            responsive: true
+          }"
+        >
+          <template #Status="{ text }">
+            <rs-badge :variant="text === 'Active' ? 'success' : 'warning'">
+              {{ text }}
+            </rs-badge>
+          </template>
+          <template #Action>
+            <div class="flex items-center">
+              <rs-button variant="primary-outline" size="sm">
+                <Icon name="material-symbols:edit-outline"></Icon>
+              </rs-button>
+              <rs-button variant="danger-outline" size="sm" class="ml-2">
+                <Icon name="material-symbols:delete-outline-rounded"></Icon>
+              </rs-button>
+            </div>
+          </template>
+
+        </rs-table>
+
+        <div v-else class="text-center py-8">
+          <img src="/path-to-your-no-product-image.png" alt="No products" class="mx-auto mb-4" />
+          <p class="text-xl font-semibold">No product under this status or filter</p>
+          <p class="text-gray-500">Please check other product status or use other filter.</p>
+        </div>
+      </template>
     </rs-card>
   </div>
 </template>
