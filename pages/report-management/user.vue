@@ -27,6 +27,7 @@
           >
           <select
             v-model="selectedUserType"
+            @change="filtering"
             class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
           >
             <option value="">All</option>
@@ -42,6 +43,7 @@
           >
           <input
             v-model="startDate"
+            @change="filtering"
             type="date"
             class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
           />
@@ -52,6 +54,7 @@
           >
           <input
             v-model="endDate"
+            @change="filtering"
             type="date"
             class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
           />
@@ -64,6 +67,7 @@
           >
           <select
             v-model="selectedStatus"
+            @change="filtering"
             class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
           >
             <option value="">All</option>
@@ -74,113 +78,46 @@
       </div>
     </div>
 
-    <!-- User List Table -->
     <div class="bg-white p-6 rounded-lg shadow-md">
-      <div class="text-lg font-medium mb-4">User List</div>
-
-      <!-- Search Input -->
-      <div class="mb-4">
-        <input
-          type="text"
-          v-model="filter"
-          placeholder="Search users..."
-          class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-        />
-      </div>
-
-      <!-- User Table -->
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                User ID
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Name
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Email
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                User Type
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Registered Date
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Status
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="(user, index) in paginatedUsers" :key="index">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ user.id }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ user.name }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ user.email }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ user.type }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                {{ user.registeredDate }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  :class="{
-                    'bg-green-100 text-green-800': user.status === 'active',
-                    'bg-red-100 text-red-800': user.status === 'inactive',
-                  }"
-                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-                >
-                  {{ user.status }}
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Pagination Controls -->
-      <div class="mt-4 flex justify-between items-center">
-        <button
-          @click="previousPage"
-          :disabled="currentPage === 1"
-          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 disabled:opacity-50"
+      <div v-if="!tableLoading">
+        <rs-table
+          v-if="filteredUsers.length > 0"
+          :data="filteredUsers"
+          :options="{
+            variant: 'default',
+            striped: true,
+            borderless: true,
+          }"
+          :options-advanced="{
+            sortable: true,
+            responsive: true,
+            filterable: false,
+          }"
+          advanced
         >
-          Previous
-        </button>
-        <span>Page {{ currentPage }} of {{ totalPages }}</span>
-        <button
-          @click="nextPage"
-          :disabled="currentPage === totalPages"
-          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 disabled:opacity-50"
-        >
-          Next
-        </button>
+          <template v-slot:actions="data">
+            <div class="flex gap-2">
+              <div class="cursor-pointer" @click="navigateToDetail(data)">
+                <Icon
+                  name="material-symbols:list-alt"
+                  class="text-indigo-500 hover:text-indigo-800"
+                  size="19"
+                />
+              </div>
+            </div>
+          </template>
+        </rs-table>
+
+        <div v-else>No users found.</div>
+      </div>
+      <div v-else>
+        <div class="p-10 text-center">
+          <Icon
+            name="eos-icons:loading"
+            class="animate-spin text-gray-500"
+            size="20"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -227,16 +164,15 @@ const users = ref([
   // Add more users...
 ]);
 
+// Loading state
+const tableLoading = ref(false);
+
 // Filters
 const filter = ref("");
 const selectedUserType = ref("");
 const startDate = ref("");
 const endDate = ref("");
 const selectedStatus = ref("");
-
-// Pagination
-const currentPage = ref(1);
-const itemsPerPage = 10;
 
 // Computed filtered and paginated users
 const filteredUsers = computed(() => {
@@ -263,31 +199,23 @@ const filteredUsers = computed(() => {
   });
 });
 
-const totalPages = computed(() =>
-  Math.ceil(filteredUsers.value.length / itemsPerPage)
-);
+// Method to handle filtering
+const filtering = () => {
+  tableLoading.value = true;
 
-const paginatedUsers = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  return filteredUsers.value.slice(start, start + itemsPerPage);
-});
-
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value += 1;
-  }
-};
-
-const previousPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value -= 1;
-  }
+  setTimeout(() => {
+    tableLoading.value = false;
+  }, 1000); // 1 second loading state before displaying the table
 };
 
 // Method to generate Excel report
 const generateExcel = () => {
   alert("Generating Excel report...");
   // Implement Excel generation logic here
+};
+
+const navigateToDetail = async (data) => {
+  await navigateTo(`/user-report/detail/${data.id}`);
 };
 </script>
 

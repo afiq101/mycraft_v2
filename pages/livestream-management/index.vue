@@ -5,151 +5,107 @@
     <!-- Ongoing/Live Streams Section -->
     <div class="bg-white p-6 rounded-lg shadow-md">
       <div class="text-lg font-medium mb-4">Ongoing Livestreams</div>
-      <div class="mb-4">
-        <input
-          v-model="searchQuery"
-          type="text"
-          placeholder="Search Livestreams..."
-          class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-        />
-      </div>
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Seller
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Title
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Status
-              </th>
-              <th
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Start Time
-              </th>
 
-              <th
-                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="(livestream, index) in filteredLivestreams" :key="index">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ livestream.seller }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ livestream.title }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ livestream.status }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ livestream.startTime }}
-              </td>
-
-              <td
-                class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2"
-              >
-                <button
-                  @click="endLivestream(index)"
-                  class="text-red-600 hover:text-red-800"
-                >
-                  <Icon name="material-symbols:stop-circle"></Icon>
-                </button>
-                <button
-                  @click="banFromLivestream(index)"
-                  class="text-red-600 hover:text-red-800"
-                >
-                  <Icon name="material-symbols:person-cancel-rounded"></Icon>
-                </button>
-                <button
-                  @click="viewLivestreamAnalytics(index)"
-                  class="text-green-600 hover:text-green-800"
-                >
-                  <Icon name="material-symbols:analytics"></Icon>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      <rs-table
+        :data="livestreams"
+        :options="{
+          variant: 'default',
+          striped: true,
+          borderless: true,
+          hover: false,
+          fixed: false,
+        }"
+        advanced
+      >
+        <template v-slot:actions="data">
+          <div class="flex gap-2">
+            <button
+              @click="endLivestream(data.value.actions)"
+              class="text-red-600 hover:text-red-800"
+            >
+              <Icon name="material-symbols:stop-circle"></Icon>
+            </button>
+            <button
+              @click="banFromLivestream(data.value.actions)"
+              class="text-red-600 hover:text-red-800"
+            >
+              <Icon name="material-symbols:person-cancel-rounded"></Icon>
+            </button>
+            <button
+              @click="viewLivestreamAnalytics(data.value.actions)"
+              class="text-green-600 hover:text-green-800"
+            >
+              <Icon name="material-symbols:analytics"></Icon>
+            </button>
+          </div>
+        </template>
+      </rs-table>
     </div>
 
-    <!-- Livestream Analytics Modal -->
-    <div
-      v-if="showAnalytics"
-      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+    <rs-modal
+      v-model="showAnalytics"
+      title="Livestream Analytics"
+      position="center"
     >
-      <div class="bg-white p-6 rounded-lg shadow-md w-11/12 sm:w-2/3 lg:w-1/2">
-        <div class="text-lg font-medium mb-4">Livestream Analytics</div>
-        <div class="space-y-4">
-          <!-- Viewer Statistics -->
-          <div class="flex justify-between items-center">
-            <div class="text-sm font-medium text-gray-700">Total Viewers:</div>
-            <div class="text-lg font-semibold text-gray-900">
-              {{ analytics.totalViewers }}
-            </div>
-          </div>
-          <div class="flex justify-between items-center">
-            <div class="text-sm font-medium text-gray-700">
-              Peak Concurrent Viewers:
-            </div>
-            <div class="text-lg font-semibold text-gray-900">
-              {{ analytics.peakViewers }}
-            </div>
-          </div>
-          <div class="flex justify-between items-center">
-            <div class="text-sm font-medium text-gray-700">
-              Average Watch Time:
-            </div>
-            <div class="text-lg font-semibold text-gray-900">
-              {{ analytics.averageWatchTime }}
-            </div>
-          </div>
-
-          <!-- Engagement Metrics -->
-          <div class="flex justify-between items-center">
-            <div class="text-sm font-medium text-gray-700">Likes:</div>
-            <div class="text-lg font-semibold text-gray-900">
-              {{ analytics.likes }}
-            </div>
-          </div>
-          <div class="flex justify-between items-center">
-            <div class="text-sm font-medium text-gray-700">Comments:</div>
-            <div class="text-lg font-semibold text-gray-900">
-              {{ analytics.comments }}
-            </div>
-          </div>
-          <div class="flex justify-between items-center">
-            <div class="text-sm font-medium text-gray-700">Shares:</div>
-            <div class="text-lg font-semibold text-gray-900">
-              {{ analytics.shares }}
-            </div>
+      <div class="text-lg font-medium mb-4">Livestream Analytics</div>
+      <div class="space-y-4">
+        <!-- Viewer Statistics -->
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-700">Total Viewers:</div>
+          <div class="text-lg font-semibold text-gray-900">
+            {{ analytics.totalViewers }}
           </div>
         </div>
-        <div class="flex justify-end mt-4">
-          <button
-            @click="closeAnalytics"
-            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-          >
-            Close
-          </button>
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-700">
+            Peak Concurrent Viewers:
+          </div>
+          <div class="text-lg font-semibold text-gray-900">
+            {{ analytics.peakViewers }}
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-700">
+            Average Watch Time:
+          </div>
+          <div class="text-lg font-semibold text-gray-900">
+            {{ analytics.averageWatchTime }}
+          </div>
+        </div>
+
+        <!-- Engagement Metrics -->
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-700">Likes:</div>
+          <div class="text-lg font-semibold text-gray-900">
+            {{ analytics.likes }}
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-700">Comments:</div>
+          <div class="text-lg font-semibold text-gray-900">
+            {{ analytics.comments }}
+          </div>
+        </div>
+        <div class="flex justify-between items-center">
+          <div class="text-sm font-medium text-gray-700">Shares:</div>
+          <div class="text-lg font-semibold text-gray-900">
+            {{ analytics.shares }}
+          </div>
         </div>
       </div>
-    </div>
+      <div class="flex justify-end mt-4">
+        <button
+          @click="closeAnalytics"
+          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
+        >
+          Close
+        </button>
+      </div>
+
+      <template #footer>
+        <div></div>
+      </template>
+    </rs-modal>
 
     <!-- Livestream Configuration Section -->
     <div class="bg-white p-6 rounded-lg shadow-md">
@@ -210,29 +166,29 @@ const livestreams = ref([
     seller: "John Doe",
     title: "Product Launch",
     startTime: "2023-09-10 10:00",
-    platform: "YouTube",
     status: "Live",
+    actions: 1,
   },
   {
     seller: "Jane Doe",
     title: "Weekly Q&A",
     startTime: "2023-09-10 15:00",
-    platform: "Facebook",
     status: "Live",
+    actions: 2,
   },
   {
     seller: "John Doe",
     title: "Gaming Session",
     startTime: "2023-09-10 20:00",
-    platform: "Twitch",
     status: "Live",
+    actions: 3,
   },
   {
     seller: "Jane Doe",
     title: "Community Update",
     startTime: "2023-09-11 09:00",
-    platform: "YouTube",
     status: "Live",
+    actions: 4,
   },
 ]);
 
@@ -263,16 +219,25 @@ const filteredLivestreams = computed(() => {
 });
 
 // Methods for managing livestreams
-const endLivestream = (index) => {
-  livestreams.value[index].status = "Ended";
-  alert(`Livestream "${livestreams.value[index].seller}" has ended.`);
+const endLivestream = (data) => {
+  // CHang ethe status of the livestream basde action id
+  console.log("data", data);
+
+  const filtered = livestreams.value.filter(
+    (livestream) => livestream.actions === data
+  );
+  filtered[0].status = "Ended";
+  alert(`Livestream "${filtered[0].seller}" has ended.`);
 };
 
-const banFromLivestream = (index) => {
-  livestreams.value[index].status = "Banned";
-  alert(`Livestream "${livestreams.value[index].title}" has been banned.`);
+const banFromLivestream = (data) => {
+  const filtered = livestreams.value.filter(
+    (livestream) => livestream.actions === data
+  );
+  filtered[0].status = "Banned";
+  alert(`Livestream "${filtered[0].title}" has been banned.`);
 };
-const viewLivestreamAnalytics = (index) => {
+const viewLivestreamAnalytics = (data) => {
   // Mock data for analytics
   analytics.value = {
     totalViewers: 1200,

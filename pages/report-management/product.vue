@@ -2,20 +2,64 @@
   <div class="space-y-8">
     <div class="text-lg font-semibold">Product Report</div>
 
+    <!-- Total Products Card -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="text-lg font-medium">Total Products</div>
+      <div class="flex items-center justify-between mt-4">
+        <div class="text-2xl font-semibold">{{ totalProducts }}</div>
+        <button
+          @click="generateExcel"
+          class="px-4 py-2 text-sm text-white bg-green-600 rounded-lg hover:bg-green-500"
+        >
+          Generate Excel
+        </button>
+      </div>
+    </div>
+
     <!-- Filters Section -->
     <div class="bg-white p-6 rounded-lg shadow-md">
       <div class="text-lg font-medium mb-4">Filters</div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <!-- Search by Seller -->
+        <!-- Seller Filter -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2"
-            >Search by Seller</label
+            >Seller</label
+          >
+          <select
+            v-model="selectedSeller"
+            @change="filtering"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="">All</option>
+            <option value="Seller 1">Seller 1</option>
+            <option value="Seller 2">Seller 2</option>
+            <!-- Add more sellers as needed -->
+          </select>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Price (Min)</label
           >
           <input
-            v-model="filterSeller"
-            type="text"
-            placeholder="Search by seller..."
+            v-model="minPrice"
+            @change="filtering"
+            type="number"
             class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+            placeholder="Enter minimum price"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Price (Max)</label
+          >
+          <input
+            v-model="maxPrice"
+            @change="filtering"
+            type="number"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+            placeholder="Enter maximum price"
           />
         </div>
 
@@ -26,6 +70,7 @@
           >
           <select
             v-model="selectedStatus"
+            @change="filtering"
             class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
           >
             <option value="">All</option>
@@ -36,94 +81,46 @@
       </div>
     </div>
 
-    <!-- Product List Table -->
     <div class="bg-white p-6 rounded-lg shadow-md">
-      <div class="text-lg font-medium mb-4">Product List</div>
+      <div v-if="!tableLoading">
+        <rs-table
+          v-if="filteredProducts.length > 0"
+          :data="filteredProducts"
+          :options="{
+            variant: 'default',
+            striped: true,
+            borderless: true,
+          }"
+          :options-advanced="{
+            sortable: true,
+            responsive: true,
+            filterable: false,
+          }"
+          advanced
+        >
+          <template v-slot:actions="data">
+            <div class="flex gap-2">
+              <div class="cursor-pointer" @click="navigateToDetail(data)">
+                <Icon
+                  name="material-symbols:list-alt"
+                  class="text-indigo-500 hover:text-indigo-800"
+                  size="19"
+                />
+              </div>
+            </div>
+          </template>
+        </rs-table>
 
-      <!-- Product Table -->
-      <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-          <thead class="bg-gray-50">
-            <tr>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Product ID
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Product Name
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Seller
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Price
-              </th>
-              <th
-                scope="col"
-                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-              >
-                Status
-              </th>
-            </tr>
-          </thead>
-          <tbody class="bg-white divide-y divide-gray-200">
-            <tr v-for="(product, index) in paginatedProducts" :key="index">
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ product.id }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ product.name }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ product.seller }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                {{ product.price | currency }}
-              </td>
-              <td class="px-6 py-4 whitespace-nowrap">
-                <span
-                  :class="{
-                    'bg-green-100 text-green-800': product.status === 'active',
-                    'bg-red-100 text-red-800': product.status === 'inactive',
-                  }"
-                  class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
-                >
-                  {{ product.status }}
-                </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div v-else>No products found.</div>
       </div>
-
-      <!-- Pagination Controls -->
-      <div class="mt-4 flex justify-between items-center">
-        <button
-          @click="previousPage"
-          :disabled="currentPage === 1"
-          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 disabled:opacity-50"
-        >
-          Previous
-        </button>
-        <span>Page {{ currentPage }} of {{ totalPages }}</span>
-        <button
-          @click="nextPage"
-          :disabled="currentPage === totalPages"
-          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 disabled:opacity-50"
-        >
-          Next
-        </button>
+      <div v-else>
+        <div class="p-10 text-center">
+          <Icon
+            name="eos-icons:loading"
+            class="animate-spin text-gray-500"
+            size="20"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -136,6 +133,9 @@ import { ref, computed } from "vue";
 definePageMeta({
   title: "Product Report",
 });
+
+// Total number of products
+const totalProducts = ref(20); // Update this as per your data
 
 // Sample product data
 const products = ref([
@@ -163,47 +163,50 @@ const products = ref([
   // Add more products up to 20...
 ]);
 
-// Filters
-const filterSeller = ref("");
-const selectedStatus = ref("");
+// Loading state
+const tableLoading = ref(false);
 
-// Pagination
-const currentPage = ref(1);
-const itemsPerPage = 10;
+// Filters
+const selectedSeller = ref("");
+const minPrice = ref(null);
+const maxPrice = ref(null);
+const selectedStatus = ref("");
 
 // Computed filtered and paginated products
 const filteredProducts = computed(() => {
   return products.value.filter((product) => {
-    const matchesSeller = filterSeller.value
-      ? product.seller.toLowerCase().includes(filterSeller.value.toLowerCase())
+    const matchesSeller = selectedSeller.value
+      ? product.seller === selectedSeller.value
       : true;
     const matchesStatus = selectedStatus.value
       ? product.status === selectedStatus.value
       : true;
+    const matchesMinPrice =
+      minPrice.value !== null ? product.price >= minPrice.value : true;
+    const matchesMaxPrice =
+      maxPrice.value !== null ? product.price <= maxPrice.value : true;
 
-    return matchesSeller && matchesStatus;
+    return matchesSeller && matchesStatus && matchesMinPrice && matchesMaxPrice;
   });
 });
 
-const totalPages = computed(() =>
-  Math.ceil(filteredProducts.value.length / itemsPerPage)
-);
+// Method to handle filtering
+const filtering = () => {
+  tableLoading.value = true;
 
-const paginatedProducts = computed(() => {
-  const start = (currentPage.value - 1) * itemsPerPage;
-  return filteredProducts.value.slice(start, start + itemsPerPage);
-});
-
-const nextPage = () => {
-  if (currentPage.value < totalPages.value) {
-    currentPage.value += 1;
-  }
+  setTimeout(() => {
+    tableLoading.value = false;
+  }, 1000); // 1 second loading state before displaying the table
 };
 
-const previousPage = () => {
-  if (currentPage.value > 1) {
-    currentPage.value -= 1;
-  }
+// Method to generate Excel report
+const generateExcel = () => {
+  alert("Generating Excel report...");
+  // Implement Excel generation logic here
+};
+
+const navigateToDetail = async (data) => {
+  await navigateTo(`/product-report/detail/${data.id}`);
 };
 </script>
 
