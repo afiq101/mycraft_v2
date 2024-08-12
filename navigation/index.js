@@ -19,38 +19,42 @@ export default [
       {
         "title": "Pengurusan Profil",
         "path": "/pengurusan-profil",
-        "icon": "",
-        "child": []
+        "icon": "ph:user-fill",
+        "child": [],
+        "meta": {}
       },
       {
         "title": "Administrators",
         "path": "/administrators",
-        "icon": "",
-        "child": []
+        "icon": "ph:user-list-fill",
+        "child": [],
+        "meta": {}
+      },
+      {
+        "title": "Seller",
+        "path": "/seller",
+        "icon": "ph:user-sound-fill",
+        "child": [],
+        "meta": {}
       },
       {
         "title": "Memberships",
         "path": "/memberships",
-        "icon": "",
-        "child": []
+        "icon": "ph:users-fill",
+        "child": [],
+        "meta": {}
       },
       {
         "title": "Global Setting Management",
         "path": "/global-setting-management",
-        "icon": "",
-        "child": [
-          {
-            "title": "Coin Management",
-            "path": "/global-setting-management/coin-management",
-            "icon": "",
-            "child": []
-          }
-        ]
+        "icon": "ph:globe-simple-bold",
+        "child": [],
+        "meta": {}
       },
       {
         "title": "System Monitoring",
         "path": "/system-monitoring",
-        "icon": "",
+        "icon": "ph:projector-screen-chart-bold",
         "child": [
           {
             "title": "Server Performance Metrics",
@@ -70,19 +74,15 @@ export default [
             "icon": "",
             "child": []
           }
-        ]
+        ],
+        "meta": {}
       },
       {
         "title": "Integration API Keys Setting",
         "path": "/integration-api-keys-setting",
-        "icon": "",
-        "child": []
-      },
-      {
-        "title": "Payment Gateway API Keys",
-        "path": "/integration-api-keys-setting/payment-gateway-api-keys",
-        "icon": "",
-        "child": []
+        "icon": "ph:link-simple-horizontal-duotone",
+        "child": [],
+        "meta": {}
       },
       {
         "title": "Courier Service Management",
