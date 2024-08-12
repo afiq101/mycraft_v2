@@ -8,17 +8,17 @@
   const data = [
     {
       id: 1,
-      name: "Product Care 1",
+      name: "Machine wash cold, gentle cycle.",
       status: "ACTIVE"
     },
     {
       id: 2,
-      name: "Product Care 2",
+      name: "Do not bleach.",
       status: "ACTIVE"
     },
     {
       id: 3,
-      name: "Product Care 3",
+      name: "Hand wash recommended to preserve fabric quality.",
       status: "ACTIVE"
     },
   ];
@@ -45,15 +45,20 @@
 
   const updateStatus = async (id, event) => {
     try {
-      $swal
-        .fire({
-          title: "Are you sure to update this status?",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#1D1E22",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Proceed",
-        })
+      const result = await $swal.fire({
+        title: "Are you sure to update this status?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#1D1E22",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Proceed",
+      });
+
+      if (result.isConfirmed) {
+        toggleStatus(id);
+      } else {
+        event.target.checked = !event.target.checked;
+      }
     } catch (error) {
       console.log(error);
       event.target.checked = !event.target.checked;
@@ -119,7 +124,7 @@
             <label class="relative inline-flex items-center cursor-pointer">
               <input v-if="data.value.status !== 'INACTIVE'"
                 type="checkbox"
-                @change="updateStatus(data.value.status, $event)"
+                @change="updateStatus(data.value.id, $event)"
                 class="sr-only peer"
                 :checked="data.value.status == 'ACTIVE' ? true : false"
               />

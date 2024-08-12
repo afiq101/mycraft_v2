@@ -1,4 +1,5 @@
 <script setup>
+import { BarChart, useBarChart } from "vue-chart-3";
 definePageMeta({
   title: "Dashboard",
   middleware: ["auth"],
@@ -223,6 +224,144 @@ const chartOptionsTransaction = computed(() => ({
       format: "MMMM",
     },
   },
+}));
+
+// Total Sale
+const totalSales = ref([
+  {
+    name: "Total Sales",
+    data: [1200, 1500, 1100, 1800, 1900, 2200, 2500, 2700, 3000, 3100, 3400, 3600],
+  },
+]);
+
+const chartTotalSale = computed(() => ({
+  chart: {
+    id: "salesChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: [
+      "January", "February", "March", "April", "May", "June", 
+      "July", "August", "September", "October", "November", "December"
+    ],
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
+}));
+
+// Sales by Category
+// Example data: Sales figures for different categories
+const sales = ref([300, 500, 200, 450, 350]);
+
+// Categories corresponding to the sales data
+const chartData = computed(() => ({
+  labels: [
+    "Electronics", 
+    "Furniture", 
+    "Groceries", 
+    "Clothing", 
+    "Toys"
+  ],
+  datasets: [
+    {
+      label: "Sales by Category",
+      data: sales.value,
+      backgroundColor: ["#FF829D", "#FFD778", "#5EB5EF", "#6FCDCD", "#ECEDF1"],
+    },
+  ],
+}));
+
+const salesCategory1 = computed(() => ({
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+  plugins: {
+    zoom: {
+      zoom: {
+        wheel: {
+          enabled: true,
+        },
+        pinch: {
+          enabled: true,
+        },
+        mode: "xy",
+      },
+    },
+    legend: {
+      display: true,
+    },
+  }
+}));
+
+const { barChartProps } = useBarChart({
+  chartData,
+  options: salesCategory1,
+});
+
+// Example data: Sales for different categories
+const series = ref([
+  {
+    name: "Electronics",
+    data: [300],
+  },
+  {
+    name: "Furniture",
+    data: [500],
+  },
+  {
+    name: "Groceries",
+    data: [200],
+  },
+  {
+    name: "Clothing",
+    data: [450],
+  },
+  {
+    name: "Toys",
+    data: [350],
+  },
+]);
+
+const salesCategory = computed(() => ({
+  chart: {
+    id: "salesCategoryChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: ["Electronics", "Furniture", "Groceries", "Clothing", "Toys"],
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
 }));
 
 onMounted(() => {
@@ -474,6 +613,44 @@ onMounted(() => {
           </template>
         </rs-card>
       </div>
+    </div>
+
+    <div>
+      <rs-card>
+        <template #header> Total Sales </template>
+        <template #body>
+          <ClientOnly>
+            <VueApexCharts
+              :key="changeKey"
+              width="100%"
+              height="300"
+              type="line"
+              :options="chartTotalSale"
+              :series="totalSales"
+            ></VueApexCharts>
+          </ClientOnly>
+        </template>
+      </rs-card>
+
+      <rs-card>
+        <template #header> Sales by Category </template>
+        <template #body>
+          <BarChart
+            v-bind="barChartProps"
+            style="position: relative; height: 40vh; width: 80vw"
+          />
+          <!-- <ClientOnly>
+            <VueApexCharts
+              :key="changeKey"
+              width="100%"
+              height="300"
+              type="bar"
+              :options="salesCategory"
+              :series="series"
+            ></VueApexCharts>
+          </ClientOnly> -->
+        </template>
+      </rs-card>
     </div>
   </div>
 </template>

@@ -6,19 +6,19 @@
   const { $swal } = useNuxtApp();
 
   const data = [
-    {
+  {
       id: 1,
-      name: "Category 1",
+      name: "Electronics",
       status: "ACTIVE"
     },
     {
       id: 2,
-      name: "Category 2",
+      name: "Clothing",
       status: "ACTIVE"
     },
     {
       id: 3,
-      name: "Category 3",
+      name: "Home & Kitchen",
       status: "ACTIVE"
     },
   ];
@@ -119,7 +119,7 @@
             <label class="relative inline-flex items-center cursor-pointer">
               <input v-if="data.value.status !== 'INACTIVE'"
                 type="checkbox"
-                @change="updateStatus(data.value.status, $event)"
+                
                 class="sr-only peer"
                 :checked="data.value.status == 'ACTIVE' ? true : false"
               />
