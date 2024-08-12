@@ -45,12 +45,17 @@ const getRoleVariant = (role) => {
       <template #header>
         <div class="flex justify-between items-center">
           <h2 class="text-xl font-semibold">Administrator Listings</h2>
-          <nuxt-link to="/administrators/create-admin">
+          <div class="flex space-x-4">
+          <rs-button variant="primary">
+            <Icon name="ph:download-simple-bold" class="w-5 h-5 mr-2" />
+            Generate Report
+          </rs-button>
+          <nuxt-link to="/super-admin/administrators/create-admin">
           <rs-button variant="primary">
             <Icon name="heroicons:plus" class="w-5 h-5 mr-2" />
             New Admin
           </rs-button></nuxt-link>
-        </div>
+        </div></div>
       </template>
       <template #body>
         <div v-if="isLoading" class="text-center py-4">
@@ -73,7 +78,7 @@ const getRoleVariant = (role) => {
           <template #LastSeen="{ value }">{{ value.lastSeen }}</template>
           <template #Action="{ row }">
             <div class="flex space-x-2"> <!-- Added a flex container with spacing -->
-              <nuxt-link to="/eborang/pentadbir/butiran-borang">
+              <nuxt-link to="/super-admin/administrators/create-admin">
                 <rs-button 
                   variant="primary" 
                   size="sm"
@@ -88,7 +93,7 @@ const getRoleVariant = (role) => {
               >
                 Delete
               </rs-button>
-              <nuxt-link to="/administrators/create-admin/audit-trails">
+              <nuxt-link to="/super-admin/administrators/create-admin/audit-trails">
               <rs-button 
                 variant="warning" 
                 size="sm"

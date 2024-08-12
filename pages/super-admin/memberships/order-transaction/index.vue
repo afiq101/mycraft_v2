@@ -114,23 +114,23 @@ const getOrderStatusVariant = (status) => {
     <!-- Filters Card -->
     <rs-card class="mb-8 p-4 bg-white shadow-md rounded-lg">
       <div class="flex justify-between items-center space-x-4">
-        <nuxt-link to="/memberships/coin-transaction">
+        <nuxt-link to="/super-admin/memberships/coin-transaction">
         <rs-button variant="primary" class="flex-1 p-2">
           Coin Transactions
         </rs-button></nuxt-link>
-        <nuxt-link to="/memberships/voucher-transaction">
+        <nuxt-link to="/super-admin/memberships/voucher-transaction">
         <rs-button variant="primary" class="flex-1 p-2">
           Voucher Transactions
         </rs-button></nuxt-link>
-        <nuxt-link to="/administrators/create-admin/audit-trails">
+        <nuxt-link to="/super-admin/administrators/create-admin/audit-trails">
         <rs-button variant="primary" class="flex-1 p-2">
           Activity Logs
         </rs-button></nuxt-link>
-        <nuxt-link to="/memberships/social-activity">
+        <nuxt-link to="/super-admin/memberships/social-activity">
         <rs-button variant="primary" class="flex-1 p-2">
           Social Activities
         </rs-button></nuxt-link>
-        <nuxt-link to="/memberships/referral">
+        <nuxt-link to="/super-admin/memberships/referral">
         <rs-button variant="primary" class="flex-1 p-2">
           Referral Listing
         </rs-button></nuxt-link>

@@ -139,7 +139,7 @@ const uploadAvatar = (event) => {
         <h2 class="text-xl font-semibold">Profile Information</h2>
       </template>
       <template #body>
-        <FormKit type="form" @submit="updateProfile">
+        <FormKit type="form" :actions="false" @submit="updateProfile">
           <div class="space-y-6">
             <FormKit
               type="text"
@@ -227,7 +227,7 @@ const uploadAvatar = (event) => {
     <h2 class="text-xl font-semibold">Address Information</h2>
   </template>
   <template #body>
-    <FormKit type="form" @submit="updateProfile">
+    <FormKit type="form" :actions="false" @submit="updateProfile">
       <div class="space-y-6">
         <FormKit
           type="text"
@@ -314,7 +314,7 @@ const uploadAvatar = (event) => {
         <h2 class="text-xl font-semibold">Bank Account Details</h2>
       </template>
       <template #body>
-        <FormKit type="form" @submit="updateProfile">
+        <FormKit type="form" :actions="false" @submit="updateProfile">
           <div class="space-y-6">
             <FormKit
               type="text"
@@ -370,7 +370,7 @@ const uploadAvatar = (event) => {
         <h2 class="text-xl font-semibold">Change Password</h2>
       </template>
       <template #body>
-        <FormKit type="form" @submit="changePassword">
+        <FormKit type="form" :actions="false" @submit="changePassword">
           <div class="space-y-6">
             <FormKit
               type="password"

@@ -50,6 +50,7 @@ const previewShop = (seller) => {
 <template>
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-8">List of Sellers</h1>
+    
 
     <!-- Status Tabs -->
     <div class="mb-4">
@@ -68,6 +69,17 @@ const previewShop = (seller) => {
       <template #header>
         <div class="flex justify-between items-center">
           <h2 class="text-xl font-semibold">Seller Listings</h2>
+          <div class="flex space-x-4">
+          <rs-button variant="primary">
+            <Icon name="ph:download-simple-bold" class="w-5 h-5 mr-2" />
+            Generate Report
+          </rs-button>
+          <nuxt-link to="/super-admin/seller/create-seller">
+          <rs-button variant="primary">
+            <Icon name="heroicons:plus" class="w-5 h-5 mr-2" />
+            New Seller
+          </rs-button></nuxt-link>
+    </div>
         </div>
       </template>
       <template #body>
@@ -90,7 +102,7 @@ const previewShop = (seller) => {
           <template #LastSeen="{ value }">{{ value.lastSeen }}</template>
           <template #Action="{ row }">
             <div class="flex space-x-2">
-              <nuxt-link to="/memberships/create-member">
+              <nuxt-link to="/super-admin/memberships/create-member">
                 <rs-button 
                   variant="primary" 
                   size="sm"
@@ -98,7 +110,7 @@ const previewShop = (seller) => {
                   Edit
                 </rs-button>
               </nuxt-link>
-              <nuxt-link to="/seller/product">
+              <nuxt-link to="/super-admin/seller/product">
               <rs-button 
                 variant="warning" 
                 size="sm"
@@ -106,7 +118,7 @@ const previewShop = (seller) => {
               >
                 Product
               </rs-button></nuxt-link>
-              <nuxt-link to="/memberships/order-transaction">
+              <nuxt-link to="/super-admin/memberships/order-transaction">
               <rs-button 
                 variant="warning" 
                 size="sm"

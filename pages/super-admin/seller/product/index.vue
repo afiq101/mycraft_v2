@@ -93,6 +93,12 @@ const deleteProduct = (product) => {
       <template #header>
         <div class="flex justify-between items-center">
           <h2 class="text-xl font-semibold">Product Listings</h2>
+          <div class="flex space-x-4">
+          <rs-button variant="primary">
+            <Icon name="ph:download-simple-bold" class="w-5 h-5 mr-2" />
+            Generate Report
+          </rs-button>
+    </div>
         </div>
       </template>
       <template #body>
