@@ -5,34 +5,71 @@ definePageMeta({
 });
 
 const orders = ref([
-  { id: 'ORD1234', customer: 'John Doe', total: 'RM299', status: 'Completed', date: '2024-08-01' },
-  { id: 'ORD5678', customer: 'Jane Smith', total: 'RM149', status: 'Pending', date: '2024-08-02' },
-  { id: 'ORD9101', customer: 'Alice Johnson', total: 'RM499', status: 'Placed', date: '2024-08-03' },
-  { id: 'ORD1121', customer: 'Bob Brown', total: 'RM89', status: 'Returned', date: '2024-08-04' },
-  { id: 'ORD3141', customer: 'Charlie White', total: 'RM249', status: 'Completed', date: '2024-08-05' },
-  { id: 'ORD5161', customer: 'Diane Green', total: 'RM399', status: 'Pending', date: '2024-08-06' },
+  {
+    id: "ORD1234",
+    customer: "John Doe",
+    total: "RM299",
+    status: "Completed",
+    date: "2024-08-01",
+  },
+  {
+    id: "ORD5678",
+    customer: "Jane Smith",
+    total: "RM149",
+    status: "Pending",
+    date: "2024-08-02",
+  },
+  {
+    id: "ORD9101",
+    customer: "Alice Johnson",
+    total: "RM499",
+    status: "Placed",
+    date: "2024-08-03",
+  },
+  {
+    id: "ORD1121",
+    customer: "Bob Brown",
+    total: "RM89",
+    status: "Returned",
+    date: "2024-08-04",
+  },
+  {
+    id: "ORD3141",
+    customer: "Charlie White",
+    total: "RM249",
+    status: "Completed",
+    date: "2024-08-05",
+  },
+  {
+    id: "ORD5161",
+    customer: "Diane Green",
+    total: "RM399",
+    status: "Pending",
+    date: "2024-08-06",
+  },
 ]);
 
-const activeTab = ref('All');
-const searchQuery = ref('');
-const selectedStatus = ref('');
+const activeTab = ref("All");
+const searchQuery = ref("");
+const selectedStatus = ref("");
 
-const statuses = ['All', 'Placed', 'Completed', 'Pending'];
+const statuses = ["All", "Placed", "Completed", "Pending"];
 
 const filteredOrders = computed(() => {
   // Ensure orders array is initialized and not undefined
   if (!orders.value) return [];
-  
-  return orders.value.filter(order => 
-    (activeTab.value === 'All' || order.status === activeTab.value) &&
-    order.id.toLowerCase().includes(searchQuery.value.toLowerCase()) &&
-    (selectedStatus.value === '' || order.status === selectedStatus.value)
+
+  return orders.value.filter(
+    (order) =>
+      (activeTab.value === "All" || order.status === activeTab.value) &&
+      order.id.toLowerCase().includes(searchQuery.value.toLowerCase()) &&
+      (selectedStatus.value === "" || order.status === selectedStatus.value)
   );
 });
 
 // Function to add a new order (dummy function for now)
 const addNewOrder = () => {
-  console.log('Adding new order');
+  console.log("Adding new order");
 };
 </script>
 
@@ -49,9 +86,14 @@ const addNewOrder = () => {
           <rs-card>
             <template #header>
               <h2 class="text-lg font-semibold">Placed Orders</h2>
-            </template> 
+            </template>
             <template #body>
-              <p class="text-3xl">{{ orders.value?.filter(order => order.status === 'Placed').length || 0 }}</p>
+              <p class="text-3xl">
+                {{
+                  orders.value?.filter((order) => order.status === "Placed")
+                    .length || 0
+                }}
+              </p>
             </template>
           </rs-card>
           <rs-card>
@@ -59,7 +101,12 @@ const addNewOrder = () => {
               <h2 class="text-lg font-semibold">Completed Orders</h2>
             </template>
             <template #body>
-              <p class="text-3xl">{{ orders.value?.filter(order => order.status === 'Completed').length || 0 }}</p>
+              <p class="text-3xl">
+                {{
+                  orders.value?.filter((order) => order.status === "Completed")
+                    .length || 0
+                }}
+              </p>
             </template>
           </rs-card>
           <rs-card>
@@ -67,19 +114,40 @@ const addNewOrder = () => {
               <h2 class="text-lg font-semibold">Pending Orders</h2>
             </template>
             <template #body>
-              <p class="text-3xl">{{ orders.value?.filter(order => order.status === 'Pending').length || 0 }}</p>
+              <p class="text-3xl">
+                {{
+                  orders.value?.filter((order) => order.status === "Pending")
+                    .length || 0
+                }}
+              </p>
             </template>
           </rs-card>
         </div>
 
         <rs-tab>
-          <rs-tab-item title="All" :active="activeTab === 'All'" @click="activeTab = 'All'">
+          <rs-tab-item
+            title="All"
+            :active="activeTab === 'All'"
+            @click="activeTab = 'All'"
+          >
           </rs-tab-item>
-          <rs-tab-item title="Placed" :active="activeTab === 'Placed'" @click="activeTab = 'Placed'">
+          <rs-tab-item
+            title="Placed"
+            :active="activeTab === 'Placed'"
+            @click="activeTab = 'Placed'"
+          >
           </rs-tab-item>
-          <rs-tab-item title="Completed" :active="activeTab === 'Completed'" @click="activeTab = 'Completed'">
+          <rs-tab-item
+            title="Completed"
+            :active="activeTab === 'Completed'"
+            @click="activeTab = 'Completed'"
+          >
           </rs-tab-item>
-          <rs-tab-item title="Pending" :active="activeTab === 'Pending'" @click="activeTab = 'Pending'">
+          <rs-tab-item
+            title="Pending"
+            :active="activeTab === 'Pending'"
+            @click="activeTab = 'Pending'"
+          >
           </rs-tab-item>
         </rs-tab>
 
@@ -90,7 +158,7 @@ const addNewOrder = () => {
             placeholder="Search Order ID"
             :classes="{
               outer: 'mb-0',
-              input: 'w-full'
+              input: 'w-full',
             }"
           />
           <FormKit
@@ -100,7 +168,7 @@ const addNewOrder = () => {
             placeholder="Select Status"
             :classes="{
               outer: 'mb-0',
-              input: 'w-full'
+              input: 'w-full',
             }"
           />
         </div>
@@ -112,11 +180,19 @@ const addNewOrder = () => {
           advanced
           :options-advanced="{
             sortable: true,
-            responsive: true
+            responsive: true,
           }"
         >
           <template #Status="{ text }">
-            <rs-badge :variant="text === 'Completed' ? 'success' : (text === 'Pending' ? 'warning' : 'danger')">
+            <rs-badge
+              :variant="
+                text === 'Completed'
+                  ? 'success'
+                  : text === 'Pending'
+                  ? 'warning'
+                  : 'danger'
+              "
+            >
               {{ text }}
             </rs-badge>
           </template>
@@ -130,13 +206,20 @@ const addNewOrder = () => {
               </rs-button>
             </div>
           </template>
-
         </rs-table>
 
         <div v-else class="text-center py-8">
-          <img src="/path-to-your-no-order-image.png" alt="No orders" class="mx-auto mb-4" />
-          <p class="text-xl font-semibold">No orders under this status or filter</p>
-          <p class="text-gray-500">Please check other order status or use other filter.</p>
+          <img
+            src="/img/background/default-thumbnail.jpg"
+            alt="No orders"
+            class="mx-auto mb-4"
+          />
+          <p class="text-xl font-semibold">
+            No orders under this status or filter
+          </p>
+          <p class="text-gray-500">
+            Please check other order status or use other filter.
+          </p>
         </div>
       </template>
     </rs-card>

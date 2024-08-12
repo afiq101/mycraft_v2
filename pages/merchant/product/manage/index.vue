@@ -5,36 +5,69 @@ definePageMeta({
 });
 
 const products = ref([
-  { name: 'Cincin Lelaki Perak', category: 'Logam', price: 'RM10.00', stock: 50, status: 'Active', abTesting: 'A' },
-  { name: 'Rantai Loket Helena', category: 'Logam', price: 'RM20.00', stock: 30, status: 'Active', abTesting: 'B' },
-  { name: 'Document Bag', category: 'Anyaman', price: 'RM285.00', stock: 150, status: 'Inactive', abTesting: 'A' },
-  { name: 'Baju T Batik Ikat & Celup', category: 'Kain & Tenunan', price: 'RM48.00', stock: 75, status: 'Active', abTesting: 'None' },
-  ]);
+  {
+    name: "Cincin Lelaki Perak",
+    category: "Logam",
+    price: "RM10.00",
+    stock: 50,
+    status: "Active",
+    abTesting: "A",
+  },
+  {
+    name: "Rantai Loket Helena",
+    category: "Logam",
+    price: "RM20.00",
+    stock: 30,
+    status: "Active",
+    abTesting: "B",
+  },
+  {
+    name: "Document Bag",
+    category: "Anyaman",
+    price: "RM285.00",
+    stock: 150,
+    status: "Inactive",
+    abTesting: "A",
+  },
+  {
+    name: "Baju T Batik Ikat & Celup",
+    category: "Kain & Tenunan",
+    price: "RM48.00",
+    stock: 75,
+    status: "Active",
+    abTesting: "None",
+  },
+]);
 
-const activeTab = ref('All');
-const searchQuery = ref('');
-const selectedCategory = ref('');
-const sortBy = ref('');
-const abTesting = ref('');
+const activeTab = ref("All");
+const searchQuery = ref("");
+const selectedCategory = ref("");
+const sortBy = ref("");
+const abTesting = ref("");
 
-const categories = ['Logam', 'Kain & Tenunan', 'Anyaman', 'Kraf Seni', 'Buku'];
-const sortOptions = ['Name A-Z', 'Name Z-A', 'Price Low to High', 'Price High to Low'];
-const abTestingOptions = ['A', 'B', 'None'];
-
-
+const categories = ["Logam", "Kain & Tenunan", "Anyaman", "Kraf Seni", "Buku"];
+const sortOptions = [
+  "Name A-Z",
+  "Name Z-A",
+  "Price Low to High",
+  "Price High to Low",
+];
+const abTestingOptions = ["A", "B", "None"];
 
 const filteredProducts = computed(() => {
-  return products.value.filter(product => 
-    (activeTab.value === 'All' || product.status === activeTab.value) &&
-    product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) &&
-    (selectedCategory.value === '' || product.category === selectedCategory.value) &&
-    (abTesting.value === '' || product.abTesting === abTesting.value)
+  return products.value.filter(
+    (product) =>
+      (activeTab.value === "All" || product.status === activeTab.value) &&
+      product.name.toLowerCase().includes(searchQuery.value.toLowerCase()) &&
+      (selectedCategory.value === "" ||
+        product.category === selectedCategory.value) &&
+      (abTesting.value === "" || product.abTesting === abTesting.value)
   );
 });
 
 // Function to add a new product (dummy function for now)
 const addNewProduct = () => {
-  console.log('Adding new product');
+  console.log("Adding new product");
 };
 </script>
 
@@ -50,21 +83,50 @@ const addNewProduct = () => {
         </div>
       </template>
       <template #body>
-        <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4" role="alert">
-          <p>Welcome to Product Management Page. <a href="#" class="underline">Learn More</a></p>
-          <p>Your products are not yet visible to buyers. Please add address to make them visible.</p>
+        <div
+          class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4"
+          role="alert"
+        >
+          <p>
+            Welcome to Product Management Page.
+            <a href="#" class="underline">Learn More</a>
+          </p>
+          <p>
+            Your products are not yet visible to buyers. Please add address to
+            make them visible.
+          </p>
         </div>
 
         <rs-tab>
-          <rs-tab-item title="All" :active="activeTab === 'All'" @click="activeTab = 'All'">
+          <rs-tab-item
+            title="All"
+            :active="activeTab === 'All'"
+            @click="activeTab = 'All'"
+          >
           </rs-tab-item>
-          <rs-tab-item title="Active" :active="activeTab === 'Active'" @click="activeTab = 'Active'">
+          <rs-tab-item
+            title="Active"
+            :active="activeTab === 'Active'"
+            @click="activeTab = 'Active'"
+          >
           </rs-tab-item>
-          <rs-tab-item title="Inactive" :active="activeTab === 'Inactive'" @click="activeTab = 'Inactive'">
+          <rs-tab-item
+            title="Inactive"
+            :active="activeTab === 'Inactive'"
+            @click="activeTab = 'Inactive'"
+          >
           </rs-tab-item>
-          <rs-tab-item title="Violation" :active="activeTab === 'Violation'" @click="activeTab = 'Violation'">
+          <rs-tab-item
+            title="Violation"
+            :active="activeTab === 'Violation'"
+            @click="activeTab = 'Violation'"
+          >
           </rs-tab-item>
-          <rs-tab-item title="Deleted" :active="activeTab === 'Deleted'" @click="activeTab = 'Deleted'">
+          <rs-tab-item
+            title="Deleted"
+            :active="activeTab === 'Deleted'"
+            @click="activeTab = 'Deleted'"
+          >
           </rs-tab-item>
         </rs-tab>
 
@@ -75,7 +137,7 @@ const addNewProduct = () => {
             placeholder="Search Product Name"
             :classes="{
               outer: 'mb-0',
-              input: 'w-full'
+              input: 'w-full',
             }"
           />
           <FormKit
@@ -85,7 +147,7 @@ const addNewProduct = () => {
             placeholder="Select Category"
             :classes="{
               outer: 'mb-0',
-              input: 'w-full'
+              input: 'w-full',
             }"
           />
           <FormKit
@@ -95,7 +157,7 @@ const addNewProduct = () => {
             placeholder="Sort By"
             :classes="{
               outer: 'mb-0',
-              input: 'w-full'
+              input: 'w-full',
             }"
           />
           <FormKit
@@ -105,7 +167,7 @@ const addNewProduct = () => {
             placeholder="A/B Testing"
             :classes="{
               outer: 'mb-0',
-              input: 'w-full'
+              input: 'w-full',
             }"
           />
         </div>
@@ -117,7 +179,7 @@ const addNewProduct = () => {
           advanced
           :options-advanced="{
             sortable: true,
-            responsive: true
+            responsive: true,
           }"
         >
           <template #Status="{ text }">
@@ -135,13 +197,20 @@ const addNewProduct = () => {
               </rs-button>
             </div>
           </template>
-
         </rs-table>
 
         <div v-else class="text-center py-8">
-          <img src="/path-to-your-no-product-image.png" alt="No products" class="mx-auto mb-4" />
-          <p class="text-xl font-semibold">No product under this status or filter</p>
-          <p class="text-gray-500">Please check other product status or use other filter.</p>
+          <img
+            src="/img/background/default-thumbnail.jpg"
+            alt="No products"
+            class="mx-auto mb-4"
+          />
+          <p class="text-xl font-semibold">
+            No product under this status or filter
+          </p>
+          <p class="text-gray-500">
+            Please check other product status or use other filter.
+          </p>
         </div>
       </template>
     </rs-card>
