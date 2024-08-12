@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-  title: "corrad | Innovative solutions for captivating content",
+  title: "MyCraft Shoppe",
   description: "Home page",
   htmlAttrs: {
     lang: "en",
