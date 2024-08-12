@@ -40,7 +40,7 @@ const login = async () => {
         showConfirmButton: false,
       });
 
-      window.location.href = "/dashboard";
+      window.location.href = "/admin/dashboard";
     }
   } catch (e) {
     console.log(e);
