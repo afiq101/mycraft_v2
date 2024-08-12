@@ -148,28 +148,28 @@ export default [
         ],
         meta: {},
       },
-      // {
-      //   title: "Customer Orders",
-      //   path: "/merchant/orders",
-      //   icon: "ic:outline-dashboard",
-      //   child: [
-      //     {
-      //       title: "Manage Orders",
-      //       path: "/merchant/orders/manage-orders",
-      //       icon: "ic:outline-dashboard",
-      //       child: [],
-      //       meta: {},
-      //     },
-      //     {
-      //       title: "Return Orders",
-      //       path: "/merchant/orders/return-orders",
-      //       icon: "ic:outline-dashboard",
-      //       child: [],
-      //       meta: {},
-      //     },
-      //   ],
-      //   meta: {},
-      // },
+      {
+        title: "Customer Orders",
+        path: "/merchant/orders",
+        icon: "material-symbols-light:orders-rounded",
+        child: [
+          {
+            title: "Manage",
+            path: "/merchant/orders/manage-orders",
+            icon: "",
+            child: [],
+            meta: {},
+          },
+          {
+            title: "Return Orders",
+            path: "/merchant/orders/return-orders",
+            icon: "",
+            child: [],
+            meta: {},
+          },
+        ],
+        meta: {},
+      },
       {
         title: "Financial",
         path: "/merchant/financial",
