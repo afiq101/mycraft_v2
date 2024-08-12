@@ -250,5 +250,10 @@ export default [
         meta: {},
       },  
     ],
+    meta: {
+          auth: {
+            role: ["Seller"],
+          },
+        },
   },
 ];
