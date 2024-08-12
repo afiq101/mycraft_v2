@@ -226,15 +226,70 @@ const chartOptionsTransaction = computed(() => ({
   },
 }));
 
-// Total Sale
-const totalSales = ref([
+
+
+// Analytical Total Sales (Normal Price)
+const totalSalesData = ref([
   {
-    name: "Total Sales",
-    data: [1200, 1500, 1100, 1800, 1900, 2200, 2500, 2700, 3000, 3100, 3400, 3600],
+    name: 'Total Sales',
+    data: [1200, 1500, 1100, 1800, 1900, 2200, 2500],
   },
 ]);
 
-const chartTotalSale = computed(() => ({
+// Today's Orders (SKU)
+const todaysOrdersData = ref([
+  {
+    name: "Today's Orders",
+    data: [150, 200, 120, 300, 250],
+  },
+]);
+
+// Sales by Categories
+const salesByCategoriesData = ref([
+  {
+    name: 'Sales by Categories',
+    data: [5000, 4000, 3000, 7000, 2000],
+  },
+]);
+const categories = ref(['Electronics', 'Clothing', 'Home & Garden', 'Toys', 'Books']);
+
+// Monthly Sales (Domestic & International)
+const monthlySalesData = ref([
+  {
+    name: 'Domestic Sales',
+    data: [20000, 25000, 22000, 27000, 30000, 28000, 35000],
+  },
+  {
+    name: 'International Sales',
+    data: [15000, 18000, 16000, 20000, 24000, 23000, 26000],
+  },
+]);
+
+// Annual Sales (Domestic & International)
+const annualSalesData = ref([
+  {
+    name: 'Domestic Sales',
+    data: [380000],
+  },
+  {
+    name: 'International Sales',
+    data: [280000],
+  },
+]);
+
+// Sales via Web or Apps Purchased
+const salesViaWebOrAppsData = ref([
+  {
+    name: 'Web Sales',
+    data: [24000, 28000, 26000, 29000, 32000, 31000, 33000],
+  },
+  {
+    name: 'App Sales',
+    data: [15000, 16000, 14000, 18000, 20000, 22000, 23000],
+  },
+]);
+
+const chartSale = computed(() => ({
   chart: {
     id: "salesChart",
   },
@@ -364,12 +419,40 @@ const salesCategory = computed(() => ({
   ],
 }));
 
+// Chart options
+const chartOptions1 = computed(() => ({
+  chart: {
+    id: "apexChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: categories,
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
+}));
+
 onMounted(() => {
   setTimeout(() => {
     changeKey.value++;
   }, 500);
 });
 </script>
+
 
 <template>
   <div>
@@ -615,9 +698,9 @@ onMounted(() => {
       </div>
     </div>
 
-    <div>
+    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-6">
       <rs-card>
-        <template #header> Total Sales </template>
+        <template #header> Analytical Total Sales (Normal Price) </template>
         <template #body>
           <ClientOnly>
             <VueApexCharts
@@ -625,32 +708,46 @@ onMounted(() => {
               width="100%"
               height="300"
               type="line"
-              :options="chartTotalSale"
-              :series="totalSales"
+              :options="chartSale"
+              :series="totalSalesData"
             ></VueApexCharts>
           </ClientOnly>
         </template>
       </rs-card>
 
       <rs-card>
-        <template #header> Sales by Category </template>
+        <template #header> Today's Orders (SKU) </template>
         <template #body>
-          <BarChart
-            v-bind="barChartProps"
-            style="position: relative; height: 40vh; width: 80vw"
-          />
-          <!-- <ClientOnly>
+          <ClientOnly>
+            <VueApexCharts
+              :key="changeKey"
+              width="100%"
+              height="300"
+              type="line"
+              :options="chartSale"
+              :series="todaysOrdersData"
+            ></VueApexCharts>
+          </ClientOnly>
+        </template>
+      </rs-card>
+
+      <rs-card>
+        <template #header> Sales by Categories </template>
+        <template #body>
+          <ClientOnly>
             <VueApexCharts
               :key="changeKey"
               width="100%"
               height="300"
               type="bar"
-              :options="salesCategory"
-              :series="series"
+              :options="chartOptions1"
+              :series="salesByCategoriesData"
             ></VueApexCharts>
-          </ClientOnly> -->
+          </ClientOnly>
         </template>
       </rs-card>
     </div>
+
+    
   </div>
 </template>

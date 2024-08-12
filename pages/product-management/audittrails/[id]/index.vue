@@ -1,6 +1,6 @@
 <script setup>
   definePageMeta({
-    title: "Audit Trails Product",
+    title: "Product Audit Trails",
   });
 
   const field = [
@@ -10,22 +10,69 @@
     "CustomerName",
     "Status"
   ]
+  
   const data = [
     {
-      transactionDate: "09-08-2024",
-      orderID: "OD001",
-      transactionNo: "202408091230",
-      userFullname: "User A",
+      transactionDate: "2024-08-09",
+      orderID: "OD1001",
+      transactionNo: "TX202408091001",
+      userFullname: "Ahmad Faizal",
       status: "Delivered"
     },
     {
-      transactionDate: "09-08-2024",
-      orderID: "OD002",
-      transactionNo: "202408091230",
-      userFullname: "User B",
+      transactionDate: "2024-08-09",
+      orderID: "OD1002",
+      transactionNo: "TX202408091002",
+      userFullname: "Siti Aisyah",
       status: "Complete"
     },
-  ]
+    {
+      transactionDate: "2024-08-09",
+      orderID: "OD1003",
+      transactionNo: "TX202408091003",
+      userFullname: "Mohd Azim",
+      status: "Shipped"
+    },
+    {
+      transactionDate: "2024-08-10",
+      orderID: "OD1004",
+      transactionNo: "TX202408101001",
+      userFullname: "Nor Aini",
+      status: "Complete"
+    },
+    {
+      transactionDate: "2024-08-10",
+      orderID: "OD1005",
+      transactionNo: "TX202408101002",
+      userFullname: "Kumar Raj",
+      status: "Delivered"
+    },
+    {
+      transactionDate: "2024-08-11",
+      orderID: "OD1006",
+      transactionNo: "TX202408111001",
+      userFullname: "Nurul Huda",
+      status: "Shipped"
+    },
+    {
+      transactionDate: "2024-08-11",
+      orderID: "OD1007",
+      transactionNo: "TX202408111002",
+      userFullname: "Lee Wei Ming",
+      status: "Complete"
+    },
+  ];
+
+  // Calculate the counts for each status
+  const statusCounts = data.reduce((acc, record) => {
+    acc[record.status] = (acc[record.status] || 0) + 1;
+    return acc;
+  }, {});
+
+  const deliveredCount = statusCounts['Delivered'] || 0;
+  const completeCount = statusCounts['Complete'] || 0;
+  const shippedCount = statusCounts['Shipped'] || 0;
+
 </script>
 
 <template>
@@ -40,8 +87,8 @@
           <Icon class="text-success" name="ph:check-circle-duotone"></Icon>
         </div>
         <div class="flex-1 truncate">
-          <span class="block font-semibold text-xl leading-tight"> 0 </span>
-          <span class="text-base font-semibold text-gray-500">Complate</span>
+          <span class="block font-semibold text-xl leading-tight"> {{ completeCount }} </span>
+          <span class="text-base font-semibold text-gray-500">Complete</span>
         </div>
       </div>
     </rs-card>
@@ -51,7 +98,7 @@
           <Icon class="text-secondary" name="material-symbols:box-outline-rounded"></Icon>
         </div>
         <div class="flex-1 truncate">
-          <span class="block font-semibold text-xl leading-tight"> 0 </span>
+          <span class="block font-semibold text-xl leading-tight"> {{ shippedCount }} </span>
           <span class="text-base font-semibold text-gray-500">Shipped</span>
         </div>
       </div>
@@ -62,7 +109,7 @@
           <Icon class="text-warning" name="carbon:delivery-truck"></Icon>
         </div>
         <div class="flex-1 truncate">
-          <span class="block font-semibold text-xl leading-tight"> 0 </span>
+          <span class="block font-semibold text-xl leading-tight"> {{ deliveredCount }} </span>
           <span class="text-base font-semibold text-gray-500">Delivered</span>
         </div>
       </div>
@@ -88,15 +135,27 @@
         }"
         advanced
       > 
+        <template v-slot:Status="data">
+          <rs-badge
+            :variant="
+              data.value.status === 'Complete'
+                ? 'success'
+                : data.value.status == 'Delivered'
+                ? 'warning'
+                : 'secondary'
+            ">
+            {{ data.value.status }}
+          </rs-badge>
+        </template>
       </rs-table>
-    <div v-else class="flex justify-center text-primary/40 border-2 border-grey-200 p-3">
-      <div class="text-center">
-        <h5 class="font-semibold">No Record</h5>
-        <span class="text-sm text-gray-500">
-          List not found
-        </span>
+      <div v-else class="flex justify-center text-primary/40 border-2 border-grey-200 p-3">
+        <div class="text-center">
+          <h5 class="font-semibold">No Record</h5>
+          <span class="text-sm text-gray-500">
+            List not found
+          </span>
+        </div>
       </div>
-    </div>
     </template>
   </rs-card>
   

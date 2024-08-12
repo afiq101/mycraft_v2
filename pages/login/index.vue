@@ -4,7 +4,6 @@ import { useUserStore } from "~/stores/user";
 definePageMeta({
   title: "Login",
   layout: "empty",
-  middleware: ["dashboard"],
 });
 
 const { $swal } = useNuxtApp();
