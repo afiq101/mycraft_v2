@@ -1,111 +1,11 @@
 <script setup>
 import products from "../data/products";
+import events from "../data/events";
 
 definePageMeta({
   title: "Marketplace",
   layout: "default",
 });
-
-// const products = ref([
-//   {
-//     image:
-//       "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4mRni?ver=a707&q=90&m=6&h=540&w=943&b=%23FF171717&o=f&aim=true",
-//     name: "White V-Neck Shirt",
-//     price: 27.53,
-//     originalPrice: 84.49,
-//     soldCount: "3.3K+",
-//     discount: 67,
-//     rating: 4.5,
-//     reviewCount: 461,
-//     isNewDeal: true,
-//     isAlmostSoldOut: true,
-//   },
-//   {
-//     image:
-//       "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4mRni?ver=a707&q=90&m=6&h=540&w=943&b=%23FF171717&o=f&aim=true",
-//     name: "Green Paw Print Bags (20 Pack)",
-//     price: 4.97,
-//     originalPrice: 20.99,
-//     soldCount: "4.2K+",
-//     discount: 76,
-//     rating: 4.5,
-//     reviewCount: 263,
-//     isNewDeal: true,
-//   },
-//   {
-//     image:
-//       "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4mRni?ver=a707&q=90&m=6&h=540&w=943&b=%23FF171717&o=f&aim=true",
-//     name: "Green Paw Print Bags (20 Pack)",
-//     price: 4.97,
-//     originalPrice: 20.99,
-//     soldCount: "4.2K+",
-//     discount: 76,
-//     rating: 4.5,
-//     reviewCount: 263,
-//     isNewDeal: true,
-//   },
-//   {
-//     image:
-//       "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4mRni?ver=a707&q=90&m=6&h=540&w=943&b=%23FF171717&o=f&aim=true",
-//     name: "Green Paw Print Bags (20 Pack)",
-//     price: 4.97,
-//     originalPrice: 20.99,
-//     soldCount: "4.2K+",
-//     discount: 76,
-//     rating: 4.5,
-//     reviewCount: 263,
-//     isNewDeal: true,
-//   },
-//   {
-//     image:
-//       "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4mRni?ver=a707&q=90&m=6&h=540&w=943&b=%23FF171717&o=f&aim=true",
-//     name: "White V-Neck Shirt",
-//     price: 27.53,
-//     originalPrice: 84.49,
-//     soldCount: "3.3K+",
-//     discount: 67,
-//     rating: 4.5,
-//     reviewCount: 461,
-//     isNewDeal: true,
-//     isAlmostSoldOut: true,
-//   },
-//   {
-//     image:
-//       "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4mRni?ver=a707&q=90&m=6&h=540&w=943&b=%23FF171717&o=f&aim=true",
-//     name: "Green Paw Print Bags (20 Pack)",
-//     price: 4.97,
-//     originalPrice: 20.99,
-//     soldCount: "4.2K+",
-//     discount: 76,
-//     rating: 4.5,
-//     reviewCount: 263,
-//     isNewDeal: true,
-//   },
-//   {
-//     image:
-//       "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4mRni?ver=a707&q=90&m=6&h=540&w=943&b=%23FF171717&o=f&aim=true",
-//     name: "Green Paw Print Bags (20 Pack)",
-//     price: 4.97,
-//     originalPrice: 20.99,
-//     soldCount: "4.2K+",
-//     discount: 76,
-//     rating: 4.5,
-//     reviewCount: 263,
-//     isNewDeal: true,
-//   },
-//   {
-//     image:
-//       "https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RE4mRni?ver=a707&q=90&m=6&h=540&w=943&b=%23FF171717&o=f&aim=true",
-//     name: "Green Paw Print Bags (20 Pack)",
-//     price: 4.97,
-//     originalPrice: 20.99,
-//     soldCount: "4.2K+",
-//     discount: 76,
-//     rating: 4.5,
-//     reviewCount: 263,
-//     isNewDeal: true,
-//   },
-// ]);
 
 const formatSold = (n) => {
   if (n < 1e3) return n;
@@ -124,6 +24,15 @@ async function navigateProductDetail(sku) {
     path: "/product-detail",
     query: {
       sku: sku,
+    },
+  });
+}
+
+async function navigateEventDetail(id) {
+  await navigateTo({
+    path: "/event-detail",
+    query: {
+      id: id,
     },
   });
 }
@@ -182,6 +91,74 @@ const handleSearch = () => {
         </rs-button>
       </div>
     </rs-card>
+    <h3 class="mb-3">Event</h3>
+
+    <section
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+    >
+      <rs-card
+        class="cursor-pointer hover:scale-105 transition-all"
+        v-for="(event, index) in events"
+        :key="index"
+        @click="navigateEventDetail(event.id)"
+      >
+        <div class="product-image relative h-48 rounded-lg">
+          <img
+            class="object-scale-down w-full h-full"
+            :src="event.images.length > 0 ? event.images[0] : ''"
+            :alt="event.name"
+          />
+        </div>
+        <div class="product-content-wrapper flex flex-col px-4 mb-6">
+          <div class="product-title mt-4 h-12">
+            <span class="line-clamp-1 text-base font-semibold">{{
+              event.name
+            }}</span>
+            <span class="line-clamp-1 text-gray-500 text-sm">
+              {{ event.description }}
+            </span>
+          </div>
+          <div class="product-content flex flex-col">
+            <div class="product-price flex justify-between">
+              <div class="truncate">
+                <div class="text-sm text-primary">
+                  {{ event.currency
+                  }}<span class="text-lg">
+                    {{
+                      event.discountedPrice
+                        ? formatPrice(event.discountedPrice)
+                        : formatPrice(event.price)
+                    }}</span
+                  >
+
+                  <!-- If price 0 put free -->
+                  <span v-if="event.price == 0" class="text-xs ml-1">Free</span>
+                </div>
+                <span
+                  v-if="event.discountedPrice"
+                  class="text-sm line-through text-gray-500 mt-1"
+                >
+                  {{ event.currency }}{{ formatPrice(event.price) }}
+                </span>
+              </div>
+              <div class="action-button flex items-center gap-x-5">
+                <div class="icon-wrapper">
+                  <Icon
+                    size="1.4rem"
+                    fill="#A9A9A9"
+                    stroke="#A9A9A9"
+                    name="ph:shopping-cart-fill"
+                  ></Icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </rs-card>
+    </section>
+
+    <hr class="mb-3 mt-3" />
+    <h3 class="mb-3">Products</h3>
 
     <section
       class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"

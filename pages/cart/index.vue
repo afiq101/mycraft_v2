@@ -7,19 +7,17 @@ definePageMeta({
 const cartItems = ref([
   {
     id: 1,
-    name: "Asus ROG Strix GeForce RTX3060 V2 OC Edition 12GB GDDR6",
-    price: 3130,
+    name: "BEG BIMBIT",
+    price: 120,
     quantity: 2,
-    image:
-      "https://my-test-11.slatic.net/p/37114e5a75ef2492dca718f876992c7f.png",
+    image: "https://i.imgur.com/y3nj4JJ.jpeg",
   },
   {
     id: 2,
-    name: "Iphone 13 Pro Max 256GB",
-    price: 5029,
+    name: "(PRE-ORDER) - CINCIN LELAKI PERAK",
+    price: 120,
     quantity: 1,
-    image:
-      "https://store.storeimages.cdn-apple.com/8756/as-images.apple.com/is/iphone-13-pro-max-silver-select?wid=940&hei=1112&fmt=png-alpha&.v=1645552346280",
+    image: "https://i.imgur.com/G49ZT1V.jpg",
   },
 ]);
 
@@ -131,7 +129,11 @@ const handleCheckout = () => {
           <h2 class="text-2xl font-bold">Checkout</h2>
         </template>
         <template #body>
-          <FormKit type="form" @submit="handleCheckout" submit-label="Proceed Checkout">
+          <FormKit
+            type="form"
+            @submit="handleCheckout"
+            submit-label="Proceed Checkout"
+          >
             <FormKit
               type="email"
               name="email"

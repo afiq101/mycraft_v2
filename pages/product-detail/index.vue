@@ -149,7 +149,7 @@ const formatSold = (n) => {
           </div>
           <div class="product-attributes my-5">
             <rs-collapse accordion>
-              <rs-collapse-item title="Product Specifications:">
+              <rs-collapse-item title="Description:">
                 <ul class="grid grid-cols-2 gap-3">
                   <li
                     class="font-medium"

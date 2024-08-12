@@ -220,7 +220,7 @@ const pages = computed(() => {
         <span class="font-semibold">Brand</span>
         <FormKit
           type="radio"
-          :options="['Asus', 'Samsung', 'MSI', 'Apple', 'Playstation 5']"
+          :options="['MyBatik', 'Mama Shop', 'Beg Shop', 'Jewel Shop']"
           :classes="{
             fieldset: 'border-none !p-0 mt-4',
           }"
