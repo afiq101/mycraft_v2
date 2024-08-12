@@ -94,12 +94,7 @@
         </div>
       </div>
       <div class="flex justify-end mt-4">
-        <button
-          @click="closeAnalytics"
-          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-        >
-          Close
-        </button>
+        <rs-button @click="closeAnalytics" class="px-4 py-2 text-sm">Close</rs-button>
       </div>
 
       <template #footer>
@@ -140,12 +135,9 @@
 
         <!-- Save Configuration Button -->
         <div class="flex justify-end">
-          <button
-            @click="saveConfiguration"
-            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-          >
+          <rs-button @click="saveConfiguration" class="px-4 py-2 text-sm">
             Save Configuration
-          </button>
+          </rs-button>
         </div>
       </div>
     </div>

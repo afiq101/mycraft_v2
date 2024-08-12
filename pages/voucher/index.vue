@@ -4,12 +4,12 @@
 
     <!-- Create Voucher Button -->
     <div class="flex justify-end">
-      <button
+      <rs-button
         @click="showCreateVoucherModal = true"
-        class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
+        class="px-4 py-2 text-sm"
       >
         Create Voucher
-      </button>
+      </rs-button>
     </div>
 
     <!-- Voucher Listing Table -->
@@ -311,12 +311,9 @@
           >
             Cancel
           </button>
-          <button
-            @click="saveVoucher"
-            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-          >
+          <rs-button @click="saveVoucher" class="px-4 py-2 text-sm">
             Save Changes
-          </button>
+          </rs-button>
         </div>
       </div>
       <template #footer>

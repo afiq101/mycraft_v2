@@ -117,7 +117,7 @@ export default [
       {
         title: "Customer Service",
         path: "/customer-service",
-        icon: "ic:outline-dashboard",
+        icon: "ri:customer-service-2-fill",
         child: [],
         meta: {},
       },
@@ -194,7 +194,7 @@ export default [
     ],
     meta: {
       auth: {
-        role: ["Developer"],
+        role: ["Admin"],
       },
     },
   },

@@ -4,12 +4,9 @@
 
     <!-- Create eBook Button -->
     <div class="flex justify-end">
-      <button
-        @click="showCreateEbookModal = true"
-        class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-      >
+      <rs-button @click="showCreateEbookModal = true" class="px-4 py-2 text-sm">
         Create eBook
-      </button>
+      </rs-button>
     </div>
 
     <!-- eBook Listing Table -->
@@ -113,13 +110,13 @@
           >
             Cancel
           </button>
-          <button
+          <rs-button
             @click="createEbook"
             :disabled="!newEbook.title || !newEbook.file"
-            class="px-4 py-2 text-sm text-white bg-green-600 rounded-lg hover:bg-green-500 disabled:opacity-50"
+            class="px-4 py-2 text-sm"
           >
             Create eBook
-          </button>
+          </rs-button>
         </div>
       </div>
 
@@ -183,12 +180,9 @@
           >
             Cancel
           </button>
-          <button
-            @click="saveEbook"
-            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-          >
+          <rs-button @click="saveEbook" class="px-4 py-2 text-sm">
             Save Changes
-          </button>
+          </rs-button>
         </div>
       </div>
 

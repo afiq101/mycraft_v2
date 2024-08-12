@@ -80,12 +80,9 @@
     <div class="bg-white p-6 rounded-lg shadow-md">
       <div class="flex justify-between items-center mb-4">
         <div class="text-lg font-medium">Advertisement Listing</div>
-        <button
-          @click="showCreateAdModal = true"
-          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-        >
+        <rs-button @click="showCreateAdModal = true" class="px-4 py-2 text-sm">
           Add Advertisement
-        </button>
+        </rs-button>
       </div>
 
       <!-- Advertisement Table -->
@@ -187,12 +184,12 @@
     <div class="bg-white p-6 rounded-lg shadow-md">
       <div class="flex justify-between items-center mb-4">
         <div class="text-lg font-medium">Highlighted Products</div>
-        <button
+        <rs-button
           @click="showCreateProductModal = true"
-          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
+          class="px-4 py-2 text-sm"
         >
           Add Highlighted Product
-        </button>
+        </rs-button>
       </div>
 
       <!-- Highlighted Product Table -->
@@ -313,15 +310,19 @@
           >
             Cancel
           </button>
-          <button
+          <rs-button
             @click="createAd"
             :disabled="!newAd.title || !newAd.image || !newAd.url"
-            class="px-4 py-2 text-sm text-white bg-green-600 rounded-lg hover:bg-green-500 disabled:opacity-50"
+            class="px-4 py-2 text-sm"
           >
             Add Advertisement
-          </button>
+          </rs-button>
         </div>
       </div>
+
+      <template #footer>
+        <div></div>
+      </template>
     </rs-modal>
 
     <!-- Edit Advertisement Modal -->
@@ -382,12 +383,9 @@
           >
             Cancel
           </button>
-          <button
-            @click="saveAd"
-            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-          >
+          <rs-button @click="saveAd" class="px-4 py-2 text-sm">
             Save Changes
-          </button>
+          </rs-button>
         </div>
       </div>
 
@@ -439,15 +437,18 @@
           >
             Cancel
           </button>
-          <button
+          <rs-button
             @click="createProduct"
             :disabled="!newProduct.name || !newProduct.image"
-            class="px-4 py-2 text-sm text-white bg-green-600 rounded-lg hover:bg-green-500 disabled:opacity-50"
+            class="px-4 py-2 text-sm"
           >
             Add Product
-          </button>
+          </rs-button>
         </div>
       </div>
+      <template #footer>
+        <div></div>
+      </template>
     </rs-modal>
 
     <!-- Edit Highlighted Product Modal -->

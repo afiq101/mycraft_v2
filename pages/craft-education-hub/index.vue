@@ -243,12 +243,9 @@
           >
             Cancel
           </button>
-          <button
-            @click="saveWebinar"
-            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-          >
+          <rs-button @click="saveWebinar" class="px-4 py-2 text-sm text-white">
             Save Changes
-          </button>
+          </rs-button>
         </div>
       </div>
 

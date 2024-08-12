@@ -141,12 +141,9 @@
           >
             Save as Draft
           </button>
-          <button
-            @click="createNotification"
-            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-          >
+          <rs-button @click="createNotification" class="px-4 py-2 text-sm">
             Create Notification
-          </button>
+          </rs-button>
         </div>
       </div>
     </div>
@@ -323,12 +320,9 @@
         >
           Cancel
         </button>
-        <button
-          @click="saveNotification"
-          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-        >
+        <rs-button @click="saveNotification" class="px-4 py-2 text-sm">
           Save Changes
-        </button>
+        </rs-button>
       </div>
 
       <template #footer>
