@@ -80,12 +80,9 @@
     <div class="bg-white p-6 rounded-lg shadow-md">
       <div class="flex justify-between items-center mb-4">
         <div class="text-lg font-medium">Advertisement Listing</div>
-        <button
-          @click="showCreateAdModal = true"
-          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-        >
+        <rs-button @click="showCreateAdModal = true" class="px-4 py-2 text-sm">
           Add Advertisement
-        </button>
+        </rs-button>
       </div>
 
       <!-- Advertisement Table -->
@@ -94,31 +91,26 @@
           <thead class="bg-gray-50">
             <tr>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Title
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Image
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 URL
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Status
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Actions
@@ -142,10 +134,11 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm">
                 <span
-                  :class="{
-                    'bg-green-100 text-green-800': ad.status === 'active',
-                    'bg-gray-100 text-gray-800': ad.status === 'inactive',
-                  }"
+                  :class="
+                    ad.status === 'active'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-gray-100 text-gray-800'
+                  "
                   class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
                 >
                   {{ ad.status }}
@@ -156,11 +149,8 @@
               >
                 <button
                   @click="toggleAdStatus(index)"
-                  class=""
                   :class="
-                    ad.status === 'active'
-                      ? ' text-green-800'
-                      : ' text-gray-800'
+                    ad.status === 'active' ? 'text-green-800' : 'text-gray-800'
                   "
                 >
                   {{ ad.status === "active" ? "Deactivate" : "Activate" }}
@@ -171,7 +161,7 @@
                 >
                   <Icon
                     name="material-symbols:edit-outline-rounded"
-                    class="w-4 h-4"
+                    size="20"
                   />
                 </button>
                 <button
@@ -180,7 +170,7 @@
                 >
                   <Icon
                     name="material-symbols:delete-outline-rounded"
-                    class="w-4 h-4"
+                    size="20"
                   />
                 </button>
               </td>
@@ -194,12 +184,12 @@
     <div class="bg-white p-6 rounded-lg shadow-md">
       <div class="flex justify-between items-center mb-4">
         <div class="text-lg font-medium">Highlighted Products</div>
-        <button
+        <rs-button
           @click="showCreateProductModal = true"
-          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
+          class="px-4 py-2 text-sm"
         >
           Add Highlighted Product
-        </button>
+        </rs-button>
       </div>
 
       <!-- Highlighted Product Table -->
@@ -208,25 +198,21 @@
           <thead class="bg-gray-50">
             <tr>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Product Name
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Image
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Priority
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Actions
@@ -246,29 +232,20 @@
                 />
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                <button @click="increasePriority(index)">↑</button>
-                <button @click="decreasePriority(index)">↓</button>
+                <button @click="changePriority(index, 'up')">↑</button>
+                <button @click="changePriority(index, 'down')">↓</button>
                 {{ product.priority }}
               </td>
               <td
                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2"
               >
                 <button
-                  @click="editProduct(index)"
-                  class="text-blue-600 hover:text-blue-800"
-                >
-                  <Icon
-                    name="material-symbols:edit-outline-rounded"
-                    class="w-4 h-4"
-                  />
-                </button>
-                <button
                   @click="deleteProduct(index)"
                   class="text-red-600 hover:text-red-800"
                 >
                   <Icon
                     name="material-symbols:delete-outline-rounded"
-                    class="w-4 h-4"
+                    size="20"
                   />
                 </button>
               </td>
@@ -278,199 +255,257 @@
       </div>
     </div>
 
-    <!-- Create Advertisement Modal -->
-    <div
-      v-if="showCreateAdModal"
-      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+    <!-- Modals -->
+    <rs-modal
+      v-model="showCreateAdModal"
+      position="center"
+      title="Add Advertisement"
     >
-      <div class="bg-white p-6 rounded-lg shadow-md w-11/12 sm:w-2/3 lg:w-1/2">
-        <div class="text-lg font-medium mb-4">Add Advertisement</div>
-        <div class="space-y-4">
-          <!-- Title -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Title</label
-            >
-            <input
-              v-model="newAd.title"
-              type="text"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+      <div class="space-y-4">
+        <!-- Title -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Title</label
+          >
+          <input
+            v-model="newAd.title"
+            type="text"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Image Upload -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Upload Image</label
-            >
-            <input
-              type="file"
-              @change="handleFileUploadAds"
-              accept="image/*"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-            <p v-if="newAd.image" class="text-sm text-gray-500 mt-2">
-              {{ newAd.image.name }}
-            </p>
-          </div>
+        <!-- Image Upload -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Upload Image</label
+          >
+          <input
+            type="file"
+            @change="handleFileUploadAds"
+            accept="image/*"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <p v-if="newAd.image" class="text-sm text-gray-500 mt-2">
+            {{ newAd.image.name }}
+          </p>
+        </div>
 
-          <!-- URL -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >URL</label
-            >
-            <input
-              v-model="newAd.url"
-              type="url"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+        <!-- URL -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >URL</label
+          >
+          <input
+            v-model="newAd.url"
+            type="url"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Actions -->
-          <div class="flex justify-end space-x-4">
-            <button
-              @click="cancelCreateAd"
-              class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-            <button
-              @click="createAd"
-              :disabled="!newAd.title || !newAd.image || !newAd.url"
-              class="px-4 py-2 text-sm text-white bg-green-600 rounded-lg hover:bg-green-500 disabled:opacity-50"
-            >
-              Add Advertisement
-            </button>
-          </div>
+        <!-- Actions -->
+        <div class="flex justify-end space-x-4">
+          <button
+            @click="cancelCreateAd"
+            class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <rs-button
+            @click="createAd"
+            :disabled="!newAd.title || !newAd.image || !newAd.url"
+            class="px-4 py-2 text-sm"
+          >
+            Add Advertisement
+          </rs-button>
         </div>
       </div>
-    </div>
+
+      <template #footer>
+        <div></div>
+      </template>
+    </rs-modal>
 
     <!-- Edit Advertisement Modal -->
-    <div
-      v-if="editingIndex !== null"
-      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+    <rs-modal
+      v-model="editingAdsModal"
+      title="Edit Advertisement"
+      position="center"
     >
-      <div class="bg-white p-6 rounded-lg shadow-md w-11/12 sm:w-2/3 lg:w-1/2">
-        <div class="text-lg font-medium mb-4">Edit Advertisement</div>
-        <div class="space-y-4">
-          <!-- Title -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Title</label
-            >
-            <input
-              v-model="advertisements[editingIndex].title"
-              type="text"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+      <div class="space-y-4">
+        <!-- Title -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Title</label
+          >
+          <input
+            v-model="advertisements[editingIndex].title"
+            type="text"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Image Upload -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Upload Image</label
-            >
-            <input
-              type="file"
-              @change="handleFileUploadEdit"
-              accept="image/*"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-            <p
-              v-if="advertisements[editingIndex].image"
-              class="text-sm text-gray-500 mt-2"
-            >
-              {{ advertisements[editingIndex].image.name }}
-            </p>
-          </div>
+        <!-- Image Upload -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Upload Image</label
+          >
+          <input
+            type="file"
+            @change="handleFileUploadEdit"
+            accept="image/*"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <p
+            v-if="advertisements[editingIndex].image"
+            class="text-sm text-gray-500 mt-2"
+          >
+            {{ advertisements[editingIndex].image.name }}
+          </p>
+        </div>
 
-          <!-- URL -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >URL</label
-            >
-            <input
-              v-model="advertisements[editingIndex].url"
-              type="url"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+        <!-- URL -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >URL</label
+          >
+          <input
+            v-model="advertisements[editingIndex].url"
+            type="url"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Actions -->
-          <div class="flex justify-end space-x-4">
-            <button
-              @click="cancelEditAd"
-              class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-            <button
-              @click="saveAd"
-              class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-            >
-              Save Changes
-            </button>
-          </div>
+        <!-- Actions -->
+        <div class="flex justify-end space-x-4">
+          <button
+            @click="(editingAdsModal = false), cancelEditAd"
+            class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <rs-button @click="saveAd" class="px-4 py-2 text-sm">
+            Save Changes
+          </rs-button>
         </div>
       </div>
-    </div>
+
+      <template #footer>
+        <div></div>
+      </template>
+    </rs-modal>
 
     <!-- Create Highlighted Product Modal -->
-    <div
-      v-if="showCreateProductModal"
-      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+    <rs-modal
+      v-model="showCreateProductModal"
+      position="center"
+      title="Add Highlighted Product"
     >
-      <div class="bg-white p-6 rounded-lg shadow-md w-11/12 sm:w-2/3 lg:w-1/2">
-        <div class="text-lg font-medium mb-4">Add Highlighted Product</div>
-        <div class="space-y-4">
-          <!-- Product Name -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Product Name</label
-            >
-            <input
-              v-model="newProduct.name"
-              type="text"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+      <div class="space-y-4">
+        <!-- Product Name -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Product Name</label
+          >
+          <input
+            v-model="newProduct.name"
+            type="text"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Image Upload -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Upload Image</label
-            >
-            <input
-              type="file"
-              @change="handleFileUploadProduct"
-              accept="image/*"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-            <p v-if="newProduct.image" class="text-sm text-gray-500 mt-2">
-              {{ newProduct.image.name }}
-            </p>
-          </div>
+        <!-- Image Upload -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Upload Image</label
+          >
+          <input
+            type="file"
+            @change="handleFileUploadProduct"
+            accept="image/*"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <p v-if="newProduct.image" class="text-sm text-gray-500 mt-2">
+            {{ newProduct.image.name }}
+          </p>
+        </div>
 
-          <!-- Actions -->
-          <div class="flex justify-end space-x-4">
-            <button
-              @click="cancelCreateProduct"
-              class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-            <button
-              @click="createProduct"
-              :disabled="!newProduct.name || !newProduct.image"
-              class="px-4 py-2 text-sm text-white bg-green-600 rounded-lg hover:bg-green-500 disabled:opacity-50"
-            >
-              Add Product
-            </button>
-          </div>
+        <!-- Actions -->
+        <div class="flex justify-end space-x-4">
+          <button
+            @click="cancelCreateProduct"
+            class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <rs-button
+            @click="createProduct"
+            :disabled="!newProduct.name || !newProduct.image"
+            class="px-4 py-2 text-sm"
+          >
+            Add Product
+          </rs-button>
         </div>
       </div>
-    </div>
+      <template #footer>
+        <div></div>
+      </template>
+    </rs-modal>
+
+    <!-- Edit Highlighted Product Modal -->
+    <rs-modal
+      v-model="editingProductsModal"
+      title="Edit Highlighted Product"
+      position="center"
+    >
+      <div class="space-y-4">
+        <!-- Product Name -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Product Name</label
+          >
+          <input
+            v-model="highlightedProducts[editingIndex].name"
+            type="text"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
+
+        <!-- Image Upload -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Upload Image</label
+          >
+          <input
+            type="file"
+            @change="handleFileUploadEdit"
+            accept="image/*"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <p
+            v-if="highlightedProducts[editingIndex].image"
+            class="text-sm text-gray-500 mt-2"
+          >
+            {{ highlightedProducts[editingIndex].image.name }}
+          </p>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-end space-x-4">
+          <button
+            @click="cancelEditProduct"
+            class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+            @click="saveProduct"
+            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
+          >
+            Save Changes
+          </button>
+        </div>
+      </div>
+    </rs-modal>
   </div>
 </template>
 
@@ -483,11 +518,7 @@ definePageMeta({
 });
 
 // Banner images state
-const bannerImages = ref([
-  // Example images
-  { url: "https://example.com/image1.jpg" },
-  { url: "https://example.com/image2.jpg" },
-]);
+const bannerImages = ref([]);
 
 // Reference for the hidden file input
 const fileInput = ref(null);
@@ -497,7 +528,7 @@ const triggerFileUpload = () => {
   fileInput.value.click();
 };
 
-// Handle file upload
+// Handle file upload for banner images
 const handleFileUpload = (event) => {
   const file = event.target.files[0];
   if (file && bannerImages.value.length < 5) {
@@ -532,7 +563,9 @@ const advertisements = ref([
   },
 ]);
 
+// Modals and form state
 const showCreateAdModal = ref(false);
+const editingAdsModal = ref(false);
 const newAd = ref({
   title: "",
   image: null,
@@ -573,6 +606,7 @@ const createAd = () => {
 
 // Edit an advertisement
 const editAd = (index) => {
+  editingAdsModal.value = true;
   editingIndex.value = index;
 };
 
@@ -593,6 +627,7 @@ const toggleAdStatus = (index) => {
   const activeAdsCount = advertisements.value.filter(
     (ad) => ad.status === "active"
   ).length;
+
   if (advertisements.value[index].status === "active") {
     advertisements.value[index].status = "inactive";
   } else if (activeAdsCount < 5) {
@@ -606,11 +641,6 @@ const toggleAdStatus = (index) => {
 const cancelCreateAd = () => {
   newAd.value = { title: "", image: null, url: "", status: "inactive" };
   showCreateAdModal.value = false;
-};
-
-// Cancel advertisement editing
-const cancelEditAd = () => {
-  editingIndex.value = null;
 };
 
 // Highlighted products data
@@ -627,7 +657,9 @@ const highlightedProducts = ref([
   },
 ]);
 
+// Modals and form state
 const showCreateProductModal = ref(false);
+const editingProductsModal = ref(false);
 const newProduct = ref({
   name: "",
   image: null,
@@ -648,7 +680,11 @@ const handleFileUploadProduct = (event) => {
 const createProduct = () => {
   if (newProduct.value.name && newProduct.value.image) {
     highlightedProducts.value.push({ ...newProduct.value });
-    newProduct.value = { name: "", image: null, priority: 0 };
+    newProduct.value = {
+      name: "",
+      image: null,
+      priority: highlightedProducts.value.length + 1,
+    };
     showCreateProductModal.value = false;
     alert("Highlighted product added successfully!");
   }
@@ -656,31 +692,55 @@ const createProduct = () => {
 
 // Edit a highlighted product
 const editProduct = (index) => {
+  editingProductsModal.value = true;
   editingIndex.value = index;
 };
 
 // Save changes to the edited highlighted product
 const saveProduct = () => {
-  editingIndex.value = null;
+  editingProductsModal.value = false;
   alert("Highlighted product updated successfully!");
 };
 
 // Delete a highlighted product
 const deleteProduct = (index) => {
   highlightedProducts.value.splice(index, 1);
+  highlightedProducts.value.forEach((product, i) => (product.priority = i + 1));
   alert("Highlighted product deleted successfully!");
 };
 
-// Increase priority of a product
-const increasePriority = (index) => {
-  if (highlightedProducts.value[index].priority > 1) {
-    highlightedProducts.value[index].priority--;
+// Increase or decrease product priority
+const changePriority = (index, direction) => {
+  if (direction === "up" && index > 0) {
+    [highlightedProducts.value[index], highlightedProducts.value[index - 1]] = [
+      highlightedProducts.value[index - 1],
+      highlightedProducts.value[index],
+    ];
+  } else if (
+    direction === "down" &&
+    index < highlightedProducts.value.length - 1
+  ) {
+    [highlightedProducts.value[index], highlightedProducts.value[index + 1]] = [
+      highlightedProducts.value[index + 1],
+      highlightedProducts.value[index],
+    ];
   }
+  highlightedProducts.value.forEach((product, i) => (product.priority = i + 1));
 };
 
-// Decrease priority of a product
-const decreasePriority = (index) => {
-  highlightedProducts.value[index].priority++;
+// Cancel highlighted product creation
+const cancelCreateProduct = () => {
+  newProduct.value = {
+    name: "",
+    image: null,
+    priority: highlightedProducts.value.length + 1,
+  };
+  showCreateProductModal.value = false;
+};
+
+// Cancel highlighted product editing
+const cancelEditProduct = () => {
+  editingIndex.value = null;
 };
 </script>
 

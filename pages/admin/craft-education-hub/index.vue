@@ -138,7 +138,7 @@
                 >
                   <Icon
                     name="material-symbols:edit-outline-rounded"
-                    class="w-4 h-4"
+                    size="30"
                   />
                 </button>
                 <button
@@ -147,7 +147,7 @@
                 >
                   <Icon
                     name="material-symbols:delete-outline-rounded"
-                    class="w-4 h-4"
+                    size="30"
                   />
                 </button>
               </div>
@@ -157,102 +157,102 @@
       </div>
     </div>
 
-    <!-- Edit Webinar Modal -->
-    <div
-      v-if="editingIndex !== null"
-      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+    <rs-modal
+      v-model="editingModal"
+      position="center"
+      title="Edit Webinar"
+      size="lg"
     >
-      <div class="bg-white p-6 rounded-lg shadow-md w-11/12 sm:w-2/3 lg:w-1/2">
-        <div class="text-lg font-medium mb-4">Edit Webinar</div>
-        <div class="space-y-4">
-          <!-- Title -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Title</label
-            >
-            <input
-              v-model="webinars[editingIndex].title"
-              type="text"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+      <div class="text-lg font-medium mb-4">Edit Webinar</div>
+      <div class="space-y-4">
+        <!-- Title -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Title</label
+          >
+          <input
+            v-model="webinars[editingIndex].title"
+            type="text"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Start and End DateTime -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Start Date & Time</label
-            >
-            <input
-              v-model="webinars[editingIndex].startDatetime"
-              type="datetime-local"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >End Date & Time</label
-            >
-            <input
-              v-model="webinars[editingIndex].endDatetime"
-              type="datetime-local"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+        <!-- Start and End DateTime -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Start Date & Time</label
+          >
+          <input
+            v-model="webinars[editingIndex].startDatetime"
+            type="datetime-local"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >End Date & Time</label
+          >
+          <input
+            v-model="webinars[editingIndex].endDatetime"
+            type="datetime-local"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Description -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Description</label
-            >
-            <textarea
-              v-model="webinars[editingIndex].description"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-              rows="4"
-            ></textarea>
-          </div>
+        <!-- Description -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Description</label
+          >
+          <textarea
+            v-model="webinars[editingIndex].description"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+            rows="4"
+          ></textarea>
+        </div>
 
-          <!-- External Platform Link -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >External Platform Link</label
-            >
-            <input
-              v-model="webinars[editingIndex].link"
-              type="url"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+        <!-- External Platform Link -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >External Platform Link</label
+          >
+          <input
+            v-model="webinars[editingIndex].link"
+            type="url"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Passcode -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Passcode</label
-            >
-            <input
-              v-model="webinars[editingIndex].passcode"
-              type="text"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+        <!-- Passcode -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Passcode</label
+          >
+          <input
+            v-model="webinars[editingIndex].passcode"
+            type="text"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Actions -->
-          <div class="flex justify-end space-x-4">
-            <button
-              @click="cancelEdit"
-              class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-            <button
-              @click="saveWebinar"
-              class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-            >
-              Save Changes
-            </button>
-          </div>
+        <!-- Actions -->
+        <div class="flex justify-end space-x-4">
+          <button
+            @click="cancelEdit"
+            class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <rs-button @click="saveWebinar" class="px-4 py-2 text-sm text-white">
+            Save Changes
+          </rs-button>
         </div>
       </div>
-    </div>
+
+      <template #footer>
+        <div></div>
+      </template>
+    </rs-modal>
   </div>
 </template>
 
@@ -292,6 +292,8 @@ const newWebinar = ref({
   link: "",
   passcode: "",
 });
+
+const editingModal = ref(false);
 
 const webinarFilter = ref("all"); // "all", "upcoming", "past"
 
@@ -333,6 +335,8 @@ const editingIndex = ref(null);
 // Method to edit a webinar
 const editWebinar = (index) => {
   editingIndex.value = index;
+
+  editingModal.value = true;
 };
 
 // Method to save the edited webinar
@@ -350,6 +354,7 @@ const deleteWebinar = (index) => {
 // Method to cancel the edit operation
 const cancelEdit = () => {
   editingIndex.value = null;
+  editingModal.value = false;
 };
 </script>
 

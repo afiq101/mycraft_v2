@@ -141,12 +141,9 @@
           >
             Save as Draft
           </button>
-          <button
-            @click="createNotification"
-            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-          >
+          <rs-button @click="createNotification" class="px-4 py-2 text-sm">
             Create Notification
-          </button>
+          </rs-button>
         </div>
       </div>
     </div>
@@ -174,10 +171,7 @@
                 @click="editNotification(index)"
                 class="text-blue-600 hover:text-blue-800"
               >
-                <Icon
-                  name="material-symbols:edit-square-outline-rounded"
-                  class="w-4 h-4"
-                />
+                <Icon name="material-symbols:edit-outline-rounded" size="30" />
               </button>
               <button
                 @click="deleteNotification(index)"
@@ -185,7 +179,7 @@
               >
                 <Icon
                   name="material-symbols:delete-outline-rounded"
-                  class="w-4 h-4"
+                  size="30"
                 />
               </button>
             </div>
@@ -194,149 +188,147 @@
       </div>
     </div>
 
-    <!-- Update Notification Modal -->
-    <div
-      v-if="editingIndex !== null"
-      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+    <rs-modal
+      v-model="editingModal"
+      title="Create Notification"
+      size="lg"
+      position="center"
     >
-      <div class="bg-white p-6 rounded-lg shadow-md w-11/12 sm:w-2/3 lg:w-1/2">
-        <div class="text-lg font-medium mb-4">Update Notification</div>
-
-        <!-- Notification Type -->
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2"
-            >Notification Type</label
-          >
-          <select
-            v-model="notifications[editingIndex].type"
-            class="block w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500"
-          >
-            <option value="email">Email</option>
-            <option value="mobile">Mobile</option>
-          </select>
-        </div>
-
-        <!-- Targeted User Group -->
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2"
-            >Targeted User Group</label
-          >
-          <select
-            v-model="notifications[editingIndex].targetGroup"
-            class="block w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500"
-          >
-            <option value="seller">Seller</option>
-            <option value="user">User</option>
-          </select>
-        </div>
-
-        <!-- Notification Title -->
-        <input
-          v-model="notifications[editingIndex].title"
-          type="text"
-          class="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-        />
-
-        <!-- Notification Message -->
-        <textarea
-          v-model="notifications[editingIndex].message"
-          class="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-        ></textarea>
-
-        <!-- Attachments -->
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2"
-            >Attachments (Max 3 files)</label
-          >
-          <input
-            type="file"
-            multiple
-            @change="handleEditAttachment"
-            :disabled="notifications[editingIndex].attachments.length >= 3"
-            class="block w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500"
-          />
-          <div class="mt-2 flex flex-wrap space-x-2">
-            <div
-              v-for="(file, index) in notifications[editingIndex].attachments"
-              :key="index"
-              class="flex items-center space-x-2 p-2 bg-gray-100 rounded-lg"
-            >
-              <span>{{ file.name }}</span>
-              <button
-                @click="removeEditAttachment(index)"
-                class="text-red-600 hover:text-red-800"
-              >
-                <Icon
-                  name="material-symbols:delete-outline-rounded"
-                  class="w-4 h-4"
-                />
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Publish Time -->
-        <div class="mb-4">
-          <label class="block text-sm font-medium text-gray-700 mb-2"
-            >Publish</label
-          >
-          <div class="flex items-center space-x-4">
-            <div>
-              <input
-                type="radio"
-                id="editImmediate"
-                value="immediate"
-                v-model="notifications[editingIndex].publishTime"
-                class="mr-2"
-              />
-              <label for="editImmediate" class="text-sm">Immediate</label>
-            </div>
-            <div>
-              <input
-                type="radio"
-                id="editSchedule"
-                value="schedule"
-                v-model="notifications[editingIndex].publishTime"
-                class="mr-2"
-              />
-              <label for="editSchedule" class="text-sm">Schedule</label>
-            </div>
-          </div>
-        </div>
-
-        <!-- Schedule Date & Time -->
-        <div
-          v-if="notifications[editingIndex].publishTime === 'schedule'"
-          class="flex space-x-4 mb-4"
+      <!-- Notification Type -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2"
+          >Notification Type</label
         >
-          <input
-            v-model="notifications[editingIndex].scheduleDate"
-            type="date"
-            class="p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-          />
-          <input
-            v-model="notifications[editingIndex].scheduleTime"
-            type="time"
-            class="p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
+        <select
+          v-model="notifications[editingIndex].type"
+          class="block w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500"
+        >
+          <option value="email">Email</option>
+          <option value="mobile">Mobile</option>
+        </select>
+      </div>
 
-        <div class="flex justify-end space-x-4">
-          <button
-            @click="cancelEdit"
-            class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+      <!-- Targeted User Group -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2"
+          >Targeted User Group</label
+        >
+        <select
+          v-model="notifications[editingIndex].targetGroup"
+          class="block w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500"
+        >
+          <option value="seller">Seller</option>
+          <option value="user">User</option>
+        </select>
+      </div>
+
+      <!-- Notification Title -->
+      <input
+        v-model="notifications[editingIndex].title"
+        type="text"
+        class="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+      />
+
+      <!-- Notification Message -->
+      <textarea
+        v-model="notifications[editingIndex].message"
+        class="w-full p-2 mb-4 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+      ></textarea>
+
+      <!-- Attachments -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2"
+          >Attachments (Max 3 files)</label
+        >
+        <input
+          type="file"
+          multiple
+          @change="handleEditAttachment"
+          :disabled="notifications[editingIndex].attachments.length >= 3"
+          class="block w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500"
+        />
+        <div class="mt-2 flex flex-wrap space-x-2">
+          <div
+            v-for="(file, index) in notifications[editingIndex].attachments"
+            :key="index"
+            class="flex items-center space-x-2 p-2 bg-gray-100 rounded-lg"
           >
-            Cancel
-          </button>
-          <button
-            @click="saveNotification"
-            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-          >
-            Save Changes
-          </button>
+            <span>{{ file.name }}</span>
+            <button
+              @click="removeEditAttachment(index)"
+              class="text-red-600 hover:text-red-800"
+            >
+              <Icon
+                name="material-symbols:delete-outline-rounded"
+                class="w-4 h-4"
+              />
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+
+      <!-- Publish Time -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-2"
+          >Publish</label
+        >
+        <div class="flex items-center space-x-4">
+          <div>
+            <input
+              type="radio"
+              id="editImmediate"
+              value="immediate"
+              v-model="notifications[editingIndex].publishTime"
+              class="mr-2"
+            />
+            <label for="editImmediate" class="text-sm">Immediate</label>
+          </div>
+          <div>
+            <input
+              type="radio"
+              id="editSchedule"
+              value="schedule"
+              v-model="notifications[editingIndex].publishTime"
+              class="mr-2"
+            />
+            <label for="editSchedule" class="text-sm">Schedule</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Schedule Date & Time -->
+      <div
+        v-if="notifications[editingIndex].publishTime === 'schedule'"
+        class="flex space-x-4 mb-4"
+      >
+        <input
+          v-model="notifications[editingIndex].scheduleDate"
+          type="date"
+          class="p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+        />
+        <input
+          v-model="notifications[editingIndex].scheduleTime"
+          type="time"
+          class="p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+        />
+      </div>
+
+      <div class="flex justify-end space-x-4">
+        <button
+          @click="(editingModal = false), cancelEdit"
+          class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+        >
+          Cancel
+        </button>
+        <rs-button @click="saveNotification" class="px-4 py-2 text-sm">
+          Save Changes
+        </rs-button>
+      </div>
+
+      <template #footer>
+        <div></div>
+      </template>
+    </rs-modal>
   </div>
 </template>
 
@@ -406,6 +398,7 @@ const file = ref({
 });
 
 const editingIndex = ref(null);
+const editingModal = ref(false);
 
 const createNotification = () => {
   if (newNotification.value.title && newNotification.value.message) {
@@ -420,6 +413,7 @@ const saveAsDraft = () => {
 
 const editNotification = (index) => {
   editingIndex.value = index;
+  editingModal.value = true;
 };
 
 const saveNotification = () => {
