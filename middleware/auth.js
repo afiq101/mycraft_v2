@@ -9,6 +9,8 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
       method: "GET",
     });
 
+    console.log("validateUser", validateUser);
+
     // If user is not logged in, redirect to logout page
     if (validateUser.value.statusCode === 401) {
       $swal

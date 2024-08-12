@@ -40,7 +40,16 @@ const login = async () => {
         showConfirmButton: false,
       });
 
-      window.location.href = "/admin/dashboard";
+      console.log(loginUser._value.data.roles[0]);
+
+      const rolee = loginUser._value.data.roles[0];
+
+      if (rolee === "Superadmin") window.location.href = "/superadmin/dashboard";
+
+      if (rolee === "Admin") window.location.href = "/admin/dashboard";
+
+      if (rolee === "Seller") window.location.href = "/admin/dashboard";
+      // else window.location.href = "/";
     }
   } catch (e) {
     console.log(e);

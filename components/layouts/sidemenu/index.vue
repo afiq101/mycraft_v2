@@ -33,10 +33,10 @@ onMounted(() => {
   <div class="vertical-menu">
     <div class="py-2 px-4">
       <nuxt-link to="/">
-        <div class="flex flex-auto gap-3 justify-center items-center h-[48px]">
+        <div class="flex flex-auto gap-3 justify-center items-center h-[48px] mt-3">
           <img
             class="h-10 block"
-            src="@/assets/img/logo/logo-word-black.svg"
+            src="@/assets/img/logo/mycraft_logo.png"
             alt=""
           />
         </div>
