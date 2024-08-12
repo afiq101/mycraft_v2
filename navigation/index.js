@@ -83,6 +83,12 @@ export default [
         "path": "/integration-api-keys-setting/payment-gateway-api-keys",
         "icon": "",
         "child": []
+      },
+      {
+        "title": "Courier Service Management",
+        "path": "/courier-service-management",
+        "icon": "",
+        "child": []
       }
     ],
     "meta": {}

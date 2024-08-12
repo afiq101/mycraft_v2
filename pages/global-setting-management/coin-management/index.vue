@@ -2,7 +2,7 @@
 import { ref, computed } from 'vue';
 
 definePageMeta({
-  title: "Coin Management",
+  title: "Global Setting Management",
   layout: "default",
 });
 
@@ -100,7 +100,7 @@ const uploadAvatar = (event) => {
 
 <template>
   <div class="container mx-auto px-4 py-8">
-    <h1 class="text-3xl font-bold mb-8">Coin Management</h1>
+    <h1 class="text-3xl font-bold mb-8">Global Setting Management</h1>
 
     <rs-card class="mb-8">
       <template #header>

@@ -13,7 +13,7 @@ const fetchOrders = async () => {
   // Simulating an API call with setTimeout
   setTimeout(() => {
     orders.value = [
-    { 
+      { 
         id: 1, 
         orderNumber: 'ORD123456', 
         customerName: 'John Doe', 
@@ -112,34 +112,21 @@ const getOrderStatusVariant = (status) => {
     <h1 class="text-3xl font-bold mb-8">ORDER TRANSACTIONS</h1>
 
     <!-- Filters Card -->
-    <rs-card class="mb-8 p-4" style="background-color: #f4e5e5;">
-      <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-        <div>
-          <label class="block font-semibold text-gray-700">Begin Date</label>
-          <rs-button variant="outline-primary" class="w-full mt-2 p-2">
-            Button A
-          </rs-button>
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700">End Date</label>
-          <rs-button variant="outline-primary" class="w-full mt-2 p-2">
-            Button B
-          </rs-button>
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700">Status</label>
-          <rs-button variant="outline-primary" class="w-full mt-2 p-2">
-            Button C
-          </rs-button>
-        </div>
-        <div>
-          <label class="block font-semibold text-gray-700">Client</label>
-          <rs-button variant="outline-primary" class="w-full mt-2 p-2">
-            Button D
-          </rs-button>
-        </div>
+    <rs-card class="mb-8 p-4 bg-white shadow-md rounded-lg">
+      <div class="flex justify-between items-center space-x-4">
+        <rs-button variant="outline-primary" class="flex-1 p-2">
+          Button A
+        </rs-button>
+        <rs-button variant="outline-primary" class="flex-1 p-2">
+          Button B
+        </rs-button>
+        <rs-button variant="outline-primary" class="flex-1 p-2">
+          Button C
+        </rs-button>
+        <rs-button variant="outline-primary" class="flex-1 p-2">
+          Button D
+        </rs-button>
       </div>
-      <p class="text-gray-500 mt-4">*This data has been shown according to your given informations</p>
     </rs-card>
 
     <rs-card>
@@ -194,3 +181,7 @@ const getOrderStatusVariant = (status) => {
     </rs-card>
   </div>
 </template>
+
+<style scoped>
+/* Add any custom styles here */
+</style>
