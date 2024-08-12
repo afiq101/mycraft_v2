@@ -1,4 +1,5 @@
 <script setup>
+import { BarChart, useBarChart } from "vue-chart-3";
 definePageMeta({
   title: "Dashboard",
   middleware: ["auth"],
@@ -225,12 +226,233 @@ const chartOptionsTransaction = computed(() => ({
   },
 }));
 
+
+
+// Analytical Total Sales (Normal Price)
+const totalSalesData = ref([
+  {
+    name: 'Total Sales',
+    data: [1200, 1500, 1100, 1800, 1900, 2200, 2500],
+  },
+]);
+
+// Today's Orders (SKU)
+const todaysOrdersData = ref([
+  {
+    name: "Today's Orders",
+    data: [150, 200, 120, 300, 250],
+  },
+]);
+
+// Sales by Categories
+const salesByCategoriesData = ref([
+  {
+    name: 'Sales by Categories',
+    data: [5000, 4000, 3000, 7000, 2000],
+  },
+]);
+const categories = ref(['Electronics', 'Clothing', 'Home & Garden', 'Toys', 'Books']);
+
+// Monthly Sales (Domestic & International)
+const monthlySalesData = ref([
+  {
+    name: 'Domestic Sales',
+    data: [20000, 25000, 22000, 27000, 30000, 28000, 35000],
+  },
+  {
+    name: 'International Sales',
+    data: [15000, 18000, 16000, 20000, 24000, 23000, 26000],
+  },
+]);
+
+// Annual Sales (Domestic & International)
+const annualSalesData = ref([
+  {
+    name: 'Domestic Sales',
+    data: [380000],
+  },
+  {
+    name: 'International Sales',
+    data: [280000],
+  },
+]);
+
+// Sales via Web or Apps Purchased
+const salesViaWebOrAppsData = ref([
+  {
+    name: 'Web Sales',
+    data: [24000, 28000, 26000, 29000, 32000, 31000, 33000],
+  },
+  {
+    name: 'App Sales',
+    data: [15000, 16000, 14000, 18000, 20000, 22000, 23000],
+  },
+]);
+
+const chartSale = computed(() => ({
+  chart: {
+    id: "salesChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: [
+      "January", "February", "March", "April", "May", "June", 
+      "July", "August", "September", "October", "November", "December"
+    ],
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
+}));
+
+// Sales by Category
+// Example data: Sales figures for different categories
+const sales = ref([300, 500, 200, 450, 350]);
+
+// Categories corresponding to the sales data
+const chartData = computed(() => ({
+  labels: [
+    "Electronics", 
+    "Furniture", 
+    "Groceries", 
+    "Clothing", 
+    "Toys"
+  ],
+  datasets: [
+    {
+      label: "Sales by Category",
+      data: sales.value,
+      backgroundColor: ["#FF829D", "#FFD778", "#5EB5EF", "#6FCDCD", "#ECEDF1"],
+    },
+  ],
+}));
+
+const salesCategory1 = computed(() => ({
+  scales: {
+    y: {
+      beginAtZero: true,
+    },
+  },
+  plugins: {
+    zoom: {
+      zoom: {
+        wheel: {
+          enabled: true,
+        },
+        pinch: {
+          enabled: true,
+        },
+        mode: "xy",
+      },
+    },
+    legend: {
+      display: true,
+    },
+  }
+}));
+
+const { barChartProps } = useBarChart({
+  chartData,
+  options: salesCategory1,
+});
+
+// Example data: Sales for different categories
+const series = ref([
+  {
+    name: "Electronics",
+    data: [300],
+  },
+  {
+    name: "Furniture",
+    data: [500],
+  },
+  {
+    name: "Groceries",
+    data: [200],
+  },
+  {
+    name: "Clothing",
+    data: [450],
+  },
+  {
+    name: "Toys",
+    data: [350],
+  },
+]);
+
+const salesCategory = computed(() => ({
+  chart: {
+    id: "salesCategoryChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: ["Electronics", "Furniture", "Groceries", "Clothing", "Toys"],
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
+}));
+
+// Chart options
+const chartOptions1 = computed(() => ({
+  chart: {
+    id: "apexChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: categories,
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
+}));
+
 onMounted(() => {
   setTimeout(() => {
     changeKey.value++;
   }, 500);
 });
 </script>
+
 
 <template>
   <div>
@@ -475,5 +697,57 @@ onMounted(() => {
         </rs-card>
       </div>
     </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-6">
+      <rs-card>
+        <template #header> Analytical Total Sales (Normal Price) </template>
+        <template #body>
+          <ClientOnly>
+            <VueApexCharts
+              :key="changeKey"
+              width="100%"
+              height="300"
+              type="line"
+              :options="chartSale"
+              :series="totalSalesData"
+            ></VueApexCharts>
+          </ClientOnly>
+        </template>
+      </rs-card>
+
+      <rs-card>
+        <template #header> Today's Orders (SKU) </template>
+        <template #body>
+          <ClientOnly>
+            <VueApexCharts
+              :key="changeKey"
+              width="100%"
+              height="300"
+              type="line"
+              :options="chartSale"
+              :series="todaysOrdersData"
+            ></VueApexCharts>
+          </ClientOnly>
+        </template>
+      </rs-card>
+
+      <rs-card>
+        <template #header> Sales by Categories </template>
+        <template #body>
+          <ClientOnly>
+            <VueApexCharts
+              :key="changeKey"
+              width="100%"
+              height="300"
+              type="bar"
+              :options="chartOptions1"
+              :series="salesByCategoriesData"
+            ></VueApexCharts>
+          </ClientOnly>
+        </template>
+      </rs-card>
+    </div>
+
+    
   </div>
 </template>

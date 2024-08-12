@@ -1,8 +1,10 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const { $swal } = useNuxtApp();
 
+  console.log("masuk auth");
+
   if (process.client) {
-    // Validate every request to every page
+    // // Validate every request to every page
     const { data: validateUser } = await useFetch("/api/auth/validate", {
       method: "GET",
     });
