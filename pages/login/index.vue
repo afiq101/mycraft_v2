@@ -16,21 +16,33 @@ const togglePasswordVisibility = ref(false);
 
 const login = async () => {
   try {
-    // Save token to pinia store
-    userStore.setUsername("Pentadbir");
-    userStore.setRoles(["Admin"]);
-    userStore.setIsAuthenticated(true);
-
-    $swal.fire({
-      position: "center",
-      title: "Success",
-      text: "Login Success",
-      icon: "success",
-      timer: 2000,
-      showConfirmButton: false,
+    const { data: loginUser } = await useFetch("/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify({
+        username: username.value,
+        password: password.value,
+      }),
     });
 
-    window.location.href = "/dashboard";
+    console.log(loginUser._value);
+
+    if (loginUser._value.statusCode === 200) {
+      // Save token to pinia store
+      userStore.setUsername("Admin");
+      userStore.setRoles([loginUser._value.data.roles[0]]);
+      userStore.setIsAuthenticated(true);
+
+      $swal.fire({
+        position: "center",
+        title: "Success",
+        text: "Login Success",
+        icon: "success",
+        timer: 2000,
+        showConfirmButton: false,
+      });
+
+      window.location.href = "/dashboard";
+    }
   } catch (e) {
     console.log(e);
   }
