@@ -1,7 +1,7 @@
 export default [
   {
     header: "Administrator",
-    description: "Administrator business management module",
+    description: "Admin management module",
     child: [
       {
         title: "Dashboard",
@@ -17,13 +17,13 @@ export default [
         child: [],
         meta: {},
       },
-      {
-        title: "User Management",
-        path: "/admin/user-management",
-        icon: "ic:round-supervisor-account",
-        child: [],
-        meta: {},
-      },
+      // {
+      //   title: "User Management",
+      //   path: "/admin/user-management",
+      //   icon: "ic:round-supervisor-account",
+      //   child: [],
+      //   meta: {},
+      // },
       {
         title: "Product Management",
         icon: "ant-design:product-filled",
@@ -72,13 +72,13 @@ export default [
         ],
         meta: {},
       },
-      {
-        title: "Growth Seller",
-        path: "/admin/growth-seller",
-        icon: "ic:outline-dashboard",
-        child: [],
-        meta: {},
-      },
+      // {
+      //   title: "Growth Seller",
+      //   path: "/admin/growth-seller",
+      //   icon: "ic:outline-dashboard",
+      //   child: [],
+      //   meta: {},
+      // },
       {
         title: "Notification Management",
         path: "/admin/notification-management",
@@ -106,13 +106,13 @@ export default [
         ],
         meta: {},
       },
-      {
-        title: "Marketing Centre",
-        path: "/admin/marketing-centre",
-        icon: "ic:outline-dashboard",
-        child: [],
-        meta: {},
-      },
+      // {
+      //   title: "Marketing Centre",
+      //   path: "/admin/marketing-centre",
+      //   icon: "ic:outline-dashboard",
+      //   child: [],
+      //   meta: {},
+      // },
       {
         title: "Customer Service",
         path: "/admin/customer-service",
@@ -127,13 +127,13 @@ export default [
         child: [],
         meta: {},
       },
-      {
-        title: "Template Management",
-        path: "/admin/template-management",
-        icon: "ic:sharp-file-copy",
-        child: [],
-        meta: {},
-      },
+      // {
+      //   title: "Template Management",
+      //   path: "/admin/template-management",
+      //   icon: "ic:sharp-file-copy",
+      //   child: [],
+      //   meta: {},
+      // },
       {
         title: "Livestream Management",
         path: "/admin/livestream-management",
@@ -162,13 +162,13 @@ export default [
         child: [],
         meta: {},
       },
-      {
-        title: "Game Management",
-        path: "/admin/game-management",
-        icon: "ic:outline-dashboard",
-        child: [],
-        meta: {},
-      },
+      // {
+      //   title: "Game Management",
+      //   path: "/admin/game-management",
+      //   icon: "ic:outline-dashboard",
+      //   child: [],
+      //   meta: {},
+      // },
       {
         title: "Voucher",
         path: "/admin/voucher",
@@ -183,13 +183,13 @@ export default [
         child: [],
         meta: {},
       },
-      {
-        title: "Coin Management",
-        path: "/admin/coin-management",
-        icon: "ic:outline-dashboard",
-        child: [],
-        meta: {},
-      },
+      // {
+      //   title: "Coin Management",
+      //   path: "/admin/coin-management",
+      //   icon: "ic:outline-dashboard",
+      //   child: [],
+      //   meta: {},
+      // },
     ],
     meta: {
       auth: {
@@ -281,7 +281,7 @@ export default [
           {
             title: "Logistics Fee",
             path: "/merchant/financial/logistics-fees",
-            icon: " ",
+            icon: "",
             child: [],
             meta: {},
           },
