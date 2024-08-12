@@ -1,6 +1,4 @@
 <script setup>
-
-
 definePageMeta({
   title: "Login",
   layout: "empty",
@@ -25,12 +23,10 @@ const login = async () => {
       }),
     });
 
-    console.log(loginUser._value);
-
-    if (loginUser._value.statusCode === 200) {
+    if (loginUser.value.statusCode === 200) {
       // Save token to pinia store
-      userStore.setUsername("Admin");
-      userStore.setRoles([loginUser._value.data.roles[0]]);
+      userStore.setUsername(loginUser.value.data.username);
+      userStore.setRoles(loginUser.value.data.roles);
       userStore.setIsAuthenticated(true);
 
       $swal.fire({
@@ -46,11 +42,12 @@ const login = async () => {
 
       const rolee = loginUser._value.data.roles[0];
 
-      if (rolee === "Superadmin") window.location.href = "/superadmin/dashboard";
+      if (rolee === "Superadmin")
+        window.location.href = "/super-admin/profile-management";
 
       if (rolee === "Admin") window.location.href = "/admin/dashboard";
 
-      if (rolee === "Seller") window.location.href = "/admin/dashboard";
+      if (rolee === "Seller") window.location.href = "/merchant/dashboard";
       // else window.location.href = "/";
     }
   } catch (e) {
@@ -75,7 +72,7 @@ const login = async () => {
         </div>
         <h3 class="mb-4">Login</h3>
         <p class="text-slate-500 mb-6">
-          Welcome to Corrad. Please login to continue.
+          Welcome to MyCraft. Please login to continue.
         </p>
         <div class="grid grid-cols-2">
           <FormKit
@@ -115,11 +112,11 @@ const login = async () => {
             </template>
           </FormKit>
           <FormKit type="checkbox" label="Remember Me" />
-          <NuxtLink
+          <!-- <NuxtLink
             class="flex items-center justify-end h-5 mt-1 text-primary hover:underline"
             to="forgot-password"
             >Forgot Password?</NuxtLink
-          >
+          > -->
           <!-- <NuxtLink to="/" class="col-span-2">
           </NuxtLink> -->
           <FormKit
@@ -131,12 +128,12 @@ const login = async () => {
             Sign In
           </FormKit>
         </div>
-        <p class="mt-3 text-center text-slate-500">
+        <!-- <p class="mt-3 text-center text-slate-500">
           Don't have an account?
           <NuxtLink to="/register" class="text-primary hover:underline"
             >Sign Up</NuxtLink
           >
-        </p>
+        </p> -->
       </rs-card>
     </div>
   </div>

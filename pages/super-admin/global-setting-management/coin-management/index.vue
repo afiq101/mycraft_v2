@@ -7,7 +7,7 @@ definePageMeta({
 });
 
 const user = ref({
-  profilePicture: "/path/to/default-avatar.png",
+  profilePicture: "/img/background/default-thumbnail.jpg",
   fullName: "John Doe",
   email: "john@example.com",
   phoneNumber: "+1 234 567 8900",

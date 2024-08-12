@@ -9,7 +9,7 @@ definePageMeta({
 const { $swal } = useNuxtApp();
 
 const user = ref({
-  profilePicture: "/path/to/default-avatar.png",
+  profilePicture: "/img/background/default-thumbnail.jpg",
 });
 
 const currentPassword = ref("abc123");

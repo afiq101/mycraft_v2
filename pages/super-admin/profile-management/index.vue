@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed } from "vue";
 
 definePageMeta({
   title: "Update Profile",
@@ -7,16 +7,16 @@ definePageMeta({
 });
 
 const user = ref({
-  profilePicture: "/path/to/default-avatar.png",
+  profilePicture: "/img/background/default-thumbnail.jpg",
   fullName: "John Doe",
   email: "john@example.com",
   phoneNumber: "+1 234 567 8900",
 });
 
 const password = ref({
-  current: '',
-  new: '',
-  confirmNew: '',
+  current: "",
+  new: "",
+  confirmNew: "",
 });
 
 const measurePasswordStrength = (password) => {
@@ -50,27 +50,27 @@ const passwordStrength = computed(() => {
 
 const passwordStrengthLabel = computed(() => {
   const score = passwordStrength.value;
-  if (score >= 80) return 'Very Strong';
-  if (score >= 60) return 'Strong';
-  if (score >= 40) return 'Moderate';
-  if (score >= 20) return 'Weak';
-  return 'Very Weak';
+  if (score >= 80) return "Very Strong";
+  if (score >= 60) return "Strong";
+  if (score >= 40) return "Moderate";
+  if (score >= 20) return "Weak";
+  return "Very Weak";
 });
 
 const passwordStrengthColor = computed(() => {
   const score = passwordStrength.value;
-  if (score >= 80) return 'success';
-  if (score >= 60) return 'info';
-  if (score >= 40) return 'warning';
-  return 'danger';
+  if (score >= 80) return "success";
+  if (score >= 60) return "info";
+  if (score >= 40) return "warning";
+  return "danger";
 });
 
 const updateProfile = () => {
-  console.log('Profile updated', user.value);
+  console.log("Profile updated", user.value);
 };
 
 const changePassword = () => {
-  console.log('Password changed', password.value);
+  console.log("Password changed", password.value);
 };
 
 const uploadAvatar = (event) => {
@@ -96,17 +96,19 @@ const uploadAvatar = (event) => {
       <template #body>
         <div class="flex items-center space-x-6">
           <div class="shrink-0">
-            <img class="h-16 w-16 object-cover rounded-full" :src="user.profilePicture" alt="Current Avatar" />
+            <img
+              class="h-16 w-16 object-cover rounded-full"
+              :src="user.profilePicture"
+              alt="Current Avatar"
+            />
           </div>
           <label class="block flex-grow">
             <span class="sr-only">Choose image file</span>
-            <input type="file" @change="uploadAvatar" class="block w-full text-sm text-slate-500
-              file:mr-4 file:py-2 file:px-4
-              file:rounded-full file:border-0
-              file:text-sm file:font-semibold
-              file:bg-violet-50 file:text-violet-700
-              hover:file:bg-violet-100
-            "/>
+            <input
+              type="file"
+              @change="uploadAvatar"
+              class="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100"
+            />
           </label>
         </div>
         <div class="flex justify-end mt-6">
@@ -130,7 +132,9 @@ const uploadAvatar = (event) => {
               validation="required"
             >
               <template #label>
-                <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
+                <label
+                  class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500"
+                >
                   Full Name <span class="text-danger">*</span>
                 </label>
               </template>
@@ -144,7 +148,9 @@ const uploadAvatar = (event) => {
               validation="required"
             >
               <template #label>
-                <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
+                <label
+                  class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500"
+                >
                   Phone Number <span class="text-danger">*</span>
                 </label>
               </template>
@@ -158,7 +164,9 @@ const uploadAvatar = (event) => {
               validation="required|email"
             >
               <template #label>
-                <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
+                <label
+                  class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500"
+                >
                   Email <span class="text-danger">*</span>
                 </label>
               </template>
@@ -186,7 +194,9 @@ const uploadAvatar = (event) => {
               validation="required"
             >
               <template #label>
-                <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
+                <label
+                  class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500"
+                >
                   Current Password <span class="text-danger">*</span>
                 </label>
               </template>
@@ -200,18 +210,22 @@ const uploadAvatar = (event) => {
               validation="required|length:8"
             >
               <template #label>
-                <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
+                <label
+                  class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500"
+                >
                   New Password <span class="text-danger">*</span>
                 </label>
               </template>
             </FormKit>
 
             <div>
-              <label class="block text-sm font-medium text-gray-700">Password Strength</label>
-              <rs-progress-bar 
-                :value="passwordStrength" 
-                :max="100" 
-                class="mt-2" 
+              <label class="block text-sm font-medium text-gray-700"
+                >Password Strength</label
+              >
+              <rs-progress-bar
+                :value="passwordStrength"
+                :max="100"
+                class="mt-2"
                 :variant="passwordStrengthColor"
               />
               <p class="mt-1 text-sm" :class="`text-${passwordStrengthColor}`">
@@ -228,7 +242,9 @@ const uploadAvatar = (event) => {
               validation-label="New Password"
             >
               <template #label>
-                <label class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500">
+                <label
+                  class="formkit-label text-gray-700 dark:text-gray-200 block mb-2 font-semibold text-sm formkit-invalid:text-red-500"
+                >
                   Confirm New Password <span class="text-danger">*</span>
                 </label>
               </template>

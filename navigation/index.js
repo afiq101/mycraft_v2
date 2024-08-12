@@ -5,7 +5,7 @@ export default [
     child: [
       {
         title: "Pengurusan Profil",
-        path: "/super-admin/pengurusan-profil",
+        path: "/super-admin/profile-management",
         icon: "ph:user-fill",
         child: [],
         meta: {},
@@ -280,6 +280,12 @@ export default [
     header: "Merchant",
     description: "Merchant business management module",
     child: [
+      {
+        title: "Dashboard",
+        path: "/merchant/dashboard",
+        icon: "ic:outline-dashboard",
+        child: [],
+      },
       {
         title: "Registration",
         path: "/merchant/registration",
