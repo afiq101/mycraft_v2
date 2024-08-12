@@ -36,7 +36,7 @@ onMounted(() => {
         <div class="flex flex-auto gap-3 justify-center items-center h-[48px] mt-3">
           <img
             class="h-10 block"
-            src="@/assets/img/logo/mycraft_logo.png"
+            src="@/assets/img/logo/mycraffshop_logo.png"
             alt=""
           />
         </div>

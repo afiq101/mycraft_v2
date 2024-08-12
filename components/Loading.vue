@@ -17,8 +17,8 @@ const refreshPage = () => {
       <div>
         <div class="flex justify-center items-center">
           <img
-            src="@/assets/img/logo/mycraft_logo.png"
-            class="w-[200px] mb-7"
+            src="@/assets/img/logo/mycraffshop_logo.png"
+            class="w-[200px] mb-5"
             alt=""
           />
         </div>

@@ -1,10 +1,12 @@
 <script setup>
-import { useUserStore } from "~/stores/user";
+
 
 definePageMeta({
   title: "Login",
   layout: "empty",
 });
+
+import { useUserStore } from "~/stores/user";
 
 const { $swal } = useNuxtApp();
 const username = ref("");
@@ -67,7 +69,7 @@ const login = async () => {
           class="absolute -bottom-3 left-3 img-container flex justify-start items-center mb-5"
         >
           <img
-            src="@/assets/img/logo/logo-word-black.svg"
+            src="@/assets/img/logo/mycraffshop_logo.png"
             class="max-w-[90px]"
           />
         </div>

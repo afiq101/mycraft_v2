@@ -11,7 +11,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   // If user is not logged in, redirect to logout page
   if (validateUser.value.statusCode === 401) return true;
 
-  console.log("Role : ", userStore.roles);
+  // console.log("Role : ", userStore.roles);
 
   if (userStore.roles.includes("Superadmin"))
     return navigateTo("/admin/dashboard");
