@@ -59,7 +59,7 @@ definePageMeta({
         >
           <div class="h-[200px] bg-black">
             <img
-              src="stream_thumbnail_1.jpg"
+              src="#"
               alt="Stream Thumbnail"
               class="w-full h-full object-cover"
             />
@@ -74,7 +74,7 @@ definePageMeta({
         >
           <div class="h-[200px] bg-black">
             <img
-              src="stream_thumbnail_1.jpg"
+              src="#"
               alt="Stream Thumbnail"
               class="w-full h-full object-cover"
             />
@@ -89,7 +89,7 @@ definePageMeta({
         >
           <div class="h-[200px] bg-black">
             <img
-              src="stream_thumbnail_1.jpg"
+              src="#"
               alt="Stream Thumbnail"
               class="w-full h-full object-cover"
             />
