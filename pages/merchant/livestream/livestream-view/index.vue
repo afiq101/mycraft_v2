@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from 'vue';
 
 definePageMeta({
   title: "Streamer Dashboard",
   layout: "default",
 });
+
+import { ref } from 'vue';
 
 const streamTitle = ref("Blue Shirt Summer Promotion from X Brand");
 const viewerCount = ref(2277);

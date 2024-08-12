@@ -221,13 +221,6 @@ export default [
         ],
         meta: {},
       },
-      // {
-      //   title: "Shop",
-      //   path: "/merchant/shop",
-      //   icon: "ic:outline-dashboard",
-      //   child: [],
-      //   meta: {},
-      // },
       {
         title: "Customer Service",
         path: "/merchant/customer-service",

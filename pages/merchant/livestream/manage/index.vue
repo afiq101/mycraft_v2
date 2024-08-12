@@ -1,10 +1,10 @@
 <script setup>
-import { ref } from 'vue';
-
 definePageMeta({
   title: "Livestream Management",
   layout: "default",
 });
+
+import { ref } from 'vue';
 
 const activeTab = ref('Videos');
 const showScheduleModal = ref(false);

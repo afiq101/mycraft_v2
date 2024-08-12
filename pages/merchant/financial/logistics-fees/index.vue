@@ -1,10 +1,10 @@
 <script setup>
-import { ref, computed } from 'vue';
-
 definePageMeta({
   title: "Logistics Fee",
   layout: "default",
 });
+
+import { ref, computed } from 'vue';
 
 const activeTab = ref('Statements');
 const statementNo = ref('');

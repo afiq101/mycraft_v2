@@ -1,10 +1,10 @@
 <script setup>
-import { ref, computed } from 'vue';
-
 definePageMeta({
   title: "My Balance",
   layout: "default",
 });
+
+import { ref, computed } from 'vue';
 
 const totalBalance = ref(2450.75);
 const transactionTypes = ['Deposit', 'Withdrawal', 'Payment', 'Penalty', 'Adjustment'];

@@ -1,11 +1,11 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue';
-import VueApexCharts from "vue3-apexcharts";
-
 definePageMeta({
   title: "My Income",
   layout: "default",
 });
+
+import { ref, computed, onMounted } from 'vue';
+import VueApexCharts from "vue3-apexcharts";
 
 const activeTab = ref('Income Overview');
 
