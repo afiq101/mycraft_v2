@@ -1,11 +1,13 @@
 <script setup>
-import { useUserStore } from "~/stores/user";
+
 
 definePageMeta({
   title: "Login",
   layout: "empty",
   middleware: ["dashboard"],
 });
+
+import { useUserStore } from "~/stores/user";
 
 const { $swal } = useNuxtApp();
 const username = ref("");
@@ -42,7 +44,7 @@ const login = async () => {
         showConfirmButton: false,
       });
 
-      window.location.href = "/dashboard";
+      window.location.href = "/merchant/dashboard";
     } else {
       $swal.fire({
         title: "Error!",

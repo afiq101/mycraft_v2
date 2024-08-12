@@ -5,12 +5,12 @@ definePageMeta({
 });
 
 const orders = ref([
-  { id: 'ORD1234', customer: 'John Doe', total: '$299', status: 'Completed', date: '2024-08-01' },
-  { id: 'ORD5678', customer: 'Jane Smith', total: '$149', status: 'Pending', date: '2024-08-02' },
-  { id: 'ORD9101', customer: 'Alice Johnson', total: '$499', status: 'Placed', date: '2024-08-03' },
-  { id: 'ORD1121', customer: 'Bob Brown', total: '$89', status: 'Returned', date: '2024-08-04' },
-  { id: 'ORD3141', customer: 'Charlie White', total: '$249', status: 'Completed', date: '2024-08-05' },
-  { id: 'ORD5161', customer: 'Diane Green', total: '$399', status: 'Pending', date: '2024-08-06' },
+  { id: 'ORD1234', customer: 'John Doe', total: 'RM299', status: 'Completed', date: '2024-08-01' },
+  { id: 'ORD5678', customer: 'Jane Smith', total: 'RM149', status: 'Pending', date: '2024-08-02' },
+  { id: 'ORD9101', customer: 'Alice Johnson', total: 'RM499', status: 'Placed', date: '2024-08-03' },
+  { id: 'ORD1121', customer: 'Bob Brown', total: 'RM89', status: 'Returned', date: '2024-08-04' },
+  { id: 'ORD3141', customer: 'Charlie White', total: 'RM249', status: 'Completed', date: '2024-08-05' },
+  { id: 'ORD5161', customer: 'Diane Green', total: 'RM399', status: 'Pending', date: '2024-08-06' },
 ]);
 
 const activeTab = ref('All');

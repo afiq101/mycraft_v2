@@ -1,11 +1,13 @@
 <script setup>
-import { ref, computed, watch } from 'vue';
-import vSelect from 'vue-select';
-import 'vue-select/dist/vue-select.css';
 
 definePageMeta({
   title: "Registration",
 });
+
+import { ref, computed, watch } from 'vue';
+import vSelect from 'vue-select';
+import 'vue-select/dist/vue-select.css';
+
 
 const stepNames = ["Contact Information", "Address Registration", "Document Upload", "Add Product"];
 

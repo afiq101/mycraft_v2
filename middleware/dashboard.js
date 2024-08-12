@@ -7,5 +7,5 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
   // If user is not logged in, redirect to logout page
   if (validateUser.value.statusCode === 401) return true;
 
-  return navigateTo("/dashboard");
+  return navigateTo("/merchant/dashboard");
 });

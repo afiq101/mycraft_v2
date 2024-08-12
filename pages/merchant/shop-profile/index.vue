@@ -1,70 +1,73 @@
 <script setup>
-import { ref } from 'vue';
+
 
 definePageMeta({
   title: "Store Profile",
   layout: "default",
 });
 
+import { ref } from 'vue';
+
 const storeInfo = ref({
-  name: 'TechHaven',
+  name: 'KrafWarisan',
   avatar: 'https://picsum.photos/seed/store/200',
-  lastActive: '2 days ago',
+  lastActive: '2 hari lepas',
   products: 45,
   followers: '2.1k',
   following: 108,
   rating: 5.0,
   totalReviews: 687,
   chatPerformance: 84,
-  memberSince: '6 Years Ago'
+  memberSince: '6 Tahun Lalu'
 });
 
 const categories = ref([
-  'Home', 'All Products', 'Computers & Accessories', 'Audio', 'Cases & Bags', 'Home Entertainment', 'More'
+  'Laman Utama', 'Semua Produk', 'Kain & Tenunan', 'Seramik', 'Anyaman', 'Logam', 'Lagi'
 ]);
 
 const featuredProducts = ref([
   {
     id: 1,
-    name: 'Google Pixel Buds Pro',
-    image: 'https://picsum.photos/seed/buds/300/200',
+    name: 'Cincin Lelaki Perak',
+    image: 'https://i.imgur.com/G49ZT1V.jpg',
     discount: 10,
-    freeShipping: true,
-    price: '$199.99',
+    freeShipping: true, 
+    price: 'RM10.00',
     rating: 4.8,
     sold: 234
   },
   {
     id: 2,
-    name: 'Google Pixel Watch 2',
-    image: 'https://picsum.photos/seed/watch/300/200',
+    name: 'Rantai Loket Helena',
+    image: 'https://i.imgur.com/9G9JD5y.jpg',
     discount: 15,
     freeShipping: true,
-    price: '$349.99',
+    price: 'RM20.00',
     rating: 4.5,
     sold: 132
   },
   {
     id: 3,
-    name: 'Amazon All-New 11th (latest)',
-    image: 'https://picsum.photos/seed/kindle/300/200',
+    name: 'Document Bag',
+    image: 'https://i.imgur.com/1FZ3xw1.jpg',
     discount: 10,
     freeShipping: true,
-    price: '$129.99',
+    price: 'RM285.00',
     rating: 4.6,
     sold: 189
   },
   {
     id: 4,
-    name: 'Official Google Pixel 8/8',
-    image: 'https://picsum.photos/seed/pixel/300/200',
+    name: 'Baju T Batik Ikat & Celup',
+    image: 'https://i.imgur.com/AHptbcL.jpg',
     discount: 15,
     freeShipping: true,
-    price: '$899.99',
+    price: 'RM48.00',
     rating: 4.9,
     sold: 98
   },
 ]);
+
 
 const activeCategory = ref('Home');
 </script>

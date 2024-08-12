@@ -16,7 +16,7 @@ const subscribers = ref(0);
 const recentEvents = ref([
   { type: 'follow', user: 'NewFollower123', message: 'just followed!' },
   { type: 'subscription', user: 'SubUser456', message: 'subscribed for 3 months!' },
-  { type: 'donation', user: 'GenerousDonor789', message: 'donated $5: Keep up the great content!' },
+  { type: 'donation', user: 'GenerousDonor789', message: 'donated RM5: Keep up the great content!' },
 ]);
 
 const chatMessages = ref([

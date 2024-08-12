@@ -1,10 +1,12 @@
 <script setup>
-import { useUserStore } from "~/stores/user";
+
 
 definePageMeta({
   title: "Logout",
   layout: "empty",
 });
+
+import { useUserStore } from "~/stores/user";
 
 const userStore = useUserStore();
 

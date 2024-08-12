@@ -1,10 +1,11 @@
 <script setup>
-import { ref } from 'vue';
 
 definePageMeta({
   title: "Notification Manager",
   layout: "default",
 });
+
+import { ref } from 'vue';
 
 const activeTab = ref('Dashboard');
 

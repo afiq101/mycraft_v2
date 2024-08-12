@@ -5,13 +5,11 @@ definePageMeta({
 });
 
 const products = ref([
-  { name: 'Smartphone X', category: 'Electronics', price: '$799', stock: 50, status: 'Active', abTesting: 'A' },
-  { name: 'Laptop Pro', category: 'Electronics', price: '$1299', stock: 30, status: 'Active', abTesting: 'B' },
-  { name: 'Winter Jacket', category: 'Clothing', price: '$99', stock: 150, status: 'Inactive', abTesting: 'A' },
-  { name: 'Garden Chair', category: 'Home & Garden', price: '$49', stock: 75, status: 'Active', abTesting: 'None' },
-  { name: 'Children\'s Toy Set', category: 'Toys', price: '$29', stock: 200, status: 'Violation', abTesting: 'B' },
-  { name: 'Science Fiction Book', category: 'Books', price: '$19', stock: 100, status: 'Deleted', abTesting: 'None' },
-]);
+  { name: 'Cincin Lelaki Perak', category: 'Logam', price: 'RM10.00', stock: 50, status: 'Active', abTesting: 'A' },
+  { name: 'Rantai Loket Helena', category: 'Logam', price: 'RM20.00', stock: 30, status: 'Active', abTesting: 'B' },
+  { name: 'Document Bag', category: 'Anyaman', price: 'RM285.00', stock: 150, status: 'Inactive', abTesting: 'A' },
+  { name: 'Baju T Batik Ikat & Celup', category: 'Kain & Tenunan', price: 'RM48.00', stock: 75, status: 'Active', abTesting: 'None' },
+  ]);
 
 const activeTab = ref('All');
 const searchQuery = ref('');
@@ -19,7 +17,7 @@ const selectedCategory = ref('');
 const sortBy = ref('');
 const abTesting = ref('');
 
-const categories = ['Electronics', 'Clothing', 'Home & Garden', 'Toys', 'Books'];
+const categories = ['Logam', 'Kain & Tenunan', 'Anyaman', 'Kraf Seni', 'Buku'];
 const sortOptions = ['Name A-Z', 'Name Z-A', 'Price Low to High', 'Price High to Low'];
 const abTestingOptions = ['A', 'B', 'None'];
 
@@ -54,7 +52,6 @@ const addNewProduct = () => {
       <template #body>
         <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4" role="alert">
           <p>Welcome to Product Management Page. <a href="#" class="underline">Learn More</a></p>
-          <p>Try the New Size Chart Tool to enrich your fashion products information. <a href="#" class="underline">Learn how to use</a></p>
           <p>Your products are not yet visible to buyers. Please add address to make them visible.</p>
         </div>
 
