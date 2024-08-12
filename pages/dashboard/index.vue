@@ -6,227 +6,6 @@ definePageMeta({
   requiresAuth: true,
 });
 
-const data1 = ref([]);
-const data2 = ref([]);
-const data3 = ref([]);
-const data4 = ref([]);
-var sparkline1Data = [47, 45, 54, 38, 56, 24, 65];
-var sparkline2Data = [61, 35, 66, 41, 59, 25, 32];
-var sparkline3Data = [25, 18, 36, 41, 43, 35, 14];
-var sparkline4Data = [8, 16, 22, 41, 43, 35, 14];
-
-const changeKey = ref(0);
-
-const customers = [
-  {
-    name: "Iqmal",
-    age: "25",
-    city: "Kuala Lumpur",
-    country: "Malaysia",
-    totalPurchase: 1524,
-    purchase: 23,
-  },
-  {
-    name: "Adi",
-    age: "45",
-    city: "Pulau Pinang",
-    country: "Malaysia",
-    totalPurchase: 643,
-    purchase: 14,
-  },
-  {
-    name: "Raziq",
-    age: "21",
-    city: "Kelantan",
-    country: "Malaysia",
-    totalPurchase: 543,
-    purchase: 12,
-  },
-  {
-    name: "Haqeem",
-    age: "19",
-    city: "Negeri Sembilan",
-    country: "Malaysia",
-    totalPurchase: 258,
-    purchase: 6,
-  },
-];
-
-const randomizeArray = function (arg) {
-  var array = arg.slice();
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  while (0 !== currentIndex) {
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-};
-
-data1.value.push({
-  name: "Revenues",
-  data: randomizeArray(sparkline1Data),
-});
-
-data2.value.push({
-  name: "Users",
-  data: randomizeArray(sparkline2Data),
-});
-
-data3.value.push({
-  name: "Products",
-  data: randomizeArray(sparkline3Data),
-});
-
-data4.value.push({
-  name: "Viewers",
-  data: randomizeArray(sparkline4Data),
-});
-
-const chartOptions = computed(() => ({
-  chart: {
-    type: "area",
-    sparkline: {
-      enabled: true,
-    },
-  },
-  stroke: {
-    curve: "smooth",
-  },
-  fill: {
-    opacity: 1,
-  },
-  labels: [...Array(7).keys()].map((n) => `2022-06-0${n + 1}`),
-  xaxis: {
-    type: "datetime",
-  },
-}));
-
-// Radial Chart
-
-const radialData = ref([44, 55, 67, 83]);
-
-const chartOptionsRadial = computed(() => ({
-  chart: {
-    height: 350,
-    type: "radialBar",
-  },
-  plotOptions: {
-    radialBar: {
-      dataLabels: {
-        style: {
-          colors: "#9CA3AF",
-        },
-        name: {
-          offsetY: 30,
-          fontSize: "18px",
-        },
-        value: {
-          offsetY: -15,
-          fontSize: "30px",
-        },
-        total: {
-          show: true,
-          label: "Total",
-          formatter: function (w) {
-            // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-            return 249;
-          },
-        },
-      },
-    },
-  },
-  labels: ["Product A", "Product B", "Product C", "Product D"],
-  stroke: {
-    lineCap: "round",
-  },
-}));
-
-// Transaction Graph
-const transactionData = ref([
-  {
-    name: "Bill A",
-    data: [...Array(12).keys()].map((n) => Math.round(Math.random() * 100)),
-  },
-  {
-    name: "Bill B",
-    data: [...Array(12).keys()].map((n) => Math.round(Math.random() * 100)),
-  },
-]);
-
-const chartOptionsTransaction = computed(() => ({
-  chart: {
-    height: 350,
-    type: "area",
-    toolbar: {
-      show: false,
-    },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  stroke: {
-    curve: "smooth",
-  },
-  colors: ["#6366F1", "#F97316"],
-  yaxis: {
-    labels: {
-      style: {
-        colors: "#9CA3AF",
-        fontSize: "12px",
-      },
-    },
-  },
-  xaxis: {
-    type: "datetime",
-    categories: [
-      "2022-01-01",
-      "2022-02-01",
-      "2022-03-01",
-      "2022-04-01",
-      "2022-05-01",
-      "2022-06-01",
-      "2022-07-01",
-      "2022-08-01",
-      "2022-09-01",
-      "2022-10-01",
-      "2022-11-01",
-      "2022-12-01",
-    ],
-    labels: {
-      style: {
-        colors: "#9CA3AF",
-        fontSize: "14px",
-        fontWeight: 400,
-      },
-      datetimeFormatter: {
-        month: "MMM",
-      },
-    },
-  },
-  legend: {
-    position: "top",
-    horizontalAlign: "left",
-    labels: {
-      colors: "#9CA3AF",
-      useSeriesColors: false,
-    },
-  },
-  tooltip: {
-    x: {
-      format: "MMMM",
-    },
-  },
-}));
-
-
 
 // Analytical Total Sales (Normal Price)
 const totalSalesData = ref([
@@ -281,11 +60,11 @@ const annualSalesData = ref([
 const salesViaWebOrAppsData = ref([
   {
     name: 'Web Sales',
-    data: [24000, 28000, 26000, 29000, 32000, 31000, 33000],
+    data: [24000, 28000, 26000, 29000, 32000],
   },
   {
     name: 'App Sales',
-    data: [15000, 16000, 14000, 18000, 20000, 22000, 23000],
+    data: [15000, 16000, 14000, 18000, 20000],
   },
 ]);
 
@@ -318,108 +97,7 @@ const chartSale = computed(() => ({
   ],
 }));
 
-// Sales by Category
-// Example data: Sales figures for different categories
-const sales = ref([300, 500, 200, 450, 350]);
-
-// Categories corresponding to the sales data
-const chartData = computed(() => ({
-  labels: [
-    "Electronics", 
-    "Furniture", 
-    "Groceries", 
-    "Clothing", 
-    "Toys"
-  ],
-  datasets: [
-    {
-      label: "Sales by Category",
-      data: sales.value,
-      backgroundColor: ["#FF829D", "#FFD778", "#5EB5EF", "#6FCDCD", "#ECEDF1"],
-    },
-  ],
-}));
-
-const salesCategory1 = computed(() => ({
-  scales: {
-    y: {
-      beginAtZero: true,
-    },
-  },
-  plugins: {
-    zoom: {
-      zoom: {
-        wheel: {
-          enabled: true,
-        },
-        pinch: {
-          enabled: true,
-        },
-        mode: "xy",
-      },
-    },
-    legend: {
-      display: true,
-    },
-  }
-}));
-
-const { barChartProps } = useBarChart({
-  chartData,
-  options: salesCategory1,
-});
-
-// Example data: Sales for different categories
-const series = ref([
-  {
-    name: "Electronics",
-    data: [300],
-  },
-  {
-    name: "Furniture",
-    data: [500],
-  },
-  {
-    name: "Groceries",
-    data: [200],
-  },
-  {
-    name: "Clothing",
-    data: [450],
-  },
-  {
-    name: "Toys",
-    data: [350],
-  },
-]);
-
-const salesCategory = computed(() => ({
-  chart: {
-    id: "salesCategoryChart",
-  },
-  legend: {
-    position: "top",
-  },
-  theme: {
-    mode: "light",
-    palette: "palette1",
-  },
-  xaxis: {
-    categories: ["Electronics", "Furniture", "Groceries", "Clothing", "Toys"],
-  },
-  responsive: [
-    {
-      breakpoint: 768,
-      options: {
-        legend: {
-          position: "bottom",
-        },
-      },
-    },
-  ],
-}));
-
-// Chart options
+// Chart options category sales
 const chartOptions1 = computed(() => ({
   chart: {
     id: "apexChart",
@@ -432,7 +110,7 @@ const chartOptions1 = computed(() => ({
     palette: "palette1",
   },
   xaxis: {
-    categories: categories,
+    categories: ['Electronics', 'Clothing', 'Home & Garden', 'Toys', 'Books'],
   },
   responsive: [
     {
@@ -446,6 +124,311 @@ const chartOptions1 = computed(() => ({
   ],
 }));
 
+const orderData = ref([44, 55, 67, 83]);
+
+const chartOrder = computed(() => ({
+  chart: {
+    height: 350,
+    type: "radialBar",
+  },
+  plotOptions: {
+    radialBar: {
+      dataLabels: {
+        style: {
+          colors: "#9CA3AF",
+        },
+        name: {
+          offsetY: 30,
+          fontSize: "18px",
+        },
+        value: {
+          offsetY: -15,
+          fontSize: "30px",
+        },
+        total: {
+          show: true,
+          label: "Total",
+          formatter: function (w) {
+            // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+            return 249;
+          },
+        },
+      },
+    },
+  },
+  labels: ["Delivery Status", "Order Status", "Total Orders PKKM", "Total Domestic/International Orders"],
+  stroke: {
+    lineCap: "round",
+  },
+}));
+
+const chartOrder1 = computed(() => ({
+  chart: {
+    id: "apexChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: ["Delivery Status", "Order Status", "Total Orders PKKM", "Total Domestic/International Orders"],
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
+}));
+
+// Campaign
+const campaignData = ref([
+  {
+    name: 'Campaign',
+    data: [5000, 4000],
+  },
+]);
+const chartCampaign = computed(() => ({
+  chart: {
+    id: "apexChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: ['Total MCS', 'Total Sellers'],
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
+}));
+
+// Users
+// Visitor Age Range
+const visitorAgeRangeData = ref([
+  {
+    name: 'Number of Visitors',
+    data: [1500, 3000, 2500, 2000, 1000, 500],
+  },
+]);
+const chartVisitorAgeRange = computed(() => ({
+  chart: {
+    id: "apexChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: ['0-18', '19-25', '26-35', '36-45', '46-55', '56+'],
+    title: {
+      text: 'Age Range',
+    },
+  },
+  yaxis: {
+    title: {
+      text: 'Number of Visitors',
+    },
+    min: 0,
+  },
+  tooltip: {
+    x: {
+      format: 'dd/MM/yy HH:mm',
+    },
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ]
+}));
+
+// Total Download Apps
+const downloadData = ref([4455, 6783]);
+const chartDownload = computed(() => ({
+  chart: {
+    height: 350,
+    type: "radialBar",
+  },
+  plotOptions: {
+    radialBar: {
+      dataLabels: {
+        style: {
+          colors: "#9CA3AF",
+        },
+        name: {
+          offsetY: 30,
+          fontSize: "18px",
+        },
+        value: {
+          offsetY: -15,
+          fontSize: "30px",
+        },
+        total: {
+          show: true,
+          label: "Total",
+          formatter: function (w) {
+            // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
+            return 249;
+          },
+        },
+      },
+    },
+  },
+  labels: ["iOS", "Andriod"],
+  stroke: {
+    lineCap: "round",
+  },
+}));
+
+// Financial
+// Total Payout
+const payoutSeries = ref([
+  {
+    name: 'Sellers Payout',
+    data: [10000, 15000, 12000, 18000, 16000, 19000, 20000],
+  },
+  {
+    name: 'Refund Payout',
+    data: [3000, 5000, 4500, 4000, 3500, 3000, 2500],
+  },
+]);
+const chartPayout = computed(() => ({
+  chart: {
+    id: "apexChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+  },
+  yaxis: {
+    title: {
+      text: 'Amount (MYR)',
+    },
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
+}));
+
+// Total Redeemed
+const redeemedSeries = ref([
+  {
+    name: 'Coins Redeemed',
+    data: [10000, 12000, 13000, 11000, 9000, 8000, 9500],
+  },
+  {
+    name: 'Voucher Redeemed',
+    data: [5000, 5500, 6000, 4500, 4800, 5300, 5100],
+  },
+]);
+const chartRedeemed = computed(() => ({
+  chart: {
+    id: "apexChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
+}));
+
+// Total Yearly Allocation Amount (VOT)
+const votSeries = ref([
+  {
+    name: 'VOT Spend',
+    data: [15000, 16000, 17000, 15500, 16500, 17500, 18000],
+  },
+  {
+    name: 'VOT Balance',
+    data: [20000, 19000, 18000, 17000, 16000, 15000, 14000],
+  },
+]);
+const votOptions = ref({
+  chart: {
+    id: "apexChart",
+  },
+  legend: {
+    position: "top",
+  },
+  theme: {
+    mode: "light",
+    palette: "palette1",
+  },
+  xaxis: {
+    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+  },
+  yaxis: {
+    title: {
+      text: 'Amount (MYR)',
+    },
+  },
+  responsive: [
+    {
+      breakpoint: 768,
+      options: {
+        legend: {
+          position: "bottom",
+        },
+      },
+    },
+  ],
+});
+
 onMounted(() => {
   setTimeout(() => {
     changeKey.value++;
@@ -457,250 +440,258 @@ onMounted(() => {
 <template>
   <div>
     <LayoutsBreadcrumb />
-    <!-- First Row -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-x-6">
-      <!-- Summary Card #1 -->
-      <rs-card>
-        <div class="summary-1 pt-5 pb-3 px-5 flex items-center gap-4">
-          <div
-            class="p-5 flex justify-center items-center bg-primary/20 rounded-2xl"
-          >
-            <Icon class="text-primary" name="ic:outline-attach-money"></Icon>
-          </div>
-          <div class="flex-1 truncate">
-            <span class="block font-semibold text-xl leading-tight">
-              RM 100,000</span
-            >
-            <span class="text-base font-semibold text-gray-500"
-              >Total Revenues</span
-            >
-          </div>
-        </div>
-        <client-only>
-          <VueApexCharts
-            :key="changeKey"
-            width="100%"
-            height="53"
-            :options="{
-              ...chartOptions,
-              colors: ['#F43F5E'],
-              yaxis: {
-                min: 0,
-                max: Math.max(...data1[0].data) + 10,
-              },
-            }"
-            :series="data1"
-          ></VueApexCharts>
-        </client-only>
-      </rs-card>
-      <!-- Summary Card #2 -->
-      <rs-card>
-        <div class="summary-2 pt-5 pb-3 px-5 flex items-center gap-4">
-          <div
-            class="p-5 flex justify-center items-center bg-indigo-100 rounded-2xl"
-          >
-            <Icon
-              class="text-indigo-500"
-              name="ic:outline-account-circle"
-            ></Icon>
-          </div>
-          <div class="flex-1 truncate">
-            <span class="block font-semibold text-xl leading-tight"> 512</span>
-            <span class="text-base font-semibold text-gray-500"
-              >Total Users</span
-            >
-          </div>
-        </div>
-        <client-only>
-          <VueApexCharts
-            :key="changeKey"
-            width="100%"
-            height="53"
-            :options="{
-              ...chartOptions,
-              colors: ['#6366F1'],
-              yaxis: {
-                min: 0,
-                max: Math.max(...data2[0].data) + 10,
-              },
-            }"
-            :series="data2"
-          ></VueApexCharts>
-        </client-only>
-      </rs-card>
-      <!-- Summary Card #3 -->
-      <rs-card>
-        <div class="summary-3 pt-5 pb-3 px-5 flex items-center gap-4">
-          <div
-            class="p-5 flex justify-center items-center bg-orange-100 rounded-2xl"
-          >
-            <Icon class="text-orange-500" name="ic:outline-shopping-bag"></Icon>
-          </div>
-          <div class="flex-1 truncate">
-            <span class="block font-semibold text-xl leading-tight"> 20</span>
-            <span class="text-base font-semibold text-gray-500"
-              >Total Products</span
-            >
-          </div>
-        </div>
-        <client-only>
-          <VueApexCharts
-            :key="changeKey"
-            width="100%"
-            height="53"
-            :options="{
-              ...chartOptions,
-              colors: ['#F97316'],
-              yaxis: {
-                min: 0,
-                max: Math.max(...data3[0].data) + 10,
-              },
-            }"
-            :series="data3"
-          ></VueApexCharts>
-        </client-only>
-      </rs-card>
-      <!-- Summary Card #4 -->
-      <rs-card>
-        <div class="summary-4 pt-5 pb-3 px-5 flex items-center gap-4">
-          <div
-            class="p-5 flex justify-center items-center bg-blue-100 rounded-2xl"
-          >
-            <Icon class="text-blue-500" name="ic:outline-remove-red-eye"></Icon>
-          </div>
-          <div class="flex-1 truncate">
-            <span class="block font-semibold text-xl leading-tight">
-              2,452</span
-            >
-            <span class="text-base font-semibold text-gray-500"
-              >Total Viewers</span
-            >
-          </div>
-        </div>
-        <client-only>
-          <VueApexCharts
-            :key="changeKey"
-            width="100%"
-            height="53"
-            :options="{
-              ...chartOptions,
-              colors: ['#3B82F6'],
-              yaxis: {
-                min: 0,
-                max: Math.max(...data4[0].data) + 10,
-              },
-            }"
-            :series="data4"
-          ></VueApexCharts>
-        </client-only>
-      </rs-card>
-    </div>
 
+    <!-- Sales -->
+    <rs-card>
+      <template #header>Sales</template>
+      <template #body>
+        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-6">
+          <rs-card>
+            <template #header> Analytical Total Sales (Normal Price) </template>
+            <template #body>
+              <ClientOnly>
+                <VueApexCharts
+                  :key="changeKey"
+                  width="100%"
+                  height="300"
+                  type="line"
+                  :options="chartSale"
+                  :series="totalSalesData"
+                ></VueApexCharts>
+              </ClientOnly>
+            </template>
+          </rs-card>
+          <rs-card>
+            <template #header> Today's Orders (SKU) </template>
+            <template #body>
+              <ClientOnly>
+                <VueApexCharts
+                  :key="changeKey"
+                  width="100%"
+                  height="300"
+                  type="line"
+                  :options="chartSale"
+                  :series="todaysOrdersData"
+                ></VueApexCharts>
+              </ClientOnly>
+            </template>
+          </rs-card>
+          <rs-card>
+            <template #header> Sales by Categories </template>
+            <template #body>
+              <ClientOnly>
+                <VueApexCharts
+                  :key="changeKey"
+                  width="100%"
+                  height="300"
+                  type="bar"
+                  :options="chartOptions1"
+                  :series="salesByCategoriesData"
+                ></VueApexCharts>
+              </ClientOnly>
+            </template>
+          </rs-card>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-x-6">
+          <div class="w-full md:w-6/12 flex flex-col">
+            <rs-card class="flex-1">
+              <template #header>Monthly Sales (Domestic & International)</template>
+              <template #body>
+                <client-only>
+                  <VueApexCharts
+                    :key="changeKey"
+                    width="100%"
+                    height="300"
+                    type="line"
+                    :options="chartSale"
+                    :series="monthlySalesData"
+                  ></VueApexCharts>
+                </client-only>
+              </template>
+            </rs-card>
+          </div>
+          <div class="w-full md:w-6/12 flex flex-col">
+            <!-- Annual Sales -->
+            <rs-card class="flex-1">
+              <template #header>Annual Sales (Domestic & International)</template>
+              <template #body>
+                <client-only>
+                  <VueApexCharts
+                    :key="changeKey"
+                    width="100%"
+                    height="300"
+                    type="line"
+                    :options="chartSale"
+                    :series="annualSalesData"
+                  ></VueApexCharts>
+                </client-only>
+              </template>
+            </rs-card>
+          </div>
+        </div>
+
+        <div>
+          <rs-card>
+            <template #header> Sales via Web or Apps Purchased </template>
+            <template #body>
+              <ClientOnly>
+                <VueApexCharts
+                  :key="changeKey"
+                  width="100%"
+                  height="300"
+                  type="bar"
+                  :options="chartOptions1"
+                  :series="salesViaWebOrAppsData"
+                ></VueApexCharts>
+              </ClientOnly>
+            </template>
+          </rs-card>
+        </div>
+      </template>
+    </rs-card>
+    
+    <!-- User, Order, Campaign -->
     <div class="flex flex-col md:flex-row gap-x-6">
       <div class="w-12/2 md:w-8/12 flex flex-col">
-        <!-- Graph -->
-        <rs-card class="flex-1">
-          <template #header> Transaction </template>
+        <rs-card>
+          <template #header>Users</template>
           <template #body>
-            <client-only>
-              <VueApexCharts
-                :key="changeKey"
-                width="100%"
-                height="300"
-                name="area"
-                :options="chartOptionsTransaction"
-                :series="transactionData"
-              ></VueApexCharts
-            ></client-only>
-          </template>
-        </rs-card>
-        <rs-card class="flex-1">
-          <template #header> Referral</template>
-          <template #body>
-            <div
-              v-for="(val, index) in customers"
-              :key="index"
-              class="flex justify-between items-center rounded-lg bg-[rgb(var(--bg-1))] p-5 first:mt-0 mt-3"
-            >
-              <div class="flex items-center gap-x-4">
-                <img
-                  src="@/assets/img/avatar/user.webp"
-                  class="h-10 w-10 rounded-lg"
-                />
-                <div class="flex-1">
-                  <div class="flex flex-col">
-                    <span
-                      class="text-gray-900 dark:text-white font-semibold text-lg"
-                    >
-                      {{ val.name }}
-                    </span>
-                    <span class="text-gray-600 dark:text-gray-50 text-sm">
-                      RM{{ parseFloat(val.totalPurchase).toFixed(2) }} |
-                      {{ val.purchase }} sold
-                    </span>
+            <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-6">
+              <rs-card>
+                <div class="summary-1 pt-5 pb-3 px-5 flex items-center gap-4">
+                  <div class="p-5 flex justify-center items-center bg-success/20 rounded-2xl">
+                    <Icon class="text-success" name="eos-icons:admin-outlined"></Icon>
+                  </div>
+                  <div class="flex-1 truncate">
+                    <span class="block font-semibold text-xl leading-tight"> 5 </span>
+                    <span class="text-base font-semibold text-gray-500">Total Admin</span>
                   </div>
                 </div>
+              </rs-card>
+              <rs-card>
+                <div class="summary-1 pt-5 pb-3 px-5 flex items-center gap-4">
+                  <div class="p-5 flex justify-center items-center bg-secondary/20 rounded-2xl">
+                    <Icon class="text-secondary" name="material-symbols:person"></Icon>
+                  </div>
+                  <div class="flex-1 truncate">
+                    <span class="block font-semibold text-xl leading-tight"> 512 </span>
+                    <span class="text-base font-semibold text-gray-500">Total Member</span>
+                  </div>
+                </div>
+              </rs-card>
+              <rs-card>
+                <div class="summary-1 pt-5 pb-3 px-5 flex items-center gap-4">
+                  <div class="p-5 flex justify-center items-center bg-warning/20 rounded-2xl">
+                    <Icon class="text-warning" name="material-symbols:shopping-bag-outline"></Icon>
+                  </div>
+                  <div class="flex-1 truncate">
+                    <span class="block font-semibold text-xl leading-tight"> 100 </span>
+                    <span class="text-base font-semibold text-gray-500">Total Seller</span>
+                  </div>
+                </div>
+              </rs-card>
+              <rs-card>
+                <div class="summary-1 pt-5 pb-3 px-5 flex items-center gap-4">
+                  <div class="p-5 flex justify-center items-center bg-warning/20 rounded-2xl">
+                    <Icon class="text-warning" name="material-symbols:group-outline"></Icon>
+                  </div>
+                  <div class="flex-1 truncate">
+                    <span class="block font-semibold text-xl leading-tight"> 2,100 </span>
+                    <span class="text-base font-semibold text-gray-500">Total Visitors</span>
+                  </div>
+                </div>
+              </rs-card>
+              <rs-card>
+                <div class="summary-1 pt-5 pb-3 px-5 flex items-center gap-4">
+                  <div class="p-5 flex justify-center items-center bg-warning/20 rounded-2xl">
+                    <Icon class="text-warning" name="tabler:coins"></Icon>
+                  </div>
+                  <div class="flex-1 truncate">
+                    <span class="block font-semibold text-xl leading-tight"> 3,200,100 </span>
+                    <span class="text-base font-semibold text-gray-500">Coins Redeemed</span>
+                  </div>
+                </div>
+              </rs-card>
+            </div>
+
+            <div class="flex flex-col md:flex-row gap-x-6">
+              <div class="w-full md:w-6/12 flex flex-col">
+                <rs-card>
+                  <template #header>Statistic on Visitors Age Range</template>
+                  <template #body>
+                    <ClientOnly>
+                      <VueApexCharts
+                        :key="changeKey"
+                        width="100%"
+                        height="300"
+                        type="line"
+                        :options="chartVisitorAgeRange"
+                        :series="visitorAgeRangeData"
+                      ></VueApexCharts>
+                    </ClientOnly>
+                  </template>
+                </rs-card>
               </div>
-              <div>
-                <button
-                  class="flex items-center p-4 rounded-full bg-[rgb(var(--bg-2))] hover:bg-[rgb(var(--bg-2))]/10 shadow-md"
-                >
-                  <Icon size="20px" name="ic:baseline-mail-outline"></Icon>
-                </button>
+              <div class="w-full md:w-6/12 flex flex-col">
+                <rs-card>
+                  <template #header>Total Download Apps</template>
+                  <template #body>
+                    <client-only>
+                      <VueApexCharts
+                        :key="changeKey"
+                        width="100%"
+                        height="300"
+                        name="radialBar"
+                        :options="chartDownload"
+                        :series="downloadData"
+                      ></VueApexCharts>
+                    </client-only>
+                  </template>
+                </rs-card>
               </div>
             </div>
           </template>
         </rs-card>
       </div>
       <div class="w-12/2 md:w-4/12 flex flex-col">
-        <!-- Monthly Target Radial -->
-        <rs-card class="flex-1">
-          <template #header> Monthly Target </template>
+        <rs-card>
+          <template #header>Orders</template>
           <template #body>
             <client-only>
               <VueApexCharts
                 :key="changeKey"
                 width="100%"
                 height="300"
-                name="radialBar"
-                :options="chartOptionsRadial"
-                :series="radialData"
+                type="pie"
+                :options="chartOrder1"
+                :series="orderData"
               ></VueApexCharts>
             </client-only>
-            <hr class="my-4" />
-            <p class="text-xl py-5 font-medium">Products</p>
-            <div
-              class="flex item-center gap-x-4"
-              :class="{
-                'mt-0': index === 0,
-                'mt-3': index !== 0,
-              }"
-              v-for="(val, index) in ['A', 'B', 'C', 'D', 'E']"
-              :key="index"
-            >
-              <img
-                src="@/assets/img/default-thumbnail.jpg"
-                class="h-20 w-20 object-cover rounded-lg"
-              />
-              <div class="flex-1 flex items-center">
-                <div>
-                  <span class="font-semibold text-lg leading-tight"
-                    >Product {{ val }}</span
-                  >
-                  <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
-                </div>
-              </div>
-            </div>
+          </template>
+        </rs-card>
+        <rs-card>
+          <template #header>Campaign</template>
+          <template #body>
+            <ClientOnly>
+              <VueApexCharts
+                :key="changeKey"
+                width="100%"
+                height="300"
+                type="bar"
+                :options="chartCampaign"
+                :series="campaignData"
+              ></VueApexCharts>
+            </ClientOnly>
           </template>
         </rs-card>
       </div>
     </div>
-
-    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-x-6">
+    
+    <!-- Financial -->
+    <div>
       <rs-card>
-        <template #header> Analytical Total Sales (Normal Price) </template>
+        <template #header>Total Payout</template>
         <template #body>
           <ClientOnly>
             <VueApexCharts
@@ -708,31 +699,14 @@ onMounted(() => {
               width="100%"
               height="300"
               type="line"
-              :options="chartSale"
-              :series="totalSalesData"
+              :options="chartPayout"
+              :series="payoutSeries"
             ></VueApexCharts>
           </ClientOnly>
         </template>
       </rs-card>
-
       <rs-card>
-        <template #header> Today's Orders (SKU) </template>
-        <template #body>
-          <ClientOnly>
-            <VueApexCharts
-              :key="changeKey"
-              width="100%"
-              height="300"
-              type="line"
-              :options="chartSale"
-              :series="todaysOrdersData"
-            ></VueApexCharts>
-          </ClientOnly>
-        </template>
-      </rs-card>
-
-      <rs-card>
-        <template #header> Sales by Categories </template>
+        <template #header>Total Redeemed</template>
         <template #body>
           <ClientOnly>
             <VueApexCharts
@@ -740,14 +714,28 @@ onMounted(() => {
               width="100%"
               height="300"
               type="bar"
-              :options="chartOptions1"
-              :series="salesByCategoriesData"
+              :options="chartRedeemed"
+              :series="redeemedSeries"
+            ></VueApexCharts>
+          </ClientOnly>
+        </template>
+      </rs-card>
+      <rs-card>
+        <template #header>Total Yearly Allocation Amount</template>
+        <template #body>
+          <ClientOnly>
+            <VueApexCharts
+              :key="changeKey"
+              width="100%"
+              height="300"
+              type="line"
+              :options="votOptions"
+              :series="votSeries"
             ></VueApexCharts>
           </ClientOnly>
         </template>
       </rs-card>
     </div>
-
     
   </div>
 </template>
