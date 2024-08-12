@@ -28,16 +28,42 @@
         }"
         advanced
       >
+        <template v-slot:quantity="data">
+          <div>{{ numberFormat(data.value.quantity, 0) }}</div>
+        </template>
+        <template v-slot:used="data">
+          <div>{{ numberFormat(data.value.used, 0) }}</div>
+        </template>
+        <template v-slot:amount="data">
+          <div>RM {{ numberFormat(data.value.amount, 2) }}</div>
+        </template>
+        <template v-slot:status="data">
+          <div class="flex gap-2">
+            <span
+              :class="{
+                'bg-green-100 text-green-800': data.value.status === 'active',
+                'bg-yellow-100 text-yellow-800':
+                  data.value.status === 'inactive',
+                'bg-red-100 text-red-800': data.value.status === 'inactive',
+                'bg-blue-100 text-blue-800': data.value.status === 'expired',
+                'bg-indigo-100 text-indigo-800': data.value.status === 'used',
+              }"
+              class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+            >
+              <span class="first-letter:uppercase">
+                {{ data.value.status }}
+              </span>
+            </span>
+          </div>
+        </template>
+
         <template v-slot:actions="data">
           <div class="flex gap-2">
             <button
               @click="editVoucher(data.value.actions)"
               class="text-blue-600 hover:text-blue-800"
             >
-              <Icon
-                name="material-symbols:edit-outline-rounded"
-                class="w-4 h-4"
-              >
+              <Icon name="material-symbols:edit-outline-rounded" class="20">
               </Icon>
             </button>
             <button
@@ -46,7 +72,7 @@
             >
               <Icon
                 name="material-symbols:delete-outline-rounded"
-                class="w-4 h-4"
+                size="20"
               ></Icon>
             </button>
           </div>
@@ -419,6 +445,13 @@ const cancelCreateVoucher = () => {
 const cancelEditVoucher = () => {
   editingIndex.value = null;
 };
+
+function numberFormat(val, dec) {
+  return val.toLocaleString(undefined, {
+    minimumFractionDigits: dec,
+    maximumFractionDigits: dec,
+  });
+}
 </script>
 
 <style scoped>

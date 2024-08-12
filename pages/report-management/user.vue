@@ -95,15 +95,20 @@
           }"
           advanced
         >
-          <template v-slot:actions="data">
+          <template v-slot:status="data">
             <div class="flex gap-2">
-              <div class="cursor-pointer" @click="navigateToDetail(data)">
-                <Icon
-                  name="material-symbols:list-alt"
-                  class="text-indigo-500 hover:text-indigo-800"
-                  size="19"
-                />
-              </div>
+              <span
+                :class="{
+                  'bg-green-100 text-green-800': data.value.status === 'active',
+                  'bg-yellow-100 text-yellow-800':
+                    data.value.status === 'inactive',
+                }"
+                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+              >
+                <span class="first-letter:uppercase">
+                  {{ data.value.status }}
+                </span>
+              </span>
             </div>
           </template>
         </rs-table>

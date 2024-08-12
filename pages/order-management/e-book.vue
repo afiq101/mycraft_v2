@@ -2,88 +2,97 @@
   <div class="space-y-8">
     <div class="text-lg font-semibold">E-book Order Management</div>
 
-    <!-- Dropdown for Status Selection -->
-    <div class="relative w-64">
-      <select
-        v-model="selectedStatus"
-        @change="filtering"
-        class="block w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500"
-      >
-        <option value="">All Statuses</option>
-        <option
-          v-for="(data, index) in orderStatuses"
-          :key="index"
-          :value="data.code"
+    <rs-card class="p-4">
+      <div class="flex flex-wrap gap-4">
+        <!-- Dropdown for Status Selection -->
+        <div class="relative w-64">
+          <select
+            v-model="selectedStatus"
+            @change="filtering"
+            class="block w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="">All Statuses</option>
+            <option
+              v-for="(data, index) in orderStatuses"
+              :key="index"
+              :value="data.code"
+            >
+              {{ data.label }}
+            </option>
+          </select>
+        </div>
+
+        <!-- Dropdown for Date Filter Selection -->
+        <div class="relative w-64">
+          <select
+            v-model="selectedDateFilter"
+            @change="filtering"
+            class="block w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500"
+          >
+            <option value="">All Dates</option>
+            <option value="today">Today</option>
+            <option value="thisMonth">This Month</option>
+            <option value="dateRange">Date Range</option>
+            <option value="monthRange">Month Range</option>
+          </select>
+        </div>
+
+        <!-- Date Range Picker -->
+        <div
+          v-if="selectedDateFilter === 'dateRange'"
+          class="flex space-x-2 mt-4"
         >
-          {{ data.label }}
-        </option>
-      </select>
-    </div>
+          <input
+            type="date"
+            v-model="dateRange.start"
+            class="p-2 border border-gray-300 rounded-lg"
+          />
+          <input
+            type="date"
+            v-model="dateRange.end"
+            class="p-2 border border-gray-300 rounded-lg"
+          />
+          <button
+            @click="applyDateRange"
+            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
+          >
+            Apply
+          </button>
+        </div>
 
-    <!-- Dropdown for Date Filter Selection -->
-    <div class="relative w-64 mt-4">
-      <select
-        v-model="selectedDateFilter"
-        @change="filtering"
-        class="block w-full p-2 border border-gray-300 rounded-lg bg-white focus:ring-indigo-500 focus:border-indigo-500"
-      >
-        <option value="">All Dates</option>
-        <option value="today">Today</option>
-        <option value="thisMonth">This Month</option>
-        <option value="dateRange">Date Range</option>
-        <option value="monthRange">Month Range</option>
-      </select>
-    </div>
-
-    <!-- Date Range Picker -->
-    <div v-if="selectedDateFilter === 'dateRange'" class="flex space-x-2 mt-4">
-      <input
-        type="date"
-        v-model="dateRange.start"
-        class="p-2 border border-gray-300 rounded-lg"
-      />
-      <input
-        type="date"
-        v-model="dateRange.end"
-        class="p-2 border border-gray-300 rounded-lg"
-      />
-      <button
-        @click="applyDateRange"
-        class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-      >
-        Apply
-      </button>
-    </div>
-
-    <!-- Month Range Picker -->
-    <div v-if="selectedDateFilter === 'monthRange'" class="flex space-x-2 mt-4">
-      <input
-        type="month"
-        v-model="monthRange.start"
-        class="p-2 border border-gray-300 rounded-lg"
-      />
-      <input
-        type="month"
-        v-model="monthRange.end"
-        class="p-2 border border-gray-300 rounded-lg"
-      />
-      <button
-        @click="applyMonthRange"
-        class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-      >
-        Apply
-      </button>
-    </div>
-
-    <!-- Reset Filters Button -->
-    <div class="mt-4">
-      <button
-        @click="resetFilters"
-        class="px-4 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-500"
-      >
-        Reset Filters
-      </button>
-    </div>
+        <!-- Month Range Picker -->
+        <div
+          v-if="selectedDateFilter === 'monthRange'"
+          class="flex space-x-2 mt-4"
+        >
+          <input
+            type="month"
+            v-model="monthRange.start"
+            class="p-2 border border-gray-300 rounded-lg"
+          />
+          <input
+            type="month"
+            v-model="monthRange.end"
+            class="p-2 border border-gray-300 rounded-lg"
+          />
+          <button
+            @click="applyMonthRange"
+            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
+          >
+            Apply
+          </button>
+        </div>
+      </div>
+      <!-- Reset Filters Button -->
+      <div class="mt-4">
+        <button
+          @click="resetFilters"
+          class="px-4 py-2 text-sm text-white bg-red-600 rounded-lg hover:bg-red-500"
+        >
+          Reset Filters
+        </button>
+      </div>
+    </rs-card>
 
     <div
       class="my-5 bg-white p-6 rounded-lg shadow-md flex flex-col items-center"
@@ -111,15 +120,40 @@
           }"
           advanced
         >
+          <template v-slot:total="data">
+            <div>RM {{ numberFormat(data.value.total) }}</div>
+          </template>
+          <template v-slot:status="data">
+            <div class="flex gap-2">
+              <span
+                :class="{
+                  'bg-green-100 text-green-800': data.value.status === 'paid',
+                  'bg-yellow-100 text-yellow-800':
+                    data.value.status === 'unpaid',
+                  'bg-red-100 text-red-800': data.value.status === 'cancelled',
+                  'bg-blue-100 text-blue-800': data.value.status === 'shipped',
+                  'bg-indigo-100 text-indigo-800':
+                    data.value.status === 'delivered',
+                  'bg-purple-100 text-purple-800':
+                    data.value.status === 'refund',
+                  'bg-orange-100 text-orange-800':
+                    data.value.status === 'return',
+                  'bg-teal-100 text-teal-800':
+                    data.value.status === 'completed',
+                }"
+                class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
+              >
+                <span class="first-letter:uppercase">
+                  {{ data.value.status }}
+                </span>
+              </span>
+            </div>
+          </template>
           <template v-slot:actions="data">
             <div class="flex gap-2">
-              <div class="cursor-pointer" @click="navigateToDetail(data)">
-                <Icon
-                  name="material-symbols:list-alt"
-                  class="text-indigo-500 hover:text-indigo-800"
-                  size="19"
-                />
-              </div>
+              <rs-button class="cursor-pointer" @click="navigateToDetail(data)">
+                Detail
+              </rs-button>
             </div>
           </template>
         </rs-table>
@@ -373,6 +407,13 @@ const navigateToDetail = async (orderId) => {
     await navigateTo(`/order-management/detail/${orderId}`);
   }
 };
+
+function numberFormat(val) {
+  return val.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+}
 
 onMounted(() => {
   tableLoading.value = true;

@@ -138,7 +138,7 @@
                 >
                   <Icon
                     name="material-symbols:edit-outline-rounded"
-                    class="w-4 h-4"
+                    size="30"
                   />
                 </button>
                 <button
@@ -147,7 +147,7 @@
                 >
                   <Icon
                     name="material-symbols:delete-outline-rounded"
-                    class="w-4 h-4"
+                    size="30"
                   />
                 </button>
               </div>
@@ -157,7 +157,12 @@
       </div>
     </div>
 
-    <rs-modal v-model="editingModal" position="center" title="Edit Webinar" size="lg">
+    <rs-modal
+      v-model="editingModal"
+      position="center"
+      title="Edit Webinar"
+      size="lg"
+    >
       <div class="text-lg font-medium mb-4">Edit Webinar</div>
       <div class="space-y-4">
         <!-- Title -->
@@ -248,9 +253,7 @@
       </div>
 
       <template #footer>
-        <div>
-          
-        </div>
+        <div></div>
       </template>
     </rs-modal>
   </div>

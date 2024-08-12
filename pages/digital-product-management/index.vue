@@ -41,10 +41,7 @@
               @click="editEbook(data.value.actions)"
               class="text-blue-600 hover:text-blue-800"
             >
-              <Icon
-                name="material-symbols:edit-outline-rounded"
-                class="w-4 h-4"
-              >
+              <Icon name="material-symbols:edit-outline-rounded" size="20">
               </Icon>
             </button>
             <button
@@ -53,7 +50,7 @@
             >
               <Icon
                 name="material-symbols:delete-outline-rounded"
-                class="w-4 h-4"
+                size="20"
               ></Icon>
             </button>
           </div>

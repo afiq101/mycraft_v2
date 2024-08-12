@@ -94,31 +94,26 @@
           <thead class="bg-gray-50">
             <tr>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Title
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Image
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 URL
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Status
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Actions
@@ -142,10 +137,11 @@
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm">
                 <span
-                  :class="{
-                    'bg-green-100 text-green-800': ad.status === 'active',
-                    'bg-gray-100 text-gray-800': ad.status === 'inactive',
-                  }"
+                  :class="
+                    ad.status === 'active'
+                      ? 'bg-green-100 text-green-800'
+                      : 'bg-gray-100 text-gray-800'
+                  "
                   class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
                 >
                   {{ ad.status }}
@@ -156,11 +152,8 @@
               >
                 <button
                   @click="toggleAdStatus(index)"
-                  class=""
                   :class="
-                    ad.status === 'active'
-                      ? ' text-green-800'
-                      : ' text-gray-800'
+                    ad.status === 'active' ? 'text-green-800' : 'text-gray-800'
                   "
                 >
                   {{ ad.status === "active" ? "Deactivate" : "Activate" }}
@@ -171,7 +164,7 @@
                 >
                   <Icon
                     name="material-symbols:edit-outline-rounded"
-                    class="w-4 h-4"
+                    size="20"
                   />
                 </button>
                 <button
@@ -180,7 +173,7 @@
                 >
                   <Icon
                     name="material-symbols:delete-outline-rounded"
-                    class="w-4 h-4"
+                    size="20"
                   />
                 </button>
               </td>
@@ -208,25 +201,21 @@
           <thead class="bg-gray-50">
             <tr>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Product Name
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Image
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Priority
               </th>
               <th
-                scope="col"
                 class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
               >
                 Actions
@@ -246,29 +235,20 @@
                 />
               </td>
               <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                <button @click="increasePriority(index)">↑</button>
-                <button @click="decreasePriority(index)">↓</button>
+                <button @click="changePriority(index, 'up')">↑</button>
+                <button @click="changePriority(index, 'down')">↓</button>
                 {{ product.priority }}
               </td>
               <td
                 class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2"
               >
                 <button
-                  @click="(editingProductsModal = true), editProduct(index)"
-                  class="text-blue-600 hover:text-blue-800"
-                >
-                  <Icon
-                    name="material-symbols:edit-outline-rounded"
-                    class="w-4 h-4"
-                  />
-                </button>
-                <button
                   @click="deleteProduct(index)"
                   class="text-red-600 hover:text-red-800"
                 >
                   <Icon
                     name="material-symbols:delete-outline-rounded"
-                    class="w-4 h-4"
+                    size="20"
                   />
                 </button>
               </td>
@@ -278,12 +258,12 @@
       </div>
     </div>
 
+    <!-- Modals -->
     <rs-modal
       v-model="showCreateAdModal"
       position="center"
       title="Add Advertisement"
     >
-      <div class="text-lg font-medium mb-4">Add Advertisement</div>
       <div class="space-y-4">
         <!-- Title -->
         <div>
@@ -342,10 +322,6 @@
           </button>
         </div>
       </div>
-
-      <template #footer>
-        <div></div>
-      </template>
     </rs-modal>
 
     <!-- Edit Advertisement Modal -->
@@ -354,67 +330,64 @@
       title="Edit Advertisement"
       position="center"
     >
-      <div>
-        <div class="text-lg font-medium mb-4">Edit Advertisement</div>
-        <div class="space-y-4">
-          <!-- Title -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Title</label
-            >
-            <input
-              v-model="advertisements[editingIndex].title"
-              type="text"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+      <div class="space-y-4">
+        <!-- Title -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Title</label
+          >
+          <input
+            v-model="advertisements[editingIndex].title"
+            type="text"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Image Upload -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Upload Image</label
-            >
-            <input
-              type="file"
-              @change="handleFileUploadEdit"
-              accept="image/*"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-            <p
-              v-if="advertisements[editingIndex].image"
-              class="text-sm text-gray-500 mt-2"
-            >
-              {{ advertisements[editingIndex].image.name }}
-            </p>
-          </div>
+        <!-- Image Upload -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Upload Image</label
+          >
+          <input
+            type="file"
+            @change="handleFileUploadEdit"
+            accept="image/*"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <p
+            v-if="advertisements[editingIndex].image"
+            class="text-sm text-gray-500 mt-2"
+          >
+            {{ advertisements[editingIndex].image.name }}
+          </p>
+        </div>
 
-          <!-- URL -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >URL</label
-            >
-            <input
-              v-model="advertisements[editingIndex].url"
-              type="url"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+        <!-- URL -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >URL</label
+          >
+          <input
+            v-model="advertisements[editingIndex].url"
+            type="url"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Actions -->
-          <div class="flex justify-end space-x-4">
-            <button
-              @click="(editingAdsModal = false), cancelEditAd"
-              class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-            <button
-              @click="saveAd"
-              class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-            >
-              Save Changes
-            </button>
-          </div>
+        <!-- Actions -->
+        <div class="flex justify-end space-x-4">
+          <button
+            @click="(editingAdsModal = false), cancelEditAd"
+            class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+            @click="saveAd"
+            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
+          >
+            Save Changes
+          </button>
         </div>
       </div>
 
@@ -423,13 +396,12 @@
       </template>
     </rs-modal>
 
-    <!-- vCreate Highlighted Product Modal -->
+    <!-- Create Highlighted Product Modal -->
     <rs-modal
       v-model="showCreateProductModal"
       position="center"
       title="Add Highlighted Product"
     >
-      <div class="text-lg font-medium mb-4">Add Highlighted Product</div>
       <div class="space-y-4">
         <!-- Product Name -->
         <div>
@@ -462,7 +434,7 @@
         <!-- Actions -->
         <div class="flex justify-end space-x-4">
           <button
-            @click="showCreateProductModal = false"
+            @click="cancelCreateProduct"
             class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
           >
             Cancel
@@ -476,10 +448,6 @@
           </button>
         </div>
       </div>
-
-      <template #footer>
-        <div></div>
-      </template>
     </rs-modal>
 
     <!-- Edit Highlighted Product Modal -->
@@ -488,61 +456,54 @@
       title="Edit Highlighted Product"
       position="center"
     >
-      <div>
-        <div class="text-lg font-medium mb-4">Edit Highlighted Product</div>
-        <div class="space-y-4">
-          <!-- Product Name -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Product Name</label
-            >
-            <input
-              v-model="highlightedProducts[editingIndex].name"
-              type="text"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-          </div>
+      <div class="space-y-4">
+        <!-- Product Name -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Product Name</label
+          >
+          <input
+            v-model="highlightedProducts[editingIndex].name"
+            type="text"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+        </div>
 
-          <!-- Image Upload -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2"
-              >Upload Image</label
-            >
-            <input
-              type="file"
-              @change="handleFileUploadEdit"
-              accept="image/*"
-              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-            <p
-              v-if="highlightedProducts[editingIndex].image"
-              class="text-sm text-gray-500 mt-2"
-            >
-              {{ highlightedProducts[editingIndex].image.name }}
-            </p>
-          </div>
+        <!-- Image Upload -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2"
+            >Upload Image</label
+          >
+          <input
+            type="file"
+            @change="handleFileUploadEdit"
+            accept="image/*"
+            class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+          />
+          <p
+            v-if="highlightedProducts[editingIndex].image"
+            class="text-sm text-gray-500 mt-2"
+          >
+            {{ highlightedProducts[editingIndex].image.name }}
+          </p>
+        </div>
 
-          <!-- Actions -->
-          <div class="flex justify-end space-x-4">
-            <button
-              @click="editingProductsModal = false"
-              class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
-            >
-              Cancel
-            </button>
-            <button
-              @click="saveProduct"
-              class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
-            >
-              Save Changes
-            </button>
-          </div>
+        <!-- Actions -->
+        <div class="flex justify-end space-x-4">
+          <button
+            @click="cancelEditProduct"
+            class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+            @click="saveProduct"
+            class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
+          >
+            Save Changes
+          </button>
         </div>
       </div>
-
-      <template #footer>
-        <div></div>
-      </template>
     </rs-modal>
   </div>
 </template>
@@ -556,11 +517,7 @@ definePageMeta({
 });
 
 // Banner images state
-const bannerImages = ref([
-  // Example images
-  { url: "https://example.com/image1.jpg" },
-  { url: "https://example.com/image2.jpg" },
-]);
+const bannerImages = ref([]);
 
 // Reference for the hidden file input
 const fileInput = ref(null);
@@ -570,7 +527,7 @@ const triggerFileUpload = () => {
   fileInput.value.click();
 };
 
-// Handle file upload
+// Handle file upload for banner images
 const handleFileUpload = (event) => {
   const file = event.target.files[0];
   if (file && bannerImages.value.length < 5) {
@@ -605,15 +562,15 @@ const advertisements = ref([
   },
 ]);
 
+// Modals and form state
 const showCreateAdModal = ref(false);
+const editingAdsModal = ref(false);
 const newAd = ref({
   title: "",
   image: null,
   url: "",
   status: "inactive",
 });
-
-const editingAdsModal = ref(false);
 const editingIndex = ref(null);
 
 // Handle file upload for new advertisement
@@ -666,7 +623,6 @@ const deleteAd = (index) => {
 
 // Toggle advertisement status (active/inactive)
 const toggleAdStatus = (index) => {
-  console.log("index", index);
   const activeAdsCount = advertisements.value.filter(
     (ad) => ad.status === "active"
   ).length;
@@ -686,11 +642,6 @@ const cancelCreateAd = () => {
   showCreateAdModal.value = false;
 };
 
-// Cancel advertisement editing
-const cancelEditAd = () => {
-  editingIndex.value = null;
-};
-
 // Highlighted products data
 const highlightedProducts = ref([
   {
@@ -705,14 +656,14 @@ const highlightedProducts = ref([
   },
 ]);
 
+// Modals and form state
 const showCreateProductModal = ref(false);
+const editingProductsModal = ref(false);
 const newProduct = ref({
   name: "",
   image: null,
   priority: 0,
 });
-
-const editingProductsModal = ref(false);
 
 // Handle file upload for new highlighted product
 const handleFileUploadProduct = (event) => {
@@ -728,7 +679,11 @@ const handleFileUploadProduct = (event) => {
 const createProduct = () => {
   if (newProduct.value.name && newProduct.value.image) {
     highlightedProducts.value.push({ ...newProduct.value });
-    newProduct.value = { name: "", image: null, priority: 0 };
+    newProduct.value = {
+      name: "",
+      image: null,
+      priority: highlightedProducts.value.length + 1,
+    };
     showCreateProductModal.value = false;
     alert("Highlighted product added successfully!");
   }
@@ -736,31 +691,55 @@ const createProduct = () => {
 
 // Edit a highlighted product
 const editProduct = (index) => {
+  editingProductsModal.value = true;
   editingIndex.value = index;
 };
 
 // Save changes to the edited highlighted product
 const saveProduct = () => {
-  editingIndex.value = null;
+  editingProductsModal.value = false;
   alert("Highlighted product updated successfully!");
 };
 
 // Delete a highlighted product
 const deleteProduct = (index) => {
   highlightedProducts.value.splice(index, 1);
+  highlightedProducts.value.forEach((product, i) => (product.priority = i + 1));
   alert("Highlighted product deleted successfully!");
 };
 
-// Increase priority of a product
-const increasePriority = (index) => {
-  if (highlightedProducts.value[index].priority > 1) {
-    highlightedProducts.value[index].priority--;
+// Increase or decrease product priority
+const changePriority = (index, direction) => {
+  if (direction === "up" && index > 0) {
+    [highlightedProducts.value[index], highlightedProducts.value[index - 1]] = [
+      highlightedProducts.value[index - 1],
+      highlightedProducts.value[index],
+    ];
+  } else if (
+    direction === "down" &&
+    index < highlightedProducts.value.length - 1
+  ) {
+    [highlightedProducts.value[index], highlightedProducts.value[index + 1]] = [
+      highlightedProducts.value[index + 1],
+      highlightedProducts.value[index],
+    ];
   }
+  highlightedProducts.value.forEach((product, i) => (product.priority = i + 1));
 };
 
-// Decrease priority of a product
-const decreasePriority = (index) => {
-  highlightedProducts.value[index].priority++;
+// Cancel highlighted product creation
+const cancelCreateProduct = () => {
+  newProduct.value = {
+    name: "",
+    image: null,
+    priority: highlightedProducts.value.length + 1,
+  };
+  showCreateProductModal.value = false;
+};
+
+// Cancel highlighted product editing
+const cancelEditProduct = () => {
+  editingIndex.value = null;
 };
 </script>
 
