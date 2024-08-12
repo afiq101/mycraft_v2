@@ -6,7 +6,6 @@
     <div class="bg-white p-6 rounded-lg shadow-md">
       <div class="text-lg font-medium mb-4">
         Banner Images
-
         <p class="text-xs">First section of the website content</p>
       </div>
 
@@ -191,6 +190,94 @@
       </div>
     </div>
 
+    <!-- Highlighted Product Section -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <div class="flex justify-between items-center mb-4">
+        <div class="text-lg font-medium">Highlighted Products</div>
+        <button
+          @click="showCreateProductModal = true"
+          class="px-4 py-2 text-sm text-white bg-indigo-600 rounded-lg hover:bg-indigo-500"
+        >
+          Add Highlighted Product
+        </button>
+      </div>
+
+      <!-- Highlighted Product Table -->
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Product Name
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Image
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Priority
+              </th>
+              <th
+                scope="col"
+                class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+              >
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <tr v-for="(product, index) in highlightedProducts" :key="index">
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                {{ product.name }}
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <img
+                  :src="product.image.url"
+                  alt="Product Image"
+                  class="w-16 h-16 object-cover rounded-lg shadow-md"
+                />
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <button @click="increasePriority(index)">↑</button>
+                <button @click="decreasePriority(index)">↓</button>
+                {{ product.priority }}
+              </td>
+              <td
+                class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2"
+              >
+                <button
+                  @click="editProduct(index)"
+                  class="text-blue-600 hover:text-blue-800"
+                >
+                  <Icon
+                    name="material-symbols:edit-outline-rounded"
+                    class="w-4 h-4"
+                  />
+                </button>
+                <button
+                  @click="deleteProduct(index)"
+                  class="text-red-600 hover:text-red-800"
+                >
+                  <Icon
+                    name="material-symbols:delete-outline-rounded"
+                    class="w-4 h-4"
+                  />
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- Create Advertisement Modal -->
     <div
       v-if="showCreateAdModal"
@@ -328,6 +415,62 @@
         </div>
       </div>
     </div>
+
+    <!-- Create Highlighted Product Modal -->
+    <div
+      v-if="showCreateProductModal"
+      class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center"
+    >
+      <div class="bg-white p-6 rounded-lg shadow-md w-11/12 sm:w-2/3 lg:w-1/2">
+        <div class="text-lg font-medium mb-4">Add Highlighted Product</div>
+        <div class="space-y-4">
+          <!-- Product Name -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Product Name</label
+            >
+            <input
+              v-model="newProduct.name"
+              type="text"
+              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+            />
+          </div>
+
+          <!-- Image Upload -->
+          <div>
+            <label class="block text-sm font-medium text-gray-700 mb-2"
+              >Upload Image</label
+            >
+            <input
+              type="file"
+              @change="handleFileUploadProduct"
+              accept="image/*"
+              class="w-full p-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+            />
+            <p v-if="newProduct.image" class="text-sm text-gray-500 mt-2">
+              {{ newProduct.image.name }}
+            </p>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex justify-end space-x-4">
+            <button
+              @click="cancelCreateProduct"
+              class="px-4 py-2 text-sm text-gray-700 bg-gray-200 rounded-lg hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              @click="createProduct"
+              :disabled="!newProduct.name || !newProduct.image"
+              class="px-4 py-2 text-sm text-white bg-green-600 rounded-lg hover:bg-green-500 disabled:opacity-50"
+            >
+              Add Product
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -380,12 +523,6 @@ const advertisements = ref([
     image: { name: "ad1.jpg", url: "https://example.com/ad1.jpg" },
     url: "https://example.com",
     status: "active",
-  },
-  {
-    title: "Ad 2",
-    image: { name: "ad2.jpg", url: "https://example.com/ad2.jpg" },
-    url: "https://example.com",
-    status: "inactive",
   },
   {
     title: "Ad 2",
@@ -474,6 +611,76 @@ const cancelCreateAd = () => {
 // Cancel advertisement editing
 const cancelEditAd = () => {
   editingIndex.value = null;
+};
+
+// Highlighted products data
+const highlightedProducts = ref([
+  {
+    name: "Product 1",
+    image: { name: "product1.jpg", url: "https://example.com/product1.jpg" },
+    priority: 1,
+  },
+  {
+    name: "Product 2",
+    image: { name: "product2.jpg", url: "https://example.com/product2.jpg" },
+    priority: 2,
+  },
+]);
+
+const showCreateProductModal = ref(false);
+const newProduct = ref({
+  name: "",
+  image: null,
+  priority: 0,
+});
+
+// Handle file upload for new highlighted product
+const handleFileUploadProduct = (event) => {
+  const file = event.target.files[0];
+  if (file && file.type.startsWith("image/")) {
+    newProduct.value.image = file;
+  } else {
+    alert("Please upload a valid image file.");
+  }
+};
+
+// Create a new highlighted product
+const createProduct = () => {
+  if (newProduct.value.name && newProduct.value.image) {
+    highlightedProducts.value.push({ ...newProduct.value });
+    newProduct.value = { name: "", image: null, priority: 0 };
+    showCreateProductModal.value = false;
+    alert("Highlighted product added successfully!");
+  }
+};
+
+// Edit a highlighted product
+const editProduct = (index) => {
+  editingIndex.value = index;
+};
+
+// Save changes to the edited highlighted product
+const saveProduct = () => {
+  editingIndex.value = null;
+  alert("Highlighted product updated successfully!");
+};
+
+// Delete a highlighted product
+const deleteProduct = (index) => {
+  highlightedProducts.value.splice(index, 1);
+  alert("Highlighted product deleted successfully!");
+};
+
+// Increase priority of a product
+const increasePriority = (index) => {
+  if (highlightedProducts.value[index].priority > 1) {
+    highlightedProducts.value[index].priority--;
+  }
+};
+
+// Decrease priority of a product
+const decreasePriority = (index) => {
+  highlightedProducts.value[index].priority++;
 };
 </script>
 

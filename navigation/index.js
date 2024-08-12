@@ -51,7 +51,26 @@ export default [
         title: "Order Management",
         path: "/order-management",
         icon: "ic:outline-dashboard",
-        child: [],
+        child: [
+          {
+            title: "Domestic",
+            path: "/order-management/domestic",
+            icon: "ic:outline-dashboard",
+            meta: {},
+          },
+          {
+            title: "Non-Domestic",
+            path: "/order-management/non-domestic",
+            icon: "ic:outline-dashboard",
+            meta: {},
+          },
+          {
+            title: "E-book",
+            path: "/order-management/e-book",
+            icon: "ic:outline-dashboard",
+            meta: {},
+          },
+        ],
         meta: {},
       },
       {
@@ -72,7 +91,20 @@ export default [
         title: "Report Management",
         path: "/report-management",
         icon: "ic:outline-dashboard",
-        child: [],
+        child: [
+          {
+            title: "User Report",
+            path: "/report-management/user",
+            icon: "ic:outline-dashboard",
+            meta: {},
+          },
+          {
+            title: "Product Report",
+            path: "/report-management/product",
+            icon: "ic:outline-dashboard",
+            meta: {},
+          },
+        ],
         meta: {},
       },
       {
@@ -139,8 +171,8 @@ export default [
         meta: {},
       },
       {
-        title: "Online Package",
-        path: "/online-package",
+        title: "Voucher",
+        path: "/voucher",
         icon: "ic:outline-dashboard",
         child: [],
         meta: {},
