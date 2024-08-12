@@ -1,6 +1,6 @@
 <script setup>
 useHead({
-  title: "corrad | Innovative solutions for captivating content",
+  title: "MyCraft",
   description: "Home page",
   htmlAttrs: {
     lang: "en",
@@ -24,7 +24,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <VitePwaManifest />
+    <!-- <VitePwaManifest /> -->
     <NuxtLoadingIndicator />
     <NuxtLayout>
       <Loading v-if="loading" />
