@@ -270,7 +270,7 @@ const chartVisitorAgeRange = computed(() => ({
 }));
 
 // Total Download Apps
-const downloadData = ref([4455, 6783]);
+const downloadData = ref([75, 85]);
 const chartDownload = computed(() => ({
   chart: {
     height: 350,
@@ -689,53 +689,56 @@ onMounted(() => {
     </div>
     
     <!-- Financial -->
-    <div>
-      <rs-card>
-        <template #header>Total Payout</template>
-        <template #body>
-          <ClientOnly>
-            <VueApexCharts
-              :key="changeKey"
-              width="100%"
-              height="300"
-              type="line"
-              :options="chartPayout"
-              :series="payoutSeries"
-            ></VueApexCharts>
-          </ClientOnly>
-        </template>
-      </rs-card>
-      <rs-card>
-        <template #header>Total Redeemed</template>
-        <template #body>
-          <ClientOnly>
-            <VueApexCharts
-              :key="changeKey"
-              width="100%"
-              height="300"
-              type="bar"
-              :options="chartRedeemed"
-              :series="redeemedSeries"
-            ></VueApexCharts>
-          </ClientOnly>
-        </template>
-      </rs-card>
-      <rs-card>
-        <template #header>Total Yearly Allocation Amount</template>
-        <template #body>
-          <ClientOnly>
-            <VueApexCharts
-              :key="changeKey"
-              width="100%"
-              height="300"
-              type="line"
-              :options="votOptions"
-              :series="votSeries"
-            ></VueApexCharts>
-          </ClientOnly>
-        </template>
-      </rs-card>
-    </div>
+    <rs-card>
+      <template #header>Financial</template>
+      <template #body>
+        <rs-card>
+          <template #header>Total Payout</template>
+          <template #body>
+            <ClientOnly>
+              <VueApexCharts
+                :key="changeKey"
+                width="100%"
+                height="300"
+                type="line"
+                :options="chartPayout"
+                :series="payoutSeries"
+              ></VueApexCharts>
+            </ClientOnly>
+          </template>
+        </rs-card>
+        <rs-card>
+          <template #header>Total Redeemed</template>
+          <template #body>
+            <ClientOnly>
+              <VueApexCharts
+                :key="changeKey"
+                width="100%"
+                height="300"
+                type="bar"
+                :options="chartRedeemed"
+                :series="redeemedSeries"
+              ></VueApexCharts>
+            </ClientOnly>
+          </template>
+        </rs-card>
+        <rs-card>
+          <template #header>Total Yearly Allocation Amount</template>
+          <template #body>
+            <ClientOnly>
+              <VueApexCharts
+                :key="changeKey"
+                width="100%"
+                height="300"
+                type="line"
+                :options="votOptions"
+                :series="votSeries"
+              ></VueApexCharts>
+            </ClientOnly>
+          </template>
+        </rs-card>
+      </template>
+    </rs-card>
     
   </div>
 </template>
