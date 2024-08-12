@@ -68,9 +68,7 @@ const subscribeToNewsletter = () => {
     <div class="max-w-7xl mx-auto">
       <!-- Newsletter Subscription -->
       <div class="mb-12 bg-white p-6 rounded-lg shadow-sm">
-        <h3 class="text-2xl font-bold text-purple-700 mb-2">
-          Join our newsletter
-        </h3>
+        <h3 class="text-2xl font-bold mb-2">Join our newsletter</h3>
         <p class="text-gray-600 mb-4">
           Stay updated with our latest offers and products. No spam, we promise!
         </p>
@@ -79,7 +77,6 @@ const subscribeToNewsletter = () => {
             type="email"
             name="email"
             placeholder="Enter your email"
-            validation="required|email"
             v-model="newsletterEmail"
             :classes="{
               outer: 'flex-grow mr-2',
@@ -123,7 +120,7 @@ const subscribeToNewsletter = () => {
             class="h-8 w-auto"
           />
           <p class="text-sm text-gray-500 mt-2">
-            Bringing you the best in online shopping since 2023.
+            Bringing you the best in online shopping since 2024.
           </p>
         </div>
         <div class="flex space-x-4">

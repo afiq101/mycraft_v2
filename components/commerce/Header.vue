@@ -61,7 +61,7 @@ const scroll = (direction) => {
                 v-for="category in categories"
                 :key="category"
               >
-                <rs-button variant="primary-text" class="text-sm">
+                <rs-button variant="secondary-text" class="text-sm">
                   {{ category }}
                 </rs-button>
               </NuxtLink>
@@ -88,12 +88,12 @@ const scroll = (direction) => {
             </FormKit>
             <rs-button
               @click="navigateTo('/auth/login')"
-              variant="primary-text"
+              variant="secondary-text"
             >
               <Icon name="mdi:account" class="mr-2" />
               Sign in / Register
             </rs-button>
-            <rs-button @click="navigateTo('/cart')" variant="primary-text">
+            <rs-button @click="navigateTo('/cart')" variant="secondary-text">
               <Icon name="mdi:cart-outline" />
             </rs-button>
           </div>
