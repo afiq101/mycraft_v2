@@ -61,7 +61,6 @@ const getRoleVariant = (role) => {
 <template>
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-8">LIST OF MEMBERS</h1>
-
     <rs-card>
       <template #header>
         <div class="flex justify-between items-center">
@@ -95,7 +94,7 @@ const getRoleVariant = (role) => {
           <template #LastSeen="{ value }">{{ value.lastSeen }}</template>
           <template #Action="{ row }">
             <div class="flex space-x-2"> <!-- Added a flex container with spacing -->
-              <nuxt-link to="/eborang/pentadbir/butiran-borang">
+              <nuxt-link to="/memberships/create-member">
                 <rs-button 
                   variant="primary" 
                   size="sm"
@@ -110,7 +109,7 @@ const getRoleVariant = (role) => {
               >
                 Delete
               </rs-button>
-              <nuxt-link to="/administrators/create-admin/audit-trails">
+              <nuxt-link to="/memberships/order-transaction">
               <rs-button 
                 variant="warning" 
                 size="sm"

@@ -108,7 +108,6 @@ const uploadAvatar = (event) => {
 <template>
   <div class="container mx-auto px-4 py-8">
     <h1 class="text-3xl font-bold mb-8">Update Profile</h1>
-
     <rs-card class="mb-8">
       <template #header>
         <h2 class="text-xl font-semibold">Change Profile Picture</h2>
